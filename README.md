@@ -33,3 +33,5 @@
     4. Aluno (Normal)
 3. Formulário para Treino
 4. Formulário para Plano
+
+<img src="img/banco-de-dados.png" alt="">
