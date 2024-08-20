@@ -1,6 +1,10 @@
 namespace Domain.Entity.Enum;
 
-public enum Permissions
+/**
+ * DEFINE QUAIS SÃO OS TIPOS DE PERMISSÕES QUE UM
+ * MANAGER PODE TER.
+ */
+public enum Permission
 {
     CAN_ADD_MEMBERS = 1,
     CAN_EDIT_MEMBERS = 2,

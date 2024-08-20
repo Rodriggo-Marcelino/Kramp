@@ -19,7 +19,7 @@ namespace Domain.Entity
         public string? PasswordHash { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         
         public Document Document { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Permissions Permissions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Permission Permission { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
