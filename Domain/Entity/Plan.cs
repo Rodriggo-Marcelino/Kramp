@@ -1,3 +1,5 @@
+using Domain.Entity.Interfaces;
+
 namespace Domain.Entity;
 
 public class Plan
@@ -9,5 +11,8 @@ public class Plan
     public DateTime StartDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public DateTime EndDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     
-    public List<Workout> workouts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public ICollection<Workout> workouts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    
+    public IUser Member { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public IUser Creator { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

@@ -36,7 +36,7 @@ namespace Domain.Entity
         [Required]
         public string? DocumentNumber { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         [Required]
-        public Permission Permission { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<Permission> Permission { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         [Timestamp]
         public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
