@@ -34,6 +34,5 @@
 3. Formulário para Treino
 4. Formulário para Plano
 
-<img src="img/banco-de-dados.png" alt="">
 <img src="img/Main.png" alt="">
 <img src="img/Main2.png" alt="">
