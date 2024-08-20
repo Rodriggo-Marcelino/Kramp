@@ -9,6 +9,7 @@ namespace Domain.Entity.Interfaces
     {
         Guid Id { get; set; }
         string? Name { get; set; }
+
         string? Username { get; set; }
         string? PasswordHash { get; set; }
 
