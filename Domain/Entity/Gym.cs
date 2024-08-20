@@ -31,7 +31,7 @@ namespace Domain.Entity
         public Document TypeDocument { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         [Required]
         public string? DocumentNumber { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        //Owned Types
+        //TODO: Owned Types
         public Address Address { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         [Timestamp]
