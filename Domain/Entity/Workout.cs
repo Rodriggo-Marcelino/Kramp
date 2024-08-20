@@ -9,6 +9,7 @@ public class Workout
     public string? Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     
     public List<Muscle> TargetedMuscles { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public List<Exercise> Exercises { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     
     public int SeriesCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public int RepetitionCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
