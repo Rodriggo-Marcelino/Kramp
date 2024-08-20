@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entity.Interfaces;
 
 namespace Domain.Entity;
 
+[Table("plan")]
 public class Plan
 {
     public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

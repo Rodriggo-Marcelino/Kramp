@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entity.Enum;
 
 namespace Domain.Entity;
 
+[Table("workout")]
 public class Workout
 {
     public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

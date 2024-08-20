@@ -5,6 +5,7 @@ using Domain.Entity.Interfaces;
 
 namespace Domain.Entity
 {
+    [Table("manager")]
     public class Manager : IUser
     {
         [Key]
