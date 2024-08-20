@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entity.Enum;
 
 namespace Domain.Entity.Interfaces
 {
@@ -13,11 +14,11 @@ namespace Domain.Entity.Interfaces
         string? Username { get; set; }
         string? PasswordHash { get; set; }
 
-        // string? Surname { get; set; } Comentei pois Gym também é um User
-        // string? UserBio { get; set; } Comentei pois Gym também é um User
-        // DateTime BirthDate { get; set; } Comentei pois Gym também é um User
+        // string? Surname { get; set; } Comentei pois Gym tambï¿½m ï¿½ um User
+        // string? UserBio { get; set; } Comentei pois Gym tambï¿½m ï¿½ um User
+        // DateTime BirthDate { get; set; } Comentei pois Gym tambï¿½m ï¿½ um User
 
-        string? Document { get; set; }
+        Document Document { get; set; }
 
         DateTime CreatedAt { get; set; }
         string? RefreshToken {get; set;}

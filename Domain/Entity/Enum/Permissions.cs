@@ -1,0 +1,14 @@
+namespace Domain.Entity.Enum;
+
+public enum Permissions
+{
+    CAN_ADD_MEMBERS = 1,
+    CAN_EDIT_MEMBERS = 2,
+    CAN_DELETE_MEMBER = 3,
+    CAN_GET_MEMBERS = 4,
+    CAN_ADD_PROFESSIONALS = 5,
+    CAN_EDIT_PROFESSIONALS = 6,
+    CAN_DELETE_PROFESSIONALS = 7,
+    CAN_GET_PROFESSIONALS = 8,
+    CAN_SEND_NOTIFICATIONS = 9
+}

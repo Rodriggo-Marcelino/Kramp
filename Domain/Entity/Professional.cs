@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entity.Enum;
 using Domain.Entity.Interfaces;
 
 namespace Domain.Entity
@@ -16,11 +17,8 @@ namespace Domain.Entity
 
         public string? Username { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? PasswordHash { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        //CRN, CREF,...
-        public string? Document { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        //Personal Trainer, Nutricionista, Professor, ...
-        public string? Job { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Document Document { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Job Job { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
