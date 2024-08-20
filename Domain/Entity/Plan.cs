@@ -30,7 +30,7 @@ public class Plan
     [Required]
     public ICollection<Workout> workouts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-    public IUser Member { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public ICollection<IUser> Member { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     [Required]
     public IUser Creator { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

@@ -29,6 +29,7 @@ public class Workout
     
     [Required]
     public Period Period { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    
     [Timestamp]
     [DataType(DataType.Date)]
     public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
