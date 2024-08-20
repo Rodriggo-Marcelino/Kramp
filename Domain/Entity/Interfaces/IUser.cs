@@ -18,7 +18,8 @@ namespace Domain.Entity.Interfaces
         // string? UserBio { get; set; } Comentei pois Gym tamb�m � um User
         // DateTime BirthDate { get; set; } Comentei pois Gym tamb�m � um User
 
-        Document Document { get; set; }
+        Document TypeDocument { get; set; }
+        string? DocumentNumber { get; set; }
 
         DateTime CreatedAt { get; set; }
         string? RefreshToken {get; set;}
