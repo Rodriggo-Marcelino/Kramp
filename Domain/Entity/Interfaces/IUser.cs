@@ -9,11 +9,12 @@ namespace Domain.Entity.Interfaces
     {
         Guid Id { get; set; }
         string? Name { get; set; }
-        string? Surname { get; set; }
-        string? UserBio { get; set; }
         string? Username { get; set; }
         string? PasswordHash { get; set; }
-        DateTime BirthDate { get; set; }
+
+        // string? Surname { get; set; } Comentei pois Gym também é um User
+        // string? UserBio { get; set; } Comentei pois Gym também é um User
+        // DateTime BirthDate { get; set; } Comentei pois Gym também é um User
 
         string? Document { get; set; }
 

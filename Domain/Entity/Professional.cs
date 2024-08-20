@@ -12,9 +12,10 @@ namespace Domain.Entity
         public string? Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? Surname { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? UserBio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime BirthDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public string? Username { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? PasswordHash { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime BirthDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //CRN, CREF,...
         public string? Document { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

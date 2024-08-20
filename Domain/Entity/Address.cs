@@ -14,9 +14,9 @@ namespace Domain.Entity
         public string? Complement { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         //Bairro
         public string? District { get => throw new NotImplementedException(); set => throw new NotImplementedException(); } 
+
         public string? City { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
 
     }
 }
