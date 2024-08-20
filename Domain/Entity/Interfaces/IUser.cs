@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Domain.Entity.Enum;
 
 namespace Domain.Entity.Interfaces
@@ -13,10 +9,6 @@ namespace Domain.Entity.Interfaces
 
         string? Username { get; set; }
         string? PasswordHash { get; set; }
-
-        // string? Surname { get; set; } Comentei pois Gym tamb�m � um User
-        // string? UserBio { get; set; } Comentei pois Gym tamb�m � um User
-        // DateTime BirthDate { get; set; } Comentei pois Gym tamb�m � um User
 
         Document TypeDocument { get; set; }
         string? DocumentNumber { get; set; }
