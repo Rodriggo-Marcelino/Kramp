@@ -10,17 +10,21 @@ namespace Domain.Entity
     {
         [Key]
         public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Column(TypeName = "varchar(50)")]
         public string? Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Column(TypeName = "varchar(50)")]
         public string? Surname { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        
         [StringLength(240)]
         [Column(TypeName = "varchar(240)")]
         public string? UserBio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        
         [Required]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -40,6 +44,7 @@ namespace Domain.Entity
         public List<Permission> Permission { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         [Timestamp]
+        [DataType(DataType.Date)]
         public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshTokenExpiryTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

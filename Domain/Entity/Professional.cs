@@ -44,6 +44,7 @@ namespace Domain.Entity
         public Job Job { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         [Timestamp]
+        [DataType(DataType.Date)]
         public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshTokenExpiryTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
