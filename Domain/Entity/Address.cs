@@ -6,8 +6,6 @@ namespace Domain.Entity
     [NotMapped]
     public class Address
     {
-        [Key]
-        public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         [Required]
         public string? Street { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         [Required]
