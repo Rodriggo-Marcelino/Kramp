@@ -28,9 +28,9 @@ public class Plan
     public DateTime EndDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     
     [Required]
-    public ICollection<Workout> workouts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public ICollection<Workout> Workouts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-    public ICollection<IUser> Member { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    [Required]
-    public IUser Creator { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public ICollection<Member> Member { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }
+
+//Todo: Adicionar IUser
