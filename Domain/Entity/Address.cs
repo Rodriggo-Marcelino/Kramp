@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity
 {
-    //TODO: Owned Types
+    [NotMapped]
     public class Address
     {
         [Key]
