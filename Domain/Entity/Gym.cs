@@ -42,3 +42,5 @@ namespace Domain.Entity
 
     }
 }
+
+//Todo: remover as Exception 
