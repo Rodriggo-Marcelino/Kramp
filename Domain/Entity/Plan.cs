@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entity.Interfaces;
 
 namespace Domain.Entity;
 
@@ -8,29 +7,29 @@ namespace Domain.Entity;
 public class Plan
 {
     [Key]
-    public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
+    public Guid Id { get; set; } = Guid.NewGuid();
+
     [Required]
     [StringLength(50, MinimumLength = 3)]
     [Column(TypeName = "varchar(50)")]
-    public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
+    public string Name { get; set; }
+
     [StringLength(240)]
     [Column(TypeName = "varchar(240)")]
-    public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
-    [Required]
-    [DataType(DataType.Date)]
-    public DateTime StartDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
-    [Required]
-    [DataType(DataType.Date)]
-    public DateTime EndDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
-    [Required]
-    public ICollection<Workout> Workouts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string Description { get; set; }
 
-    public ICollection<Member> Member { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    [Required]
+    [DataType(DataType.Date)]
+    public DateTime StartDate { get; set; }
+
+    [Required]
+    [DataType(DataType.Date)]
+    public DateTime EndDate { get; set; }
+
+    [Required]
+    public ICollection<Workout> Workouts { get; set; }
+
+    public ICollection<Member> Member { get; set; }
 }
 
 //Todo: Adicionar IUser

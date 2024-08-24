@@ -7,19 +7,19 @@ namespace Domain.Entity
     public class Address
     {
         [Required]
-        public string? Street { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? Street { get; set; }
         [Required]
-        public string? PostalCode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? PostalCode { get; set; }
         [Required]
-        public string? Number { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string? Complement { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? Number { get; set; }
+        public string? Complement { get; set; }
         [Required]
-        public string? District { get => throw new NotImplementedException(); set => throw new NotImplementedException(); } 
+        public string? District { get; set; }
 
         [Required]
-        public string? City { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? City { get; set; }
         [Required]
-        public string? State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? State { get; set; }
 
     }
 }

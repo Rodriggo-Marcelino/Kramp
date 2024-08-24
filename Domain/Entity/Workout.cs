@@ -1,6 +1,6 @@
+using Domain.Entity.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entity.Enum;
 
 namespace Domain.Entity;
 
@@ -8,29 +8,27 @@ namespace Domain.Entity;
 public class Workout
 {
     [Key]
-    public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public Guid Id { get; set; } = Guid.NewGuid();
     [Required]
     [StringLength(50, MinimumLength = 3)]
     [Column(TypeName = "varchar(50)")]
-    public string? Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string? Name { get; set; }
     [StringLength(240)]
     [Column(TypeName = "varchar(240)")]
-    public string? Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
+    public string? Description { get; set; }
+
     [Required]
-    public List<Muscle> TargetedMuscles { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public List<Muscle> TargetedMuscles { get; set; }
     [Required]
-    public ICollection<Exercise> Exercises { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
+    public ICollection<Exercise> Exercises { get; set; }
+
     [Required]
-    public int SeriesCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int SeriesCount { get; set; }
     [Required]
-    public int RepetitionCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
+    public int RepetitionCount { get; set; }
+
     [Required]
-    public Period Period { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    
-    [Timestamp]
-    [DataType(DataType.Date)]
-    public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public Period Period { get; set; }
+
+    public DateTime CreatedAt { get; set; }
 }
