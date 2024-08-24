@@ -1,3 +1,4 @@
+using Application.ManagerCQ.Commands;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<KrampDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
 
 var app = builder.Build();
 
