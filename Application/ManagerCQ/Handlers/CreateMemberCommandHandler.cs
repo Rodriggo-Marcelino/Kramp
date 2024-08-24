@@ -31,9 +31,9 @@ namespace Application.ManagerCQ.Handlers
                 TypeDocument = Document.CPF,
                 DocumentNumber = request.DocumentNumber,
                 PasswordHash = request.Password,
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 RefreshToken = Guid.NewGuid().ToString(),
-                RefreshTokenExpiryTime = DateTime.Now.AddMonths(6)
+                RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6)
             };
 
             _context.Members.Add(member);
