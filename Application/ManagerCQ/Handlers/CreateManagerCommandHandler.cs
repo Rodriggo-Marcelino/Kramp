@@ -25,8 +25,8 @@ namespace Application.ManagerCQ.Handlers
                 UserBio = request.UserBio,
                 BirthDate = request.BirthDate,
                 Username = request.Username,
-                DocumentNumber = request.DocumentNumber,
                 PasswordHash = request.Password,
+                DocumentNumber = request.DocumentNumber,
                 RefreshToken = Guid.NewGuid().ToString(),
                 RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6)
             };
