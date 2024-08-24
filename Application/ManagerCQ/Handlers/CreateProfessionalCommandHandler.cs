@@ -50,6 +50,7 @@ namespace Application.ManagerCQ.Handlers
             }
             else
             {
+                // TODO: Melhorar na fase de tratamento de exceptions
                 throw new Exception();
             }
 
