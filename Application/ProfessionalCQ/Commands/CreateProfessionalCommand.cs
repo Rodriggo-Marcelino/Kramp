@@ -1,8 +1,8 @@
-﻿using Application.ManagerCQ.ViewModels;
+﻿using Application.ProfessionalCQ.ViewModels;
 using Domain.Entity.Enum;
 using MediatR;
 
-namespace Application.ManagerCQ.Commands
+namespace Application.ProfessionalCQ.Commands
 {
     public record CreateProfessionalCommand : IRequest<ProfessionalInfoViewModel>
     {

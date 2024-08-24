@@ -1,7 +1,7 @@
-﻿using Application.ManagerCQ.ViewModels;
+﻿using Application.MemberCQ.ViewModels;
 using MediatR;
 
-namespace Application.ManagerCQ.Commands
+namespace Application.MemberCQ.Commands
 {
     public record CreateMemberCommand : IRequest<MemberInfoViewModel>
     {

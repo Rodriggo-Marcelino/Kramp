@@ -1,5 +1,5 @@
-﻿using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.ViewModels;
+﻿using Application.ProfessionalCQ.Commands;
+using Application.ProfessionalCQ.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

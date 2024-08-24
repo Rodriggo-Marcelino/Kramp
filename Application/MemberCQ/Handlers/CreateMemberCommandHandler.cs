@@ -1,12 +1,10 @@
-﻿
-
-using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.ViewModels;
+﻿using Application.MemberCQ.Commands;
+using Application.MemberCQ.ViewModels;
 using Domain.Entity;
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.ManagerCQ.Handlers
+namespace Application.MemberCQ.Handlers
 {
     public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, MemberInfoViewModel>
     {

@@ -1,11 +1,11 @@
-﻿using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.ViewModels;
+﻿using Application.ProfessionalCQ.Commands;
+using Application.ProfessionalCQ.ViewModels;
 using Domain.Entity;
 using Domain.Entity.Enum;
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.ManagerCQ.Handlers
+namespace Application.ProfessionalCQ.Handlers
 {
     public class CreateProfessionalCommandHandler : IRequestHandler<CreateProfessionalCommand, ProfessionalInfoViewModel>
     {

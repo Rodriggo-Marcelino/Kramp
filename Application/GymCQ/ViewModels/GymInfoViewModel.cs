@@ -1,4 +1,4 @@
-﻿namespace Application.ManagerCQ.ViewModels
+﻿namespace Application.GymCQ.ViewModels
 {
     public record GymInfoViewModel
     {
