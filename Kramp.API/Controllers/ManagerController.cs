@@ -1,8 +1,6 @@
 ﻿using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
-using Domain.Entity;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kramp.API.Controllers
@@ -13,10 +11,28 @@ namespace Kramp.API.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        [HttpPost("Create-Manager")]
-        public async Task<ActionResult<ManagerInfoViewModel>> CreateManager(CreateManagerCommand command)
+        [HttpGet("Read")]
+        public async Task<ActionResult<ManagerInfoViewModel>> Read(CreateManagerCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost("Create")]
+        public async Task<ActionResult<ManagerInfoViewModel>> Create(CreateManagerCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPut("Update")]
+        public async Task<ActionResult<ManagerInfoViewModel>> Update(CreateManagerCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<ActionResult<ManagerInfoViewModel>> Delete(CreateManagerCommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

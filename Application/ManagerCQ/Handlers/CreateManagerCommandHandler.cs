@@ -1,6 +1,7 @@
 ﻿using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
 using Domain.Entity;
+using Domain.Entity.Enum;
 using Infrastructure.Persistence;
 using MediatR;
 
@@ -24,9 +25,9 @@ namespace Application.ManagerCQ.Handlers
                 UserBio = request.UserBio,
                 BirthDate = request.BirthDate,
                 Username = request.Username,
-                TypeDocument = request.TypeDocument,
+                TypeDocument = Document.CPF,
                 DocumentNumber = request.DocumentNumber,
-                PasswordHash = request.Password, 
+                PasswordHash = request.Password,
                 CreatedAt = DateTime.Now,
                 RefreshToken = Guid.NewGuid().ToString(),
                 RefreshTokenExpiryTime = DateTime.Now.AddMonths(6)
