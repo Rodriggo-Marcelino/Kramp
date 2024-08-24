@@ -16,7 +16,8 @@ namespace Application.ManagerCQ.Handlers
             _context = context;
         }
 
-        public async Task<ManagerInfoViewModel> Handle(CreateManagerCommand request, CancellationToken cancellationToken)
+        public async Task<ManagerInfoViewModel> Handle(CreateManagerCommand request,
+                                                       CancellationToken cancellationToken)
         {
             var manager = new Manager
             {
