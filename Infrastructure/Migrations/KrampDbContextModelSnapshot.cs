@@ -73,7 +73,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("exercise");
+                    b.ToTable("exercise", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Gym", b =>
@@ -118,7 +118,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("gym");
+                    b.ToTable("gym", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Manager", b =>
@@ -176,7 +176,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("manager");
+                    b.ToTable("manager", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Member", b =>
@@ -235,7 +235,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("member");
+                    b.ToTable("member", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Plan", b =>
@@ -262,7 +262,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("plan");
+                    b.ToTable("plan", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Professional", b =>
@@ -319,7 +319,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("professional");
+                    b.ToTable("professional", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Workout", b =>
@@ -362,7 +362,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("workout");
+                    b.ToTable("workout", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Exercise", b =>

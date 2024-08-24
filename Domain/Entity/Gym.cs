@@ -29,7 +29,7 @@ namespace Domain.Entity
         public string? PasswordHash { get; set; }
 
         [Required]
-        public Document TypeDocument { get; set; }
+        public Document TypeDocument { get; set; } = Document.CNPJ;
 
         [Required]
         public string? DocumentNumber { get; set; }
