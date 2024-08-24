@@ -23,3 +23,5 @@ namespace Domain.Entity
 
     }
 }
+
+//Tod: implementar corretamente 
