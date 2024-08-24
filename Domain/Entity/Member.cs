@@ -38,7 +38,7 @@ namespace Domain.Entity
         public string? PasswordHash { get; set; }
 
         [Required]
-        public Document TypeDocument { get; set; }
+        public Document TypeDocument { get; set; } = Document.CPF;
 
         [Required]
         [StringLength(20)]
