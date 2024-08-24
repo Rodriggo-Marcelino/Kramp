@@ -1,7 +1,7 @@
-﻿using Application.ManagerCQ.ViewModels;
+﻿using Application.GymCQ.ViewModels;
 using MediatR;
 
-namespace Application.ManagerCQ.Commands
+namespace Application.GymCQ.Commands
 {
     public record CreateGymCommand : IRequest<GymInfoViewModel>
     {
