@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Entity.Enum;
+using Domain.Entity.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entity.Enum;
 
 namespace Domain.Entity
 {
     [Table("manager")]
-    public class Manager
+    public class Manager : IUser
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -43,14 +44,12 @@ namespace Domain.Entity
         [StringLength(20)]
         public string? DocumentNumber { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public string? RefreshToken { get; set; }
+
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
         public List<Permission> Permission { get; set; } = new List<Permission>();
     }
 }
-
-
-//Todo: Refazer usando a interface 
