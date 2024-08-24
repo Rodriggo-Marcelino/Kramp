@@ -41,7 +41,6 @@ namespace Application.ManagerCQ.Handlers
                 UserBio = manager.UserBio,
                 BirthDate = manager.BirthDate,
                 Username = manager.Username,
-                DocumentNumber = manager.DocumentNumber,
                 RefreshToken = manager.RefreshToken,
                 RefreshTokenExpiryTime = manager.RefreshTokenExpiryTime
             };
