@@ -38,7 +38,7 @@ namespace Domain.Entity
         [DataType(DataType.Date)]
         public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string? RefreshToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string? RefreshTokenExpiryTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime? RefreshTokenExpiryTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     }
 }

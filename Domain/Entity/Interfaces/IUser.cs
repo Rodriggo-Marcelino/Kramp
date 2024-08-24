@@ -15,7 +15,7 @@ namespace Domain.Entity.Interfaces
 
         DateTime CreatedAt { get; set; }
         string? RefreshToken {get; set;}
-        string? RefreshTokenExpiryTime {get; set;}
+        DateTime? RefreshTokenExpiryTime {get; set;}
 
     }
 }
