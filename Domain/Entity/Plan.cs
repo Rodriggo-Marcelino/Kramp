@@ -12,11 +12,11 @@ public class Plan
     [Required]
     [StringLength(50, MinimumLength = 3)]
     [Column(TypeName = "varchar(50)")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [StringLength(240)]
     [Column(TypeName = "varchar(240)")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [Required]
     [DataType(DataType.Date)]
@@ -27,9 +27,9 @@ public class Plan
     public DateTime EndDate { get; set; }
 
     [Required]
-    public ICollection<Workout> Workouts { get; set; } //Exercicios do Plano
+    public ICollection<Workout>? Workouts { get; set; } //Exercicios do Plano
 
-    public ICollection<Member> Member { get; set; } //Criadores do Plano
+    public ICollection<Member>? Member { get; set; } //Criadores do Plano
 }
 
 //Todo: Adicionar IUser

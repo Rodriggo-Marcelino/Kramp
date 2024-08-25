@@ -35,7 +35,7 @@ namespace Domain.Entity
         public string? DocumentNumber { get; set; }
 
         //TODO: Owned Types
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
