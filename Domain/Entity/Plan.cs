@@ -27,9 +27,9 @@ public class Plan
     public DateTime EndDate { get; set; }
 
     [Required]
-    public ICollection<Workout> Workouts { get; set; }
+    public ICollection<Workout> Workouts { get; set; } //Exercicios do Plano
 
-    public ICollection<Member> Member { get; set; }
+    public ICollection<Member> Member { get; set; } //Criadores do Plano
 }
 
 //Todo: Adicionar IUser

@@ -31,4 +31,7 @@ public class Workout
     public Period Period { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    
+    //TODO: Fazer com que Workout se conecte também com Professional
+    public ICollection<Member> Member { get; set; } //Criadores de Treino
 }
