@@ -20,7 +20,7 @@ public class Workout
     public string? Description { get; set; }
 
     [Required]
-    public List<Muscle> TargetedMuscles { get; set; }
+    public List<Muscle>? TargetedMuscles { get; set; }
     
     [Required]
     public ICollection<Exercise>? Exercises { get; set; }
@@ -35,7 +35,7 @@ public class Workout
     public Period Period { get; set; }
     
     //TODO: Fazer com que Workout se conecte também com Professional
-    public ICollection<Member> Member { get; set; } //Criadores de Treino
+    public ICollection<Member>? Member { get; set; } //Criadores de Treino
 
     public DateTime CreatedAt { get; set; }
 }
