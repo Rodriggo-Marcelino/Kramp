@@ -30,6 +30,9 @@ public class Plan
     public ICollection<Workout>? Workouts { get; set; } //Exercicios do Plano
 
     public ICollection<Member>? Member { get; set; } //Criadores do Plano
+    
+    public DateTime CreatedAt { get; set; }
 }
+
 
 //Todo: Adicionar IUser
