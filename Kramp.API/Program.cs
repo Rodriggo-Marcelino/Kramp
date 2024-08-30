@@ -1,6 +1,9 @@
 using Application.ManagerCQ.Commands;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using Application.ManagerCQ.Validators;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -12,6 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<KrampDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateManagerCommandValidator>();
+builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 
