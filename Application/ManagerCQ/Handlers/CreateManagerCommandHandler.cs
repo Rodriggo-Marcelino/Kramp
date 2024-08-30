@@ -1,12 +1,13 @@
 ﻿using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
+using Application.Response;
 using Domain.Entity;
 using Infrastructure.Persistence;
 using MediatR;
 
 namespace Application.ManagerCQ.Handlers
 {
-    public class CreateManagerCommandHandler : IRequestHandler<CreateManagerCommand, ManagerInfoViewModel>
+    public class CreateManagerCommandHandler : IRequestHandler<CreateManagerCommand, ResponseBase<ManagerInfoViewModel?>>
     {
         private readonly KrampDbContext _context;
 
@@ -15,7 +16,7 @@ namespace Application.ManagerCQ.Handlers
             _context = context;
         }
 
-        public async Task<ManagerInfoViewModel> Handle(CreateManagerCommand request,
+        public async Task<ResponseBase<ManagerInfoViewModel>> Handle(CreateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
             var manager = new Manager
@@ -34,15 +35,19 @@ namespace Application.ManagerCQ.Handlers
             _context.Managers.Add(manager);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new ManagerInfoViewModel
+            return new ResponseBase<ManagerInfoViewModel>
             {
-                Name = manager.Name,
-                Surname = manager.Surname,
-                UserBio = manager.UserBio,
-                BirthDate = manager.BirthDate,
-                Username = manager.Username,
-                RefreshToken = manager.RefreshToken,
-                RefreshTokenExpiryTime = manager.RefreshTokenExpiryTime
+                ResponseInfo = null,
+                Value = new()
+                {
+                    Name = manager.Name,
+                    Surname = manager.Surname,
+                    UserBio = manager.UserBio,
+                    BirthDate = manager.BirthDate,
+                    Username = manager.Username,
+                    RefreshToken = manager.RefreshToken,
+                    RefreshTokenExpiryTime = manager.RefreshTokenExpiryTime
+                }
             };
         }
     }
