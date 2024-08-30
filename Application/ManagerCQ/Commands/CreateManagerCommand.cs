@@ -1,9 +1,10 @@
 ﻿using Application.ManagerCQ.ViewModels;
+using Application.Response;
 using MediatR;
 
 namespace Application.ManagerCQ.Commands
 {
-    public record CreateManagerCommand : IRequest<ManagerInfoViewModel>
+    public record CreateManagerCommand : IRequest<ResponseBase<ManagerInfoViewModel>>
     {
         public string? Name { get; set; }
         public string? Surname { get; set; }
