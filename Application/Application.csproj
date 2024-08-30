@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
     <PackageReference Include="MediatR" Version="12.4.0" />
   </ItemGroup>
 
@@ -12,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="GymCQ\Validators\" />
-    <Folder Include="ManagerCQ\Validators\" />
     <Folder Include="MemberCQ\Validators\" />
     <Folder Include="ProfessionalCQ\Validators\" />
   </ItemGroup>
