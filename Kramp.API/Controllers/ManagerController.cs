@@ -29,6 +29,7 @@ namespace Kramp.API.Controllers
         [HttpGet("All")]
         public async Task<ActionResult<IEnumerable<ManagerInfoViewModel>>> GetAllManagers()
         {
+            //TODO: Retirar isso do controller
             List<Manager> managers = _context.Managers.ToList();
             IEnumerable<ManagerInfoViewModel> response = _mapper.Map<IEnumerable<ManagerInfoViewModel>>(managers);
             return Ok(response);
@@ -37,6 +38,7 @@ namespace Kramp.API.Controllers
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<ManagerInfoViewModel>> GetManagerById(Guid Id)
         {
+            //TODO: Retirar isso do controller
             Manager manager = _context.Managers.Find(Id);
             ManagerInfoViewModel response = _mapper.Map<ManagerInfoViewModel>(manager);
             return Ok(response);
@@ -50,9 +52,17 @@ namespace Kramp.API.Controllers
         }
 
         [HttpDelete("Delete/{Id:guid}")]
-        public async Task<ActionResult<ManagerInfoViewModel>> Delete(Guid id)
+        public async Task<ActionResult> Delete(Guid Id)
         {
-            throw new NotImplementedException();
+            //TODO: Retirar isso do controller
+            var deleteThis = await _context.Managers.FindAsync(Id);
+            if (deleteThis == null)
+            {
+                return NotFound();
+            }
+            _context.Managers.Remove(deleteThis);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }
