@@ -45,7 +45,8 @@ namespace Kramp.API.Controllers
         [HttpPut("Update/{Id:guid}")]
         public async Task<ActionResult<ManagerInfoViewModel>> Update(Guid Id, UpdateManagerCommand command)
         {
-            throw new NotImplementedException();
+            command.Id = Id;
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("Delete/{Id:guid}")]
