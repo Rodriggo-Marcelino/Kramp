@@ -22,15 +22,15 @@ namespace Application.ManagerCQ.Handlers
         public async Task<ResponseBase<ManagerInfoViewModel>> Handle(UpdateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
-            Manager oldManager = _context.Managers.FirstOrDefault(manager => manager.Id.Equals(request.Id));
+            Manager oldManager = _context.Managers.SingleOrDefault(manager => manager.Id.Equals(request.Id));
 
             if (oldManager == null)
             {
                 throw new Exception("Manager not found.");
             }
 
-            var newManager = _mapper.Map<Manager>(oldManager);
-            newManager = _mapper.Map(request, newManager);
+            var newManager = _mapper.Map(request, oldManager);
+
             newManager.RefreshToken = Guid.NewGuid().ToString();
             newManager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
