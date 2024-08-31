@@ -16,7 +16,7 @@ namespace Kramp.API.Controllers
 
         // TODO: Repositories
         // Injetando DbContext e Mapper temporariamente enquanto não temos repository
-        // Objetivo: Requisição GET
+        // Objetivo: Requisição GET e DELETE
         private readonly KrampDbContext _context = context;
         private readonly IMapper _mapper = mapper;
 
