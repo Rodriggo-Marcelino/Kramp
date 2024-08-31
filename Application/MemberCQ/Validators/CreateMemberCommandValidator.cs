@@ -1,16 +1,15 @@
-﻿using Application.ManagerCQ.Commands;
+﻿using Application.MemberCQ.Commands;
 using FluentValidation;
 
-namespace Application.ManagerCQ.Validators
+namespace Application.MemberCQ.Validators
 {
-    public class CreateManagerCommandValidator : AbstractValidator<CreateManagerCommand>
+    public class CreateMemberCommandValidator : AbstractValidator<CreateMemberCommand>
     {
-        public CreateManagerCommandValidator()
+        public CreateMemberCommandValidator()
         {
-
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("O nome é obrigatório.")
-                .MinimumLength(2).WithMessage("O nome deve ter no mínimo 2 caracteres.");
+               .NotEmpty().WithMessage("O nome é obrigatório.")
+               .MinimumLength(2).WithMessage("O nome deve ter no mínimo 2 caracteres.");
 
             RuleFor(x => x.Surname)
                 .NotEmpty().WithMessage("O sobrenome é obrigatório.")

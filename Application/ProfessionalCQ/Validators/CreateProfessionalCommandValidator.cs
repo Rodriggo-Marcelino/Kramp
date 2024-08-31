@@ -1,13 +1,12 @@
-﻿using Application.ManagerCQ.Commands;
+﻿using Application.ProfessionalCQ.Commands;
 using FluentValidation;
 
-namespace Application.ManagerCQ.Validators
+namespace Application.ProfessionalCQ.Validators
 {
-    public class CreateManagerCommandValidator : AbstractValidator<CreateManagerCommand>
+    public class CreateProfessionalCommandValidator : AbstractValidator<CreateProfessionalCommand>
     {
-        public CreateManagerCommandValidator()
+        public CreateProfessionalCommandValidator()
         {
-
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("O nome é obrigatório.")
                 .MinimumLength(2).WithMessage("O nome deve ter no mínimo 2 caracteres.");
@@ -30,6 +29,10 @@ namespace Application.ManagerCQ.Validators
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("A senha é obrigatória.")
                 .MinimumLength(6).WithMessage("A senha deve ter no mínimo 6 caracteres.");
+
+            RuleFor(x => x.Job)
+                .NotEmpty().WithMessage("Emprego é obrigatório")
+                .IsInEnum().WithErrorCode("Something Went Wrong");
 
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty().WithMessage("O número do documento é obrigatório.")
