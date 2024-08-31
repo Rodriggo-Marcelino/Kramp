@@ -1,6 +1,7 @@
 ﻿using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
 using Application.Response;
+using AutoMapper;
 using Domain.Entity;
 using Infrastructure.Persistence;
 using MediatR;
@@ -10,27 +11,22 @@ namespace Application.ManagerCQ.Handlers
     public class CreateManagerCommandHandler : IRequestHandler<CreateManagerCommand, ResponseBase<ManagerInfoViewModel?>>
     {
         private readonly KrampDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateManagerCommandHandler(KrampDbContext context)
+        public CreateManagerCommandHandler(KrampDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ResponseBase<ManagerInfoViewModel>> Handle(CreateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
-            var manager = new Manager
-            {
-                Name = request.Name,
-                Surname = request.Surname,
-                UserBio = request.UserBio,
-                BirthDate = request.BirthDate,
-                Username = request.Username,
-                PasswordHash = request.Password,
-                DocumentNumber = request.DocumentNumber,
-                RefreshToken = Guid.NewGuid().ToString(),
-                RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6)
-            };
+            var manager = _mapper.Map<Manager>(request);
+            manager.PasswordHash = request.Password;
+            manager.CreatedAt = DateTime.UtcNow;
+            manager.RefreshToken = Guid.NewGuid().ToString();
+            manager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
             _context.Managers.Add(manager);
             await _context.SaveChangesAsync(cancellationToken);
@@ -38,17 +34,13 @@ namespace Application.ManagerCQ.Handlers
             return new ResponseBase<ManagerInfoViewModel>
             {
                 ResponseInfo = null,
-                Value = new()
-                {
-                    Name = manager.Name,
-                    Surname = manager.Surname,
-                    UserBio = manager.UserBio,
-                    BirthDate = manager.BirthDate,
-                    Username = manager.Username,
-                    RefreshToken = manager.RefreshToken,
-                    RefreshTokenExpiryTime = manager.RefreshTokenExpiryTime
-                }
+                Value = _mapper.Map<ManagerInfoViewModel>(manager)
             };
         }
+
+        //TODO: Validação de email único
+        //TODO: Validação de CPF único
+        //TODO: Username unico
+        //TODO: Encriptar senha
     }
 }
