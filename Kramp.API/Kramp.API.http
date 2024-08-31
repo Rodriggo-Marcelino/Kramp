@@ -1,6 +1,66 @@
-@Kramp.API_HostAddress = http://localhost:5299
+@Kramp.API_HostAddress = https://localhost:7289
 
 GET {{Kramp.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST https://localhost:7289/api/Gym/Create
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "description": "Cliente VIP da academia",
+  "username": "joaosilva",
+  "password": "senhaSegura123",
+  "documentNumber": "123.456.789-00"
+}
+
+###
+
+POST https://localhost:7289/api/Manager/Create
+Content-Type: application/json
+
+{
+  "name": "Maria",
+  "surname": "Oliveira",
+  "userBio": "Apaixonada por fitness e instrutora de yoga.",
+  "birthDate": "1990-05-15T00:00:00.000Z",
+  "username": "mariaoliveira",
+  "password": "senhaSegura456",
+  "documentNumber": "987.654.321-00"
+}
+
+###
+
+POST https://localhost:7289/api/Member/Create
+Content-Type: application/json
+
+{
+  "name": "Carlos",
+  "surname": "Santos",
+  "userBio": "Personal trainer especializado em musculação.",
+  "birthDate": "1985-07-20T00:00:00.000Z",
+  "username": "carlossantos",
+  "password": "senhaSegura789",
+  "documentNumber": "321.654.987-00"
+}
+
+###
+
+POST https://localhost:7289/api/Professional/Create
+Content-Type: application/json
+
+{
+  "name": "Ana",
+  "surname": "Costa",
+  "userBio": "Nutricionista focada em dietas esportivas.",
+  "birthDate": "1992-03-10T00:00:00.000Z",
+  "username": "anacosta",
+  "password": "senhaSegura101",
+  "job": 1,
+  "documentNumber": "456.123.789-00"
+}
+
+###
+
