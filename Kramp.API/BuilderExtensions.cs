@@ -1,5 +1,6 @@
 ﻿using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.Validators;
+using Application.Mapping;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
@@ -28,6 +29,11 @@ namespace Kramp.API
         {
             builder.Services.AddValidatorsFromAssemblyContaining<CreateManagerCommandValidator>();
             builder.Services.AddFluentValidationAutoValidation();
+        }
+
+        public static void AddAutoMapper(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddAutoMapper(typeof(ProfileMappings).Assembly);
         }
     }
 }
