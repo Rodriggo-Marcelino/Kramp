@@ -20,8 +20,7 @@ namespace Application.MemberCQ.Validators
                 .When(x => !string.IsNullOrEmpty(x.UserBio));
 
             RuleFor(x => x.BirthDate)
-                .NotEmpty().WithMessage("A data de nascimento é obrigatória.")
-                .Must(BeAtLeast18YearsOld).WithMessage("O gerente deve ter pelo menos 18 anos.");
+                .NotEmpty().WithMessage("A data de nascimento é obrigatória.");
 
             RuleFor(x => x.Username)
                 .NotEmpty().WithMessage("O nome de usuário é obrigatório.");
@@ -33,15 +32,6 @@ namespace Application.MemberCQ.Validators
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty().WithMessage("O número do documento é obrigatório.")
                 .MinimumLength(5).WithMessage("O número do documento deve ter no mínimo 5 caracteres.");
-        }
-
-        //TODO: Retirar Duplicação
-        private bool BeAtLeast18YearsOld(DateTime birthDate)
-        {
-            var currentDate = DateTime.Today;
-            var age = currentDate.Year - birthDate.Year;
-            if (birthDate.Date > currentDate.AddYears(-age)) age--;
-            return age >= 18;
         }
     }
 }

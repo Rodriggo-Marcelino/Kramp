@@ -21,7 +21,7 @@ namespace Application.ProfessionalCQ.Validators
 
             RuleFor(x => x.BirthDate)
                 .NotEmpty().WithMessage("A data de nascimento é obrigatória.")
-                .Must(BeAtLeast18YearsOld).WithMessage("O gerente deve ter pelo menos 18 anos.");
+                .Must(BeAtLeast18YearsOld).WithMessage("O profissional deve ter pelo menos 18 anos.");
 
             RuleFor(x => x.Username)
                 .NotEmpty().WithMessage("O nome de usuário é obrigatório.");
