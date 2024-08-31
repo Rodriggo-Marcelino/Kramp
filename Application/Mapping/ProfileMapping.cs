@@ -14,6 +14,10 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
+            CreateMap<UpdateManagerCommand, Manager>()
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+
             CreateMap<Manager, ManagerInfoViewModel>();
         }
     }
