@@ -8,6 +8,7 @@ builder.AddServices();
 builder.AddDatabase();
 builder.AddValidations();
 builder.AddAutoMapper();
+builder.AddSwaggerDocs();
 
 
 var app = builder.Build();

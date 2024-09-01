@@ -33,5 +33,7 @@ namespace Application.MemberCQ.Validators
                 .NotEmpty().WithMessage("O número do documento é obrigatório.")
                 .MinimumLength(5).WithMessage("O número do documento deve ter no mínimo 5 caracteres.");
         }
+
+        //TODO: Implementar validação de usuario para criação de treino 
     }
 }

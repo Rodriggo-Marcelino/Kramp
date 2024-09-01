@@ -13,7 +13,7 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator mediator, KrampDbContext context, IMapper mapper) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-
+        // TODO: realizar a documentação da api 
         // TODO: Repositories
         // Injetando DbContext e Mapper temporariamente enquanto não temos repository
         // Objetivo: Requisição GET e DELETE
