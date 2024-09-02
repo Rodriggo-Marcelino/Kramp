@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Domain.Abstractions;
 using Services.AuthService;
+using Services.Repositories;
 
 namespace Kramp.API
 {
@@ -68,6 +69,7 @@ namespace Kramp.API
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
+            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(UpdateManagerCommand).Assembly));
         }
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
@@ -90,6 +92,7 @@ namespace Kramp.API
         public static void AddInjections(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddTransient<ManagerRepository>();
         }
     }
 }

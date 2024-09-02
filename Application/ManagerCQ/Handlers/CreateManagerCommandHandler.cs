@@ -6,19 +6,20 @@ using Domain.Abstractions;
 using Domain.Entity;
 using Infrastructure.Persistence;
 using MediatR;
+using Services.Repositories;
 
 namespace Application.ManagerCQ.Handlers
 {
     public class CreateManagerCommandHandler : IRequestHandler<CreateManagerCommand, ResponseBase<ManagerInfoViewModel?>>
     {
         private readonly IAuthService _authService;
-        private readonly KrampDbContext _context;
+        private readonly ManagerRepository _repository;
         private readonly IMapper _mapper;
 
-        public CreateManagerCommandHandler(IAuthService authService, KrampDbContext context, IMapper mapper)
+        public CreateManagerCommandHandler(IAuthService authService, ManagerRepository repository, IMapper mapper)
         {
             _authService = authService;
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
@@ -34,8 +35,9 @@ namespace Application.ManagerCQ.Handlers
             manager.RefreshToken = Guid.NewGuid().ToString();
             manager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            _context.Managers.Add(manager);
-            _context.SaveChanges();
+            await _repository.AddAsync(manager);
+            //_context.Managers.Add(manager);
+            //_context.SaveChanges();
 
             var managerInfoVm = _mapper.Map<ManagerInfoViewModel>(manager);
             managerInfoVm.TokenJWT = _authService.GenerateJWT(manager.DocumentNumber!, manager.Username!);
