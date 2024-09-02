@@ -2,6 +2,6 @@
 {
     public interface IAuthService
     {
-        public void GenerateJWT(string DocumentNumber, string password);
+        string GenerateJWT(string documentNumber, string username);
     }
 }
