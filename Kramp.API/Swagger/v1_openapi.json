@@ -1,0 +1,1300 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Kramp API",
+    "description": "Kramp API",
+    "contact": {
+      "name": "Exemplo de pagina de contato",
+      "url": "https://www.exemplo.com.br"
+    },
+    "license": {
+      "name": "Exemplo de licença",
+      "url": "https://www.exemplo.com.br"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Gym/Create": {
+      "post": {
+        "tags": [
+          "Gym"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/Read": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/Update": {
+      "put": {
+        "tags": [
+          "Gym"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/Delete": {
+      "delete": {
+        "tags": [
+          "Gym"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/Create": {
+      "post": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Cria um Manager",
+        "description": "Endpoint para criação de um novo gerente de academia.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateManagerCommand"
+              },
+              "examples": {
+                "validRequest": {
+                  "summary": "Exemplo de uma requisição válida",
+                  "value": {
+                    "Name": "João",
+                    "Surname": "Silva",
+                    "UserBio": "Gerente com vasta experiência em logística.",
+                    "BirthDate": "1985-07-20",
+                    "Username": "joaosilva",
+                    "Password": "segura123",
+                    "DocumentNumber": "123456789"
+                  }
+                },
+                "invalidRequest": {
+                  "summary": "Exemplo de uma requisição inválida",
+                  "value": {
+                    "Name": "",
+                    "Surname": "S",
+                    "UserBio": "Curta",
+                    "BirthDate": "2010-01-01",
+                    "Username": "",
+                    "Password": "123",
+                    "DocumentNumber": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Retorna o novo item criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerInfoViewModel"
+                },
+                "examples": {
+                  "createdResponse": {
+                    "summary": "Exemplo de resposta de criação",
+                    "value": {
+                      "Name": "Maria",
+                      "Surname": "Pereira",
+                      "UserBio": "Experiência em gestão de academias de bairro.",
+                      "BirthDate": "1990-02-15",
+                      "Username": "mariapereira",
+                      "RefreshToken": "YW5vdGhlcnVzZXI6c2VjdXJlcGFzczEyMw==",
+                      "RefreshTokenExpiryTime": "2025-01-15T23:59:59Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Se houver erro da parte do usuário no preenchimento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "nameRequiredError": {
+                    "summary": "Erro quando o nome não é preenchido",
+                    "value": {
+                      "field": "Name",
+                      "message": "O nome é obrigatório."
+                    }
+                  },
+                  "surnameMinLengthError": {
+                    "summary": "Erro quando o sobrenome não atinge o comprimento mínimo",
+                    "value": {
+                      "field": "Surname",
+                      "message": "O sobrenome deve ter no mínimo 2 caracteres."
+                    }
+                  },
+                  "birthDateError": {
+                    "summary": "Erro quando a data de nascimento indica menos de 18 anos",
+                    "value": {
+                      "field": "BirthDate",
+                      "message": "O gerente deve ter pelo menos 18 anos."
+                    }
+                  },
+                  "usernameRequiredError": {
+                    "summary": "Erro quando o nome de usuário não é preenchido",
+                    "value": {
+                      "field": "Username",
+                      "message": "O nome de usuário é obrigatório."
+                    }
+                  },
+                  "passwordMinLengthError": {
+                    "summary": "Erro quando a senha não atinge o comprimento mínimo",
+                    "value": {
+                      "field": "Password",
+                      "message": "A senha deve ter no mínimo 6 caracteres."
+                    }
+                  },
+                  "documentNumberMinLengthError": {
+                    "summary": "Erro quando o número do documento não atinge o comprimento mínimo",
+                    "value": {
+                      "field": "DocumentNumber",
+                      "message": "O número do documento deve ter no mínimo 5 caracteres."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/All": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Obtém a lista de todos os gerentes cadastrados.",
+        "description": "Endpoint para recuperar todos os gerentes cadastrados na academia.",
+        "responses": {
+          "200": {
+            "description": "Lista de gerentes retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManagerInfoViewModel"
+                  }
+                },
+                "examples": {
+                  "singleManagerResponse": {
+                    "summary": "Exemplo de resposta contendo um único gerente",
+                    "value": [
+                      {
+                        "Name": "João",
+                        "Surname": "Silva",
+                        "UserBio": "Gerente com vasta experiência em logística.",
+                        "BirthDate": "1985-07-20",
+                        "Username": "joaosilva",
+                        "RefreshToken": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+                        "RefreshTokenExpiryTime": "2024-12-31T23:59:59Z"
+                      }
+                    ]
+                  },
+                  "multipleManagersResponse": {
+                    "summary": "Exemplo de resposta contendo múltiplos gerentes",
+                    "value": [
+                      {
+                        "Name": "João",
+                        "Surname": "Silva",
+                        "UserBio": "Gerente com vasta experiência em logística.",
+                        "BirthDate": "1985-07-20",
+                        "Username": "joaosilva",
+                        "RefreshToken": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+                        "RefreshTokenExpiryTime": "2024-12-31T23:59:59Z"
+                      },
+                      {
+                        "Name": "Maria",
+                        "Surname": "Pereira",
+                        "UserBio": "Experiência em gestão de academias de bairro.",
+                        "BirthDate": "1990-02-15",
+                        "Username": "mariapereira",
+                        "RefreshToken": "YW5vdGhlcnVzZXI6c2VjdXJlcGFzczEyMw==",
+                        "RefreshTokenExpiryTime": "2025-01-15T23:59:59Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Nenhum gerente encontrado.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/Manager/{Id}": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Obtém informações de um gerente específico pelo ID.",
+        "description": "Endpoint para recuperar os detalhes de um gerente específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do gerente que deseja recuperar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do gerente retornadas com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerInfoViewModel"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "Name": "João",
+                      "Surname": "Silva",
+                      "UserBio": "Gerente com vasta experiência em logística.",
+                      "BirthDate": "1985-07-20",
+                      "Username": "joaosilva",
+                      "RefreshToken": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+                      "RefreshTokenExpiryTime": "2024-12-31T23:59:59Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gerente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "managerNotFoundError": {
+                    "summary": "Erro quando o gerente com o ID fornecido não é encontrado",
+                    "value": {
+                      "field": "Id",
+                      "message": "Gerente não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Atualiza as informações de um gerente específico.",
+        "description": "Endpoint para atualizar os detalhes de um gerente utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do gerente que deseja atualizar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateManagerCommand"
+              },
+              "examples": {
+                "validRequest": {
+                  "summary": "Exemplo de uma requisição válida",
+                  "value": {
+                    "Name": "João Atualizado",
+                    "Surname": "Silva",
+                    "UserBio": "Gerente com nova experiência em gerenciamento.",
+                    "BirthDate": "1985-07-20",
+                    "Username": "joao.atualizado",
+                    "DocumentNumber": "987654321"
+                  }
+                },
+                "invalidRequest": {
+                  "summary": "Exemplo de uma requisição inválida",
+                  "value": {
+                    "Name": "",
+                    "Surname": "S",
+                    "UserBio": "Curta",
+                    "BirthDate": "2010-01-01",
+                    "Username": "",
+                    "DocumentNumber": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gerente atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerInfoViewModel"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "Name": "João Atualizado",
+                      "Surname": "Silva",
+                      "UserBio": "Gerente com nova experiência em gerenciamento.",
+                      "BirthDate": "1985-07-20",
+                      "Username": "joao.atualizado",
+                      "DocumentNumber": "987654321"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "invalidIdFormatError": {
+                    "summary": "Erro quando o ID fornecido não está no formato UUID válido",
+                    "value": {
+                      "field": "Id",
+                      "message": "O formato do ID é inválido. Deve ser um UUID válido."
+                    }
+                  },
+                  "invalidDataError": {
+                    "summary": "Erro quando a requisição contém dados inválidos",
+                    "value": {
+                      "field": "Name",
+                      "message": "O nome é obrigatório e deve ter pelo menos 2 caracteres."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gerente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "managerNotFoundError": {
+                    "summary": "Erro quando o gerente com o ID fornecido não é encontrado",
+                    "value": {
+                      "field": "Id",
+                      "message": "Gerente não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Deleta um gerente específico pelo ID.",
+        "description": "Endpoint para deletar um gerente específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do gerente que deseja deletar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gerente deletado com sucesso.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "message": "Gerente deletado com sucesso."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "invalidIdFormatError": {
+                    "summary": "Erro quando o ID fornecido não está no formato UUID válido",
+                    "value": {
+                      "field": "Id",
+                      "message": "O formato do ID é inválido. Deve ser um UUID válido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gerente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "managerNotFoundError": {
+                    "summary": "Erro quando o gerente com o ID fornecido não é encontrado",
+                    "value": {
+                      "field": "Id",
+                      "message": "Gerente não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Create": {
+      "post": {
+        "tags": [
+          "Member"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Read": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Update": {
+      "put": {
+        "tags": [
+          "Member"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Delete": {
+      "delete": {
+        "tags": [
+          "Member"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Create": {
+      "post": {
+        "tags": [
+          "Professional"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Read": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Update": {
+      "put": {
+        "tags": [
+          "Professional"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Delete": {
+      "delete": {
+        "tags": [
+          "Professional"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateGymCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateManagerCommand": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "O nome do gerente.",
+            "minLength": 2,
+            "example": "João"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "O sobrenome do gerente.",
+            "minLength": 2,
+            "example": "Silva"
+          },
+          "UserBio": {
+            "type": "string",
+            "description": "A biografia do gerente.",
+            "minLength": 10,
+            "example": "Gerente com vasta experiência em logística.",
+            "nullable": true
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do gerente.",
+            "example": "1985-07-20"
+          },
+          "Username": {
+            "type": "string",
+            "description": "O nome de usuário do gerente.",
+            "example": "joaosilva"
+          },
+          "Password": {
+            "type": "string",
+            "description": "A senha do gerente.",
+            "minLength": 6,
+            "example": "segura123"
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "description": "O número do documento do gerente.",
+            "minLength": 5,
+            "example": "123456789"
+          }
+        },
+        "required": [
+          "Name",
+          "Surname",
+          "BirthDate",
+          "Username",
+          "Password",
+          "DocumentNumber"
+        ]
+      },
+      "CreateMemberCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "userBio": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProfessionalCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "userBio": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          },
+          "documentNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GymInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Job": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ManagerInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "O nome do gerente.",
+            "example": "João"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "O sobrenome do gerente.",
+            "example": "Silva"
+          },
+          "UserBio": {
+            "type": "string",
+            "description": "A biografia do gerente.",
+            "example": "Gerente com vasta experiência em logística.",
+            "nullable": true
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do gerente.",
+            "example": "1985-07-20"
+          },
+          "Username": {
+            "type": "string",
+            "description": "O nome de usuário do gerente.",
+            "example": "joaosilva"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "Token de atualização utilizado para renovar a sessão do gerente.",
+            "example": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+            "nullable": true
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A data e hora de expiração do token de atualização.",
+            "example": "2024-12-31T23:59:59Z",
+            "nullable": true
+          }
+        }
+      },
+      "MemberInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "userBio": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProfessionalInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "userBio": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateManagerCommand": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Nome do gerente.",
+            "example": "João"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "Sobrenome do gerente.",
+            "example": "Silva"
+          },
+          "UserBio": {
+            "type": "string",
+            "description": "Biografia do gerente.",
+            "example": "Gerente com vasta experiência em logística."
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de nascimento do gerente.",
+            "example": "1985-07-20"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Nome de usuário do gerente.",
+            "example": "joaosilva"
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "description": "Número do documento do gerente (CPF).",
+            "example": "123456789"
+          }
+        }
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "Campo que gerou o erro.",
+            "example": "Name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Descrição do erro.",
+            "example": "O nome é obrigatório."
+          }
+        }
+      }
+    }
+  }
+}
