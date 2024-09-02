@@ -23,7 +23,7 @@ namespace Kramp.API.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<ManagerInfoViewModel>> Create(CreateManagerCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            return Created("", await _mediator.Send(command));
         }
 
         [HttpGet("All")]
