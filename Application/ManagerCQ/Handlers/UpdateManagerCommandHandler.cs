@@ -3,26 +3,26 @@ using Application.ManagerCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
 using Domain.Entity;
-using Infrastructure.Persistence;
 using MediatR;
+using Services.Repositories;
 
 namespace Application.ManagerCQ.Handlers
 {
     public class UpdateManagerCommandHandler : IRequestHandler<UpdateManagerCommand, ResponseBase<ManagerInfoViewModel>>
     {
-        private readonly KrampDbContext _context;
+        private readonly ManagerRepository _repository;
         private readonly IMapper _mapper;
 
-        public UpdateManagerCommandHandler(KrampDbContext context, IMapper mapper)
+        public UpdateManagerCommandHandler(ManagerRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<ResponseBase<ManagerInfoViewModel>> Handle(UpdateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
-            Manager oldManager = _context.Managers.SingleOrDefault(manager => manager.Id.Equals(request.Id));
+            Manager oldManager = await _repository.GetByIdAsync(request.Id);
 
             if (oldManager == null)
             {
@@ -34,8 +34,9 @@ namespace Application.ManagerCQ.Handlers
             newManager.RefreshToken = Guid.NewGuid().ToString();
             newManager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            _context.Managers.Update(newManager);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.UpdateAsync(newManager);
+            //_context.Managers.Update(newManager);
+            //await _context.SaveChangesAsync(cancellationToken);
 
             return new ResponseBase<ManagerInfoViewModel>
             {
