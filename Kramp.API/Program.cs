@@ -10,6 +10,7 @@ builder.AddValidations();
 builder.AddAutoMapper();
 builder.AddSwaggerDocs();
 builder.AddJwtAuth();
+builder.AddInjections();
 
 
 var app = builder.Build();

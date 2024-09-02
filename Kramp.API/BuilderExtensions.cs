@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Domain.Abstractions;
+using Services.AuthService;
 
 namespace Kramp.API
 {
@@ -84,6 +86,10 @@ namespace Kramp.API
         public static void AddAutoMapper(this WebApplicationBuilder builder)
         {
             builder.Services.AddAutoMapper(typeof(ProfileMappings).Assembly);
+        }
+        public static void AddInjections(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<IAuthService, AuthService>();
         }
     }
 }
