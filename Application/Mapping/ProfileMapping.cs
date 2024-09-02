@@ -19,9 +19,8 @@ namespace Application.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Manager, ManagerInfoViewModel>();
+            CreateMap<Manager, ManagerInfoViewModel>().ForMember(x => x.TokenJWT, x=> x.AllowNull());
         }
-
 
     }
 }
