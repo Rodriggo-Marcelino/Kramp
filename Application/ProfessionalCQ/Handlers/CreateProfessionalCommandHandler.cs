@@ -1,73 +1,51 @@
 ﻿using Application.ProfessionalCQ.Commands;
 using Application.ProfessionalCQ.ViewModels;
+using Application.Response;
+using AutoMapper;
+using Domain.Abstractions;
 using Domain.Entity;
 using Domain.Entity.Enum;
 using Infrastructure.Persistence;
 using MediatR;
+using Services.Repositories;
 
 namespace Application.ProfessionalCQ.Handlers
 {
-    public class CreateProfessionalCommandHandler : IRequestHandler<CreateProfessionalCommand, ProfessionalInfoViewModel>
+    public class CreateProfessionalCommandHandler : IRequestHandler<CreateProfessionalCommand, ResponseBase<ProfessionalInfoViewModel?>>
     {
 
-        private readonly KrampDbContext _context;
+        private readonly IAuthService _authService;
+        private readonly ProfessionalRepository _repository;
+        private readonly IMapper _mapper;
 
-        public CreateProfessionalCommandHandler(KrampDbContext context)
+        public CreateProfessionalCommandHandler(IAuthService authService, ProfessionalRepository repository, IMapper mapper)
         {
-            _context = context;
+            _authService = authService;
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<ProfessionalInfoViewModel> Handle(CreateProfessionalCommand request,
+        public async Task<ResponseBase<ProfessionalInfoViewModel?>> Handle(CreateProfessionalCommand request,
                                                       CancellationToken cancellationToken)
         {
-            var professional = new Professional
-            {
-                Name = request.Name,
-                Surname = request.Surname,
-                UserBio = request.UserBio,
-                BirthDate = request.BirthDate,
-                Username = request.Username,
-                PasswordHash = request.Password,
-                Job = request.Job,
-                DocumentNumber = request.DocumentNumber,
-                RefreshToken = Guid.NewGuid().ToString(),
-                RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6)
-            };
+            Professional? professional = _mapper.Map<Professional>(request);
+            professional.PasswordHash = request.Password;
+            professional.RefreshToken = Guid.NewGuid().ToString();
+            professional.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            professional.setTypeDocument();
 
-            bool isNutricionist =
-                professional.Job is Job.NUTRICIONIST;
+            await _repository.AddAsync(professional, cancellationToken);
+            
+            ProfessionalInfoViewModel professionalInfoVm = _mapper.Map<ProfessionalInfoViewModel>(professional);
+            professionalInfoVm.TokenJWT = _authService.GenerateJWT(professional.DocumentNumber!, professional.Username!);
 
-            bool isProfessorOrTrainer =
-                professional.Job is Job.PERSONAL_TRAINER || professional.Job is Job.GYM_PROFESSOR;
-
-            if (isNutricionist)
+            return new ResponseBase<ProfessionalInfoViewModel?>
             {
-                professional.TypeDocument = Document.CRN;
-            }
-            else if (isProfessorOrTrainer)
-            {
-                professional.TypeDocument = Document.CREF;
-            }
-            else
-            {
-                // TODO: Melhorar na fase de tratamento de exceptions
-                throw new Exception();
-            }
-
-            _context.Professionals.Add(professional);
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return new ProfessionalInfoViewModel
-            {
-                Name = professional.Name,
-                Surname = professional.Surname,
-                UserBio = professional.UserBio,
-                BirthDate = professional.BirthDate,
-                Username = professional.Username,
-                Job = professional.Job,
-                RefreshToken = professional.RefreshToken,
-                RefreshTokenExpiryTime = professional.RefreshTokenExpiryTime,
+                ResponseInfo = null,
+                Value = professionalInfoVm
             };
         }
+
+        
     }
 }
