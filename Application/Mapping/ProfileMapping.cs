@@ -55,6 +55,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+            
+            CreateMap<UpdateProfessionalCommand, Professional>()
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Professional, ProfessionalInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
         }
