@@ -39,10 +39,11 @@ namespace Kramp.API.Controllers
             return Ok(_mapper.Map<ProfessionalInfoViewModel>(professional));
         }
 
-        [HttpPut("Update")]
-        public async Task<ActionResult<ProfessionalInfoViewModel>> Update(CreateProfessionalCommand command)
+        [HttpPut("Update/{Id:guid}")]
+        public async Task<ActionResult<ProfessionalInfoViewModel>> Update(Guid Id, UpdateProfessionalCommand command)
         {
-            throw new NotImplementedException();
+            command.Id = Id;
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("Delete/{Id:guid}")]
