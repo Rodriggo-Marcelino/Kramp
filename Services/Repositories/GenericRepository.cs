@@ -72,59 +72,59 @@ namespace Services.Repositories
         }
 
         //POST
-        public async Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity, CancellationToken cancellationToken)
         {
             var added = await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return await Task.FromResult(added.Entity);
         }
 
         //PUT
-        public async Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)
         {
             var updated = _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return await Task.FromResult(updated.Entity);
         }
 
         //DELETE
-        public async Task DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
         {
             _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteByIdAsync(Guid Id)
+        public async Task DeleteByIdAsync(Guid Id, CancellationToken cancellationToken)
         {
             var entity = await GetByIdAsync(Id);
             if (entity != null)
             {
                 var deleted = _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
             }
         }
 
-        public async Task DeleteAllByIdAsync(IEnumerable<Guid> Ids)
+        public async Task DeleteAllByIdAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
         {
             foreach (var Id in Ids)
             {
-                await DeleteByIdAsync(Id);
+                await DeleteByIdAsync(Id, cancellationToken);
             }
         }
 
-        public async Task DeleteAllAsync()
+        public async Task DeleteAllAsync(CancellationToken cancellationToken)
         {
             foreach (var entity in _dbSet)
             {
                 _dbSet.Remove(entity);
             }
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAllAsync(IEnumerable<T> entities)
+        public async Task DeleteAllAsync(IEnumerable<T> entities, CancellationToken cancellationToken)
         {
             _dbSet.RemoveRange(entities);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
