@@ -69,7 +69,6 @@ namespace Kramp.API
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
-            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(UpdateManagerCommand).Assembly));
         }
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
@@ -93,6 +92,9 @@ namespace Kramp.API
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddTransient<ManagerRepository>();
+            builder.Services.AddTransient<GymRepository>();
+            builder.Services.AddTransient<MemberRepository>();
+            builder.Services.AddTransient<ProfessionalRepository>();
         }
     }
 }
