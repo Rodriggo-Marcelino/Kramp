@@ -44,6 +44,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
             
+            CreateMap<UpdateMemberCommand, Member>()
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+            
             CreateMap<Member, MemberInfoViewModel>().ForMember(x => x.TokenJWT, x=> x.AllowNull());
             
             CreateMap<CreateProfessionalCommand, Professional>()
