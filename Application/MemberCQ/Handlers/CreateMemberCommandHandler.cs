@@ -1,48 +1,45 @@
 ﻿using Application.MemberCQ.Commands;
 using Application.MemberCQ.ViewModels;
+using Application.Response;
+using AutoMapper;
+using Domain.Abstractions;
 using Domain.Entity;
-using Infrastructure.Persistence;
 using MediatR;
+using Services.Repositories;
 
 namespace Application.MemberCQ.Handlers
 {
-    public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, MemberInfoViewModel>
+    public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, ResponseBase<MemberInfoViewModel?>>
     {
-        private readonly KrampDbContext _context;
+        private readonly IAuthService _authService;
+        private readonly MemberRepository _repository;
+        private readonly IMapper _mapper;
 
-        public CreateMemberCommandHandler(KrampDbContext context)
+        public CreateMemberCommandHandler(IAuthService authService, MemberRepository repository, IMapper mapper)
         {
-            _context = context;
+            _authService = authService;
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<MemberInfoViewModel> Handle(CreateMemberCommand request,
+        public async Task<ResponseBase<MemberInfoViewModel>> Handle(CreateMemberCommand request,
                                                       CancellationToken cancellationToken)
         {
-            var member = new Member
-            {
-                Name = request.Name,
-                Surname = request.Surname,
-                UserBio = request.UserBio,
-                BirthDate = request.BirthDate,
-                Username = request.Username,
-                PasswordHash = request.Password,
-                DocumentNumber = request.DocumentNumber,
-                RefreshToken = Guid.NewGuid().ToString(),
-                RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6)
-            };
+            Member member = _mapper.Map<Member>(request);
+            member.PasswordHash = request.Password;
+            member.CreatedAt = DateTime.UtcNow;
+            member.RefreshToken = Guid.NewGuid().ToString();
+            member.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            _context.Members.Add(member);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.AddAsync(member, cancellationToken);
+            
+            MemberInfoViewModel memberInfoVm = _mapper.Map<MemberInfoViewModel>(member);
+            memberInfoVm.TokenJWT = _authService.GenerateJWT(member.DocumentNumber!, member.Username!);
 
-            return new MemberInfoViewModel
+            return new ResponseBase<MemberInfoViewModel>
             {
-                Name = member.Name,
-                Surname = member.Surname,
-                UserBio = member.UserBio,
-                BirthDate = member.BirthDate,
-                Username = member.Username,
-                RefreshToken = member.RefreshToken,
-                RefreshTokenExpiryTime = member.RefreshTokenExpiryTime
+                ResponseInfo = null,
+                Value = memberInfoVm
             };
         }
     }
