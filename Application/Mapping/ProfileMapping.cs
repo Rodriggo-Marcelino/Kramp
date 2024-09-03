@@ -32,6 +32,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
             
+            CreateMap<UpdateGymCommand, Gym>()
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+            
             CreateMap<Gym, GymInfoViewModel>().ForMember(x => x.TokenJWT, x=> x.AllowNull());
             
             CreateMap<CreateMemberCommand, Member>()
