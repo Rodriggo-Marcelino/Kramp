@@ -46,7 +46,7 @@ namespace Kramp.API.Controllers
         }
 
         [HttpDelete("Delete/{Id:guid}")]
-        public async Task<ActionResult> Delete(Guid Id)
+        public async Task<ActionResult> DeleteById(Guid Id)
         {
             //TODO: Retirar o método de delete do controller (má prática)
             await _repository.DeleteByIdAsync(Id, new CancellationToken());
