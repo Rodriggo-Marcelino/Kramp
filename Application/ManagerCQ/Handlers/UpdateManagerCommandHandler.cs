@@ -22,7 +22,7 @@ namespace Application.ManagerCQ.Handlers
         public async Task<ResponseBase<ManagerInfoViewModel>> Handle(UpdateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
-            Manager oldManager = await _repository.GetByIdAsync(request.Id);
+            Manager? oldManager = await _repository.GetByIdAsync(request.Id);
 
             if (oldManager == null)
             {
