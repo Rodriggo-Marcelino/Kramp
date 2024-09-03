@@ -13,17 +13,17 @@ namespace Domain.Repository
         Task<int> Count();
         
         //POST
-        Task<T> AddAsync(T entity);
+        Task<T> AddAsync(T entity, CancellationToken cancellationToken);
         
         //PUT
-        Task<T> UpdateAsync(T entity);
+        Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
         
         //DELETE
-        Task DeleteAsync(T entity);
-        Task DeleteByIdAsync(Guid Id);
-        Task DeleteAllByIdAsync(IEnumerable<Guid> Ids);
-        Task DeleteAllAsync();
-        Task DeleteAllAsync(IEnumerable<T> entities);
-
+        Task DeleteAsync(T entity, CancellationToken cancellationToken);
+        Task DeleteByIdAsync(Guid Id, CancellationToken cancellationToken);
+        Task DeleteAllByIdAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken);
+        Task DeleteAllAsync(CancellationToken cancellationToken);
+        Task DeleteAllAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+ 
     }
 }
