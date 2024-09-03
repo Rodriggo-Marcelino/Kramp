@@ -1,4 +1,6 @@
-﻿using Application.ManagerCQ.Commands;
+﻿using Application.GymCQ.Commands;
+using Application.GymCQ.ViewModels;
+using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
@@ -20,6 +22,13 @@ namespace Application.Mapping
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Manager, ManagerInfoViewModel>().ForMember(x => x.TokenJWT, x=> x.AllowNull());
+            
+            CreateMap<CreateGymCommand, Gym>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+            
+            CreateMap<Gym, GymInfoViewModel>().ForMember(x => x.TokenJWT, x=> x.AllowNull());
         }
 
     }
