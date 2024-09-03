@@ -2,7 +2,6 @@
 using Application.ManagerCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
-using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;
@@ -23,8 +22,7 @@ namespace Kramp.API.Controllers
         public async Task<ActionResult<IEnumerable<ManagerInfoViewModel>>> GetAllManagers()
         {
             var managers = await _repository.GetAllAsync();
-            IEnumerable<ManagerInfoViewModel> response = _mapper.Map<IEnumerable<ManagerInfoViewModel>>(managers);
-            return Ok(response);
+            return Ok(_mapper.Map<IEnumerable<ManagerInfoViewModel>>(managers));
         }
 
         [HttpGet("{Id:guid}")]
@@ -37,8 +35,7 @@ namespace Kramp.API.Controllers
                 return NotFound();
             }
             
-            ManagerInfoViewModel response = _mapper.Map<ManagerInfoViewModel>(manager);
-            return Ok(response);
+            return Ok(_mapper.Map<ManagerInfoViewModel>(manager));
         }
 
         [HttpPut("Update/{Id:guid}")]
