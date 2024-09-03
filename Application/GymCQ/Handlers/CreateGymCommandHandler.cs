@@ -1,44 +1,46 @@
 ﻿using Application.GymCQ.Commands;
 using Application.GymCQ.ViewModels;
+using Application.Response;
+using AutoMapper;
+using Domain.Abstractions;
 using Domain.Entity;
 using Infrastructure.Persistence;
 using MediatR;
+using Services.Repositories;
 
 namespace Application.GymCQ.Handlers
 {
-    public class CreateGymCommandHandler : IRequestHandler<CreateGymCommand, GymInfoViewModel>
+    public class CreateGymCommandHandler : IRequestHandler<CreateGymCommand, ResponseBase<GymInfoViewModel?>>
     {
-        private readonly KrampDbContext _context;
+        private readonly IAuthService _authService;
+        private readonly GymRepository _repository;
+        private readonly IMapper _mapper;
 
-        public CreateGymCommandHandler(KrampDbContext context)
+        public CreateGymCommandHandler(IAuthService authService, GymRepository repository, IMapper mapper)
         {
-            _context = context;
+            _authService = authService;
+            _repository = repository;
+            _mapper = mapper;
         }
-
-        public async Task<GymInfoViewModel> Handle(CreateGymCommand request,
+        
+        public async Task<ResponseBase<GymInfoViewModel?>> Handle(CreateGymCommand request,
                                                    CancellationToken cancellationToken)
         {
-            var gym = new Gym
-            {
-                Name = request.Name,
-                Description = request.Description,
-                Username = request.Username,
-                PasswordHash = request.Password,
-                DocumentNumber = request.DocumentNumber,
-                RefreshToken = Guid.NewGuid().ToString(),
-                RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6)
-            };
+            Gym gym = _mapper.Map<Gym>(request);
+            gym.PasswordHash = request.Password;
+            gym.CreatedAt = DateTime.UtcNow;
+            gym.RefreshToken = Guid.NewGuid().ToString();
+            gym.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            _context.Gyms.Add(gym);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.AddAsync(gym, cancellationToken);
+            
+            GymInfoViewModel gymInfoVm = _mapper.Map<GymInfoViewModel>(gym);
+            gymInfoVm.TokenJWT = _authService.GenerateJWT(gym.DocumentNumber!, gym.Username!);
 
-            return new GymInfoViewModel
+            return new ResponseBase<GymInfoViewModel?>
             {
-                Name = gym.Name,
-                Description = gym.Description,
-                Username = gym.Username,
-                RefreshToken = gym.RefreshToken,
-                RefreshTokenExpiryTime = gym.RefreshTokenExpiryTime
+                ResponseInfo = null,
+                Value = gymInfoVm
             };
         }
     }
