@@ -1,9 +1,10 @@
 ﻿using Application.GymCQ.ViewModels;
+using Application.Response;
 using MediatR;
 
 namespace Application.GymCQ.Commands
 {
-    public record CreateGymCommand : IRequest<GymInfoViewModel>
+    public record CreateGymCommand : IRequest<ResponseBase<GymInfoViewModel>>
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
