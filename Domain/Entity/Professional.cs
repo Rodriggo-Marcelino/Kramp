@@ -51,5 +51,27 @@ namespace Domain.Entity
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
+        public void setTypeDocument()
+        {
+            bool isNutricionist =
+                Job is Job.NUTRICIONIST;
+
+            bool isProfessorOrTrainer =
+                Job is Job.PERSONAL_TRAINER || Job is Job.GYM_PROFESSOR;
+
+            if (isNutricionist)
+            {
+                TypeDocument = Document.CRN;
+            }
+            else if (isProfessorOrTrainer)
+            {
+                TypeDocument = Document.CREF;
+            }
+            else
+            {
+                // TODO: Melhorar na fase de tratamento de exceptions
+                throw new Exception();
+            }
+        }
     }
 }
