@@ -5,21 +5,14 @@ using Domain.Entity;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManagerController(IMediator mediator, KrampDbContext context, IMapper mapper) : ControllerBase
+    public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
-        private readonly IMediator _mediator = mediator;
-        // TODO: realizar a documentação da api 
-        // TODO: Repositories
-        // Injetando DbContext e Mapper temporariamente enquanto não temos repository
-        // Objetivo: Requisição GET e DELETE
-        private readonly KrampDbContext _context = context;
-        private readonly IMapper _mapper = mapper;
-
         [HttpPost("Create")]
         public async Task<ActionResult<ManagerInfoViewModel>> Create(CreateManagerCommand command)
         {
@@ -29,8 +22,7 @@ namespace Kramp.API.Controllers
         [HttpGet("All")]
         public async Task<ActionResult<IEnumerable<ManagerInfoViewModel>>> GetAllManagers()
         {
-            //TODO: Retirar isso do controller
-            List<Manager> managers = _context.Managers.ToList();
+            var managers = await _repository.GetAllAsync();
             IEnumerable<ManagerInfoViewModel> response = _mapper.Map<IEnumerable<ManagerInfoViewModel>>(managers);
             return Ok(response);
         }
@@ -38,8 +30,13 @@ namespace Kramp.API.Controllers
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<ManagerInfoViewModel>> GetManagerById(Guid Id)
         {
-            //TODO: Retirar isso do controller
-            Manager manager = _context.Managers.Find(Id);
+            Manager? manager = await _repository.GetByIdAsync(Id);
+            
+            if(manager == null)
+            {
+                return NotFound();
+            }
+            
             ManagerInfoViewModel response = _mapper.Map<ManagerInfoViewModel>(manager);
             return Ok(response);
         }
@@ -54,14 +51,8 @@ namespace Kramp.API.Controllers
         [HttpDelete("Delete/{Id:guid}")]
         public async Task<ActionResult> Delete(Guid Id)
         {
-            //TODO: Retirar isso do controller
-            var deleteThis = await _context.Managers.FindAsync(Id);
-            if (deleteThis == null)
-            {
-                return NotFound();
-            }
-            _context.Managers.Remove(deleteThis);
-            await _context.SaveChangesAsync();
+            //TODO: Retirar o método de delete do controller (má prática)
+            await _repository.DeleteByIdAsync(Id, new CancellationToken());
             return NoContent();
         }
     }
