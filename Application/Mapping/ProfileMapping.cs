@@ -4,6 +4,8 @@ using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
 using Application.MemberCQ.Commands;
 using Application.MemberCQ.ViewModels;
+using Application.ProfessionalCQ.Commands;
+using Application.ProfessionalCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 
@@ -38,6 +40,13 @@ namespace Application.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
             
             CreateMap<Member, MemberInfoViewModel>().ForMember(x => x.TokenJWT, x=> x.AllowNull());
+            
+            CreateMap<CreateProfessionalCommand, Professional>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+
+            CreateMap<Professional, ProfessionalInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
         }
 
     }
