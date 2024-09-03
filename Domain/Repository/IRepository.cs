@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Repository
 {
-    public interface IRepository<T, Guid> where T : class
+    public interface IRepository<T> where T : class
     {
         //GET
         Task<IEnumerable<T>> GetAllAsync();

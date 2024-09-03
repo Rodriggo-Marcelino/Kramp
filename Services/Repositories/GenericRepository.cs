@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories
 {
-    public class GenericRepository<T, Guid> : IRepository<T, Guid> where T : class
+    public class GenericRepository<T> : IRepository<T> where T : class
     {
         private readonly KrampDbContext _context;
         private readonly DbSet<T> _dbSet;
