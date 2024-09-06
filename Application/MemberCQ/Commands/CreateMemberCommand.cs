@@ -1,9 +1,10 @@
 ﻿using Application.MemberCQ.ViewModels;
+using Application.Response;
 using MediatR;
 
 namespace Application.MemberCQ.Commands
 {
-    public record CreateMemberCommand : IRequest<MemberInfoViewModel>
+    public record CreateMemberCommand : IRequest<ResponseBase<MemberInfoViewModel>>
     {
         public string? Name { get; set; }
         public string? Surname { get; set; }

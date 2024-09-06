@@ -1,38 +1,57 @@
-﻿using Application.MemberCQ.Commands;
+﻿using Application.GymCQ.ViewModels;
+using Application.MemberCQ.Commands;
 using Application.MemberCQ.ViewModels;
+using AutoMapper;
+using Domain.Entity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MemberController(IMediator mediator) : ControllerBase
+    public class MemberController(IMediator _mediator, MemberRepository _repository, IMapper _mapper) : ControllerBase
     {
-        private readonly IMediator _mediator = mediator;
 
         [HttpPost("Create")]
         public async Task<ActionResult<MemberInfoViewModel>> Create(CreateMemberCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            return Created("", await _mediator.Send(command));
         }
 
-        [HttpGet("Read")]
-        public async Task<ActionResult<MemberInfoViewModel>> Read(CreateMemberCommand command)
+        [HttpGet("All")]
+        public async Task<ActionResult<MemberInfoViewModel>> GetAllMembers()
         {
-            throw new NotImplementedException();
+            var members = await _repository.GetAllAsync();
+            return Ok(_mapper.Map<IEnumerable<GymInfoViewModel>>(members));
+        }
+        
+        [HttpGet("{Id:guid}")]
+        public async Task<ActionResult<MemberInfoViewModel>> GetMemberById(Guid Id)
+        {
+            Member? member = await _repository.GetByIdAsync(Id);
+
+            if (member == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(_mapper.Map<GymInfoViewModel>(member));
         }
 
         [HttpPut("Update")]
-        public async Task<ActionResult<MemberInfoViewModel>> Update(CreateMemberCommand command)
+        public async Task<ActionResult<MemberInfoViewModel>> Update(Guid Id, UpdateMemberCommand command)
         {
-            throw new NotImplementedException();
+            command.Id = Id;
+            return Ok(await _mediator.Send(command));
         }
 
-        [HttpDelete("Delete")]
-        public async Task<ActionResult<MemberInfoViewModel>> Delete(CreateMemberCommand command)
+        [HttpDelete("Delete/{Id:guid}")]
+        public async Task<ActionResult<MemberInfoViewModel>> DeleteById(Guid Id)
         {
-            throw new NotImplementedException();
+            await _repository.DeleteByIdAsync(Id, new CancellationToken());
+            return NoContent();
         }
     }
 }

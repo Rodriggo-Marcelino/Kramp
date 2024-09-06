@@ -22,26 +22,26 @@ namespace Application.ManagerCQ.Handlers
         public async Task<ResponseBase<ManagerInfoViewModel>> Handle(UpdateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
-            Manager oldManager = await _repository.GetByIdAsync(request.Id);
+            Manager? oldManager = await _repository.GetByIdAsync(request.Id);
 
             if (oldManager == null)
             {
                 throw new Exception("Manager not found.");
             }
 
-            var newManager = _mapper.Map(request, oldManager);
+            Manager newManager = _mapper.Map(request, oldManager);
 
             newManager.RefreshToken = Guid.NewGuid().ToString();
             newManager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.UpdateAsync(newManager);
-            //_context.Managers.Update(newManager);
-            //await _context.SaveChangesAsync(cancellationToken);
+            await _repository.UpdateAsync(newManager, cancellationToken);
+            
+            ManagerInfoViewModel managerInfoVm = _mapper.Map<ManagerInfoViewModel>(newManager);
 
             return new ResponseBase<ManagerInfoViewModel>
             {
                 ResponseInfo = null,
-                Value = _mapper.Map<ManagerInfoViewModel>(newManager)
+                Value = managerInfoVm
             };
         }
     }

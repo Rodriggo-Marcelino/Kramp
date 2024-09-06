@@ -1,10 +1,11 @@
 ﻿using Application.ProfessionalCQ.ViewModels;
+using Application.Response;
 using Domain.Entity.Enum;
 using MediatR;
 
 namespace Application.ProfessionalCQ.Commands
 {
-    public record CreateProfessionalCommand : IRequest<ProfessionalInfoViewModel>
+    public record CreateProfessionalCommand : IRequest<ResponseBase<ProfessionalInfoViewModel>>
     {
         public string? Name { get; set; }
         public string? Surname { get; set; }

@@ -4,7 +4,6 @@ using Application.Response;
 using AutoMapper;
 using Domain.Abstractions;
 using Domain.Entity;
-using Infrastructure.Persistence;
 using MediatR;
 using Services.Repositories;
 
@@ -26,20 +25,16 @@ namespace Application.ManagerCQ.Handlers
         public async Task<ResponseBase<ManagerInfoViewModel?>> Handle(CreateManagerCommand request,
                                                        CancellationToken cancellationToken)
         {
-            var manager = _mapper.Map<Manager>(request);
-
-         
+            Manager manager = _mapper.Map<Manager>(request);
+            
             manager.PasswordHash = request.Password;
-
             manager.CreatedAt = DateTime.UtcNow;
             manager.RefreshToken = Guid.NewGuid().ToString();
             manager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.AddAsync(manager);
-            //_context.Managers.Add(manager);
-            //_context.SaveChanges();
+            await _repository.AddAsync(manager, cancellationToken);
 
-            var managerInfoVm = _mapper.Map<ManagerInfoViewModel>(manager);
+            ManagerInfoViewModel managerInfoVm = _mapper.Map<ManagerInfoViewModel>(manager);
             managerInfoVm.TokenJWT = _authService.GenerateJWT(manager.DocumentNumber!, manager.Username!);
 
             return new ResponseBase<ManagerInfoViewModel?>
