@@ -4,8 +4,12 @@ using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.ViewModels;
 using Application.MemberCQ.Commands;
 using Application.MemberCQ.ViewModels;
+using Application.PlanCQ.Commands;
+using Application.PlanCQ.ViewModels;
 using Application.ProfessionalCQ.Commands;
 using Application.ProfessionalCQ.ViewModels;
+using Application.WorkoutCQ.Commands;
+using Application.WorkoutCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 
@@ -62,6 +66,14 @@ namespace Application.Mapping
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Professional, ProfessionalInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
+
+            CreateMap<CreateWorkoutCommand, Workout>().ReverseMap();
+            CreateMap<UpdateWorkoutCommand, Workout>().ReverseMap();
+            CreateMap<Workout, WorkoutInfoViewModel>().ReverseMap();
+            
+            CreateMap<CreatePlanCommand, Plan>().ReverseMap();
+            CreateMap<UpdatePlanCommand, Plan>().ReverseMap();
+            CreateMap<Plan, PlanInfoViewModel>().ReverseMap();
         }
 
     }
