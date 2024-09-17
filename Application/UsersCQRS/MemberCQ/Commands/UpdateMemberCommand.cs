@@ -1,18 +1,11 @@
 using System.Text.Json.Serialization;
+using Application.GenericsCQRS.User.Commands;
 using Application.MemberCQ.ViewModels;
 using Application.Response;
 using MediatR;
 
 namespace Application.MemberCQ.Commands;
 
-public class UpdateMemberCommand : IRequest<ResponseBase<MemberInfoViewModel>>
+public record UpdateMemberCommand : UpdateUserGenericCommand, IRequest<ResponseBase<MemberInfoViewModel>>
 {
-    [JsonIgnore]
-    public Guid Id { get; set; }
-    public string? Name { get; set; }
-    public string? Surname { get; set; }
-    public string? UserBio { get; set; }
-    public DateTime BirthDate { get; set; }
-    public string? Username { get; set; }
-    public string? DocumentNumber { get; set; }
 }
