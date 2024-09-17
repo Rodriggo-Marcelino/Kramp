@@ -32,7 +32,7 @@ namespace Application.ProfessionalCQ.Handlers
             professional.PasswordHash = request.Password;
             professional.RefreshToken = Guid.NewGuid().ToString();
             professional.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
-            professional.setTypeDocument();
+            professional.SetTypeDocument();
 
             await _repository.AddAsync(professional, cancellationToken);
             
