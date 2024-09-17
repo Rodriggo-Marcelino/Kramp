@@ -2,19 +2,13 @@ using Domain.Entity.Enum;
 using Domain.Entity.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entity.Generics;
 
 namespace Domain.Entity
 {
     [Table("member")]
-    public class Member : IUser
+    public class Member : UserGeneric
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
-        [Column(TypeName = "varchar(50)")]
-        public string? Name { get; set; }
 
         [Required]
         [StringLength(100, MinimumLength = 3)]
@@ -28,24 +22,5 @@ namespace Domain.Entity
         [Required]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
-        [Column(TypeName = "varchar(50)")]
-        public string? Username { get; set; }
-
-        [Required]
-        public string? PasswordHash { get; set; }
-
-        [Required]
-        public Document TypeDocument { get; set; } = Document.CPF;
-
-        [Required]
-        [StringLength(20)]
-        public string? DocumentNumber { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public string? RefreshToken { get; set; }
-        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

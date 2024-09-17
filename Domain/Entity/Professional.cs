@@ -2,20 +2,13 @@
 using Domain.Entity.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entity.Generics;
 
 namespace Domain.Entity
 {
     [Table("professional")]
-    public class Professional : IUser
+    public class Professional : UserGeneric
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
-        [Column(TypeName = "varchar(50)")]
-        public string? Name { get; set; }
-
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Column(TypeName = "varchar(50)")]
@@ -30,28 +23,9 @@ namespace Domain.Entity
         public DateTime BirthDate { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        [Column(TypeName = "varchar(50)")]
-        public string? Username { get; set; }
-
-        [Required]
-        public string? PasswordHash { get; set; }
-
-        [Required]
-        public Document TypeDocument { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string? DocumentNumber { get; set; }
-
-        [Required]
         public Job Job { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public string? RefreshToken { get; set; }
-        public DateTime? RefreshTokenExpiryTime { get; set; }
-
-        public void setTypeDocument()
+        public void SetTypeDocument()
         {
             bool isNutricionist =
                 Job is Job.NUTRICIONIST;
