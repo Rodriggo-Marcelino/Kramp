@@ -33,8 +33,7 @@ namespace Services.Repositories
             
             return entity;
         }
-
-        //TODO: TESTAR MAIS
+        
         public async Task<IEnumerable<T>> FindAllByIdAsync(IEnumerable<Guid> Ids)
         {
             return await _dbSet.Where(e => Ids.Contains
@@ -45,14 +44,12 @@ namespace Services.Repositories
                     )
                 .ToListAsync();
         }
-
-        //TODO: TESTAR MAIS
+        
         public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy)
         {
             return await OrderBy(_dbSet).ToListAsync();
         }
-
-        //TODO: TESTAR MAIS
+        
         public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy, int page, int pageSize)
         {
             return await OrderBy(_dbSet)
