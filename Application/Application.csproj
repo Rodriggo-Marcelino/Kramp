@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="GenericsCQRS\Training\" />
     <Folder Include="GenericsCQRS\User\Handlers\" />
-    <Folder Include="GenericsCQRS\User\Validators\" />
     <Folder Include="TrainingCQRS\" />
     <Folder Include="UsersCQRS\" />
   </ItemGroup>
