@@ -1,24 +1,13 @@
 using Domain.Entity.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entity.Generics;
 
 namespace Domain.Entity;
 
 [Table("workout")]
-public class Workout
+public class Workout : TrainingGeneric
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
-    
-    [Required]
-    [StringLength(50, MinimumLength = 3)]
-    [Column(TypeName = "varchar(50)")]
-    public string? Name { get; set; }
-    
-    [StringLength(240)]
-    [Column(TypeName = "varchar(240)")]
-    public string? Description { get; set; }
-
     [Required]
     public List<Muscle>? TargetedMuscles { get; set; }
     
@@ -36,6 +25,4 @@ public class Workout
     
     //TODO: Fazer com que Workout se conecte também com Professional
     public ICollection<Member>? Member { get; set; } //Criadores de Treino
-
-    public DateTime CreatedAt { get; set; }
 }
