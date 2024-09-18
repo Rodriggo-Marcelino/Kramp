@@ -1,18 +1,19 @@
-﻿using Application.ManagerCQ.Commands;
+﻿using Application.ExceptionHandler;
+using Application.ManagerCQ.Commands;
 using Application.ManagerCQ.Validators;
 using Application.Mapping;
+using Domain.Abstractions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Domain.Abstractions;
+using Microsoft.OpenApi.Models;
 using Services.AuthService;
 using Services.Repositories;
+using System.Reflection;
+using System.Text;
 
 namespace Kramp.API
 {
@@ -31,7 +32,7 @@ namespace Kramp.API
                     {
                         Name = "Exemplo de pagina de contato",
                         Url = new Uri("https://www.exemplo.com.br")
-                    }, 
+                    },
                     License = new OpenApiLicense
                     {
                         Name = "Exemplo de licença",
@@ -63,9 +64,10 @@ namespace Kramp.API
                 });
 
         }
-        
+
         public static void AddServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddProblemDetails(); //Padrão ProblemDetails para ser usado nas Exceptions
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
@@ -95,6 +97,12 @@ namespace Kramp.API
             builder.Services.AddTransient<GymRepository>();
             builder.Services.AddTransient<MemberRepository>();
             builder.Services.AddTransient<ProfessionalRepository>();
+        }
+
+        public static void AddExceptionHandlers(this WebApplicationBuilder builder)
+        {
+            // THIS SHOULD BE ON THE BOTTOM, ALWAYS
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         }
     }
 }

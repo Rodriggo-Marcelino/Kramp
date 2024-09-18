@@ -11,9 +11,12 @@ builder.AddAutoMapper();
 builder.AddSwaggerDocs();
 builder.AddJwtAuth();
 builder.AddInjections();
+builder.AddExceptionHandlers();
 
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 // Middleware para servir o arquivo JSON do Swagger
 app.Use(async (context, next) =>
