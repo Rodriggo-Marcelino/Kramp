@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GenericsCQRS\Training\" />
     <Folder Include="GenericsCQRS\User\Handlers\" />
     <Folder Include="TrainingCQRS\" />
     <Folder Include="UsersCQRS\" />
