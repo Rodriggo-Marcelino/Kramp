@@ -8,7 +8,7 @@ namespace Domain.Entity;
 [Table("exercise")]
 public class Exercise : TrainingGeneric
 {
-    public string? Foto { get; set; }
+    public string? Photo { get; set; }
     public string? Video { get; set; }
 
     [Required]
@@ -16,8 +16,8 @@ public class Exercise : TrainingGeneric
     public Muscle SynergistMuscle { get; set; }
 
     [Required]
-    public int TempoDescansoEmSegundos { get; set; }
-    public int TempoExercicioEmSegundos { get; set; }
+    public int RestTimeInSeconds { get; set; }
+    public int ExerciseTimeInSeconds { get; set; }
 
     [Required]
     public int Series { get; set; }
