@@ -23,6 +23,5 @@ public class Workout : TrainingGeneric
     [Required]
     public ICollection<Exercise>? Exercises { get; set; }
     
-    //TODO: Fazer com que Workout se conecte também com Professional
-    public ICollection<Member>? Member { get; set; } //Criadores de Treino
+    public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Treino (Editar, Ver)
 }

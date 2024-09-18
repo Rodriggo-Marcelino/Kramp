@@ -18,8 +18,5 @@ public class Plan : TrainingGeneric
     [Required]
     public ICollection<Workout>? Workouts { get; set; } //Exercicios do Plano
 
-    public ICollection<Member>? Member { get; set; } //Criadores do Plano
+    public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Plano (Editar, Ver)
 }
-
-
-//Todo: Adicionar IUser
