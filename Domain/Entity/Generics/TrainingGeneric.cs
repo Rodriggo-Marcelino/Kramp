@@ -4,6 +4,7 @@ using Domain.Entity.Interfaces;
 
 namespace Domain.Entity.Generics;
 
+[NotMapped]
 public class TrainingGeneric : ITraining
 {
     [Key]
