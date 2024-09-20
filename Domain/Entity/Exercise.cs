@@ -14,14 +14,4 @@ public class Exercise : TrainingGeneric
     [Required]
     public Muscle TargetedMuscle { get; set; }
     public Muscle SynergistMuscle { get; set; }
-
-    [Required]
-    public int RestTimeInSeconds { get; set; }
-    public int ExerciseTimeInSeconds { get; set; }
-
-    [Required]
-    public int Series { get; set; }
-
-    [Required]
-    public int Repetitions { get; set; }
 }

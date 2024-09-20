@@ -21,7 +21,7 @@ public class Workout : TrainingGeneric
     public List<Muscle>? TargetedMuscles { get; set; }
 
     [Required]
-    public ICollection<Exercise>? Exercises { get; set; }
+    public ICollection<WorkoutExercise>? Exercises { get; set; }
 
     public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Treino (Editar, Ver)
 }
