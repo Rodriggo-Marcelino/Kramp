@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Generics;
 
+[Table("user")]
 public class UserGeneric : IUser
 {
     [Key]

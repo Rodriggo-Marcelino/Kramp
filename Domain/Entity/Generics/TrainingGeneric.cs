@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Generics;
 
+[Table("training")]
 public class TrainingGeneric : ITraining
 {
     [Key]
