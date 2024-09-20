@@ -1,5 +1,5 @@
-﻿using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.ViewModels;
+﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 using MediatR;

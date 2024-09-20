@@ -1,5 +1,5 @@
-using Application.PlanCQ.Commands;
-using Application.PlanCQ.ViewModels;
+using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
+using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 using MediatR;

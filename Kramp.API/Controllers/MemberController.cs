@@ -1,6 +1,6 @@
-﻿using Application.GymCQ.ViewModels;
-using Application.MemberCQ.Commands;
-using Application.MemberCQ.ViewModels;
+﻿using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
+using Application.CQRS.UsersCQRS.MemberCQ.Commands;
+using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 using MediatR;

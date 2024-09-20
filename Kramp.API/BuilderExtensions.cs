@@ -1,6 +1,6 @@
-﻿using Application.ExceptionHandler;
-using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.Validators;
+﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
+using Application.ExceptionHandler;
 using Application.Mapping;
 using Domain.Abstractions;
 using FluentValidation;

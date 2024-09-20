@@ -1,15 +1,15 @@
-﻿using Application.GymCQ.Commands;
-using Application.GymCQ.ViewModels;
-using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.ViewModels;
-using Application.MemberCQ.Commands;
-using Application.MemberCQ.ViewModels;
-using Application.PlanCQ.Commands;
-using Application.PlanCQ.ViewModels;
-using Application.ProfessionalCQ.Commands;
-using Application.ProfessionalCQ.ViewModels;
-using Application.WorkoutCQ.Commands;
-using Application.WorkoutCQ.ViewModels;
+﻿using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
+using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+using Application.CQRS.UsersCQRS.GymCQ.Commands;
+using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
+using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
+using Application.CQRS.UsersCQRS.MemberCQ.Commands;
+using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 

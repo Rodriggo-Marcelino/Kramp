@@ -1,5 +1,5 @@
-﻿using Application.GymCQ.Commands;
-using Application.GymCQ.ViewModels;
+﻿using Application.CQRS.UsersCQRS.GymCQ.Commands;
+using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 using MediatR;

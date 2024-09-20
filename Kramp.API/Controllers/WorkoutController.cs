@@ -1,5 +1,5 @@
-using Application.WorkoutCQ.Commands;
-using Application.WorkoutCQ.ViewModels;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity;
 using MediatR;
