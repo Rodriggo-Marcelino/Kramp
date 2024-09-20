@@ -97,6 +97,10 @@ namespace Kramp.API
             builder.Services.AddTransient<GymRepository>();
             builder.Services.AddTransient<MemberRepository>();
             builder.Services.AddTransient<ProfessionalRepository>();
+            builder.Services.AddTransient<ExerciseRepository>();
+            builder.Services.AddTransient<WorkoutRepository>();
+            builder.Services.AddTransient<PlanRepository>();
+            builder.Services.AddSingleton<ExceptionHandlingHelper>();
         }
 
         public static void AddExceptionHandlers(this WebApplicationBuilder builder)
