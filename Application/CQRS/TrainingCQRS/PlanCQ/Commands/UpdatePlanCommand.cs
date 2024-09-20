@@ -1,9 +1,12 @@
+using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
+using Application.Response;
 using Domain.Entity;
+using MediatR;
 using System.Text.Json.Serialization;
 
 namespace Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 
-public class UpdatePlanCommand
+public record UpdatePlanCommand : IRequest<ResponseBase<PlanInfoViewModel>>
 {
     [JsonIgnore]
     public Guid Id { get; set; }
