@@ -1,5 +1,4 @@
-﻿using Application.GenericsCQRS.User.Commands;
-using Application.GenericsCQRS.User.Validators;
+﻿using Application.GenericsCQRS.User.Validators;
 using Application.ProfessionalCQ.Commands;
 using FluentValidation;
 

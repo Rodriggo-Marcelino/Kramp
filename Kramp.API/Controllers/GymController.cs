@@ -15,7 +15,7 @@ namespace Kramp.API.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<GymInfoViewModel>> Create(CreateGymCommand command)
         {
-            return Created("" ,await _mediator.Send(command));
+            return Created("", await _mediator.Send(command));
         }
 
         [HttpGet("All")]
@@ -24,7 +24,7 @@ namespace Kramp.API.Controllers
             var gyms = await _repository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<GymInfoViewModel>>(gyms));
         }
-        
+
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<GymInfoViewModel>> GetGymById(Guid Id)
         {

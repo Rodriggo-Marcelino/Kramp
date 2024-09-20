@@ -29,12 +29,12 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     public async Task<ActionResult<PlanInfoViewModel>> GetPlanById(Guid Id)
     {
         Plan? plan = await _repository.GetByIdAsync(Id);
-            
-        if(plan == null)
+
+        if (plan == null)
         {
             return NotFound();
         }
-            
+
         return Ok(_mapper.Map<PlanInfoViewModel>(plan));
     }
 

@@ -15,7 +15,7 @@ namespace Services.Repositories
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        
+
         //GET
         public async Task<IEnumerable<T>> GetAllAsync()
         {
@@ -25,31 +25,31 @@ namespace Services.Repositories
         public async Task<T?> GetByIdAsync(Guid Id)
         {
             var entity = await _dbSet.FindAsync(Id);
-            
-            if(entity == null)
+
+            if (entity == null)
             {
                 throw new Exception($"Entity of type {typeof(T).Name} with id {Id} not found.");
             }
-            
+
             return entity;
         }
-        
+
         public async Task<IEnumerable<T>> FindAllByIdAsync(IEnumerable<Guid> Ids)
         {
             return await _dbSet.Where(e => Ids.Contains
                     (
-                    (Guid) e.GetType()
+                    (Guid)e.GetType()
                     .GetProperty("Id")!
-                    .GetValue(e,null)!)
+                    .GetValue(e, null)!)
                     )
                 .ToListAsync();
         }
-        
+
         public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy)
         {
             return await OrderBy(_dbSet).ToListAsync();
         }
-        
+
         public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy, int page, int pageSize)
         {
             return await OrderBy(_dbSet)

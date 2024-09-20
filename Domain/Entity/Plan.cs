@@ -1,6 +1,6 @@
+using Domain.Entity.Generics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entity.Generics;
 
 namespace Domain.Entity;
 

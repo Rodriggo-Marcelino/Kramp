@@ -12,13 +12,13 @@ public class UpdateProfessionalCommandHandler : IRequestHandler<UpdateProfession
 {
     private readonly ProfessionalRepository _repository;
     private readonly IMapper _mapper;
-    
+
     public UpdateProfessionalCommandHandler(ProfessionalRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
-    
+
     public async Task<ResponseBase<ProfessionalInfoViewModel>> Handle(UpdateProfessionalCommand request, CancellationToken cancellationToken)
     {
         Professional? oldProfessional = await _repository.GetByIdAsync(request.Id);
@@ -31,7 +31,7 @@ public class UpdateProfessionalCommandHandler : IRequestHandler<UpdateProfession
         Professional newProfessional = _mapper.Map(request, oldProfessional);
 
         await _repository.UpdateAsync(newProfessional, cancellationToken);
-        
+
         ProfessionalInfoViewModel professionalInfoVm = _mapper.Map<ProfessionalInfoViewModel>(newProfessional);
 
         return new ResponseBase<ProfessionalInfoViewModel>

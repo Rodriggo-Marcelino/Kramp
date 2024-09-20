@@ -1,4 +1,3 @@
-using Application.ManagerCQ.ViewModels;
 using Application.MemberCQ.Commands;
 using Application.MemberCQ.ViewModels;
 using Application.Response;
@@ -13,13 +12,13 @@ public class UpdateMemberCommandHandler : IRequestHandler<UpdateMemberCommand, R
 {
     private readonly MemberRepository _repository;
     private readonly IMapper _mapper;
-    
+
     public UpdateMemberCommandHandler(MemberRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
-    
+
     public async Task<ResponseBase<MemberInfoViewModel>> Handle(UpdateMemberCommand request, CancellationToken cancellationToken)
     {
         Member? oldMember = await _repository.GetByIdAsync(request.Id);
@@ -34,7 +33,7 @@ public class UpdateMemberCommandHandler : IRequestHandler<UpdateMemberCommand, R
         newMember.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
         await _repository.UpdateAsync(newMember, cancellationToken);
-        
+
         MemberInfoViewModel memberInfoVm = _mapper.Map<MemberInfoViewModel>(newMember);
 
         return new ResponseBase<MemberInfoViewModel>

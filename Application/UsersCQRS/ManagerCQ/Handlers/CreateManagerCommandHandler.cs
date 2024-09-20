@@ -26,7 +26,7 @@ namespace Application.ManagerCQ.Handlers
                                                        CancellationToken cancellationToken)
         {
             Manager manager = _mapper.Map<Manager>(request);
-            
+
             manager.PasswordHash = request.Password;
             manager.CreatedAt = DateTime.UtcNow;
             manager.RefreshToken = Guid.NewGuid().ToString();

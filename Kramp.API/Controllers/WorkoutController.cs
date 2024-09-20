@@ -29,27 +29,27 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     public async Task<ActionResult<WorkoutInfoViewModel>> GetWorkoutById(Guid Id)
     {
         Workout? workout = await _repository.GetByIdAsync(Id);
-            
-        if(workout == null)
+
+        if (workout == null)
         {
             return NotFound();
         }
-            
+
         return Ok(_mapper.Map<WorkoutInfoViewModel>(workout));
     }
-    
+
     [HttpGet("{Id:guid}/Exercises")]
     public async Task<ActionResult<WorkoutInfoViewModel>> GetWorkoutExercisesById(Guid Id)
     {
         Workout? workout = await _repository.GetByIdAsync(Id);
-            
-        if(workout == null)
+
+        if (workout == null)
         {
             return NotFound();
         }
 
         var workoutViewModel = _mapper.Map<WorkoutInfoViewModel>(workout);
-            
+
         return Ok(workoutViewModel.Exercises);
     }
 

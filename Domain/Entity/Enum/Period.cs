@@ -4,7 +4,7 @@ public enum Period
 {
     DAILY = 1,
     WEEKLY = 2,
-    
+
     /*
      * Variáveis JUMP
      * Permitem ao criador do treino programar quantos dias de descanso até
@@ -16,5 +16,5 @@ public enum Period
     JUMP_ONE_DAY = 3,
     JUMP_TWO_DAYS = 4,
     JUMP_THREE_DAYS = 5,
-    
+
 }

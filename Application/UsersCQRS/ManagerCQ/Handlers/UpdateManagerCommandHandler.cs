@@ -35,7 +35,7 @@ namespace Application.ManagerCQ.Handlers
             newManager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
             await _repository.UpdateAsync(newManager, cancellationToken);
-            
+
             ManagerInfoViewModel managerInfoVm = _mapper.Map<ManagerInfoViewModel>(newManager);
 
             return new ResponseBase<ManagerInfoViewModel>

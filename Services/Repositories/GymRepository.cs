@@ -5,6 +5,6 @@ namespace Services.Repositories
 {
     public class GymRepository(KrampDbContext context) : GenericRepository<Gym>(context)
     {
-    
+
     }
 }

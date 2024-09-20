@@ -29,12 +29,12 @@ namespace Kramp.API.Controllers
         public async Task<ActionResult<ManagerInfoViewModel>> GetManagerById(Guid Id)
         {
             Manager? manager = await _repository.GetByIdAsync(Id);
-            
-            if(manager == null)
+
+            if (manager == null)
             {
                 return NotFound();
             }
-            
+
             return Ok(_mapper.Map<ManagerInfoViewModel>(manager));
         }
 

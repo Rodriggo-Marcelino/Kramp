@@ -32,7 +32,7 @@ namespace Application.MemberCQ.Handlers
             member.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
             await _repository.AddAsync(member, cancellationToken);
-            
+
             MemberInfoViewModel memberInfoVm = _mapper.Map<MemberInfoViewModel>(member);
             memberInfoVm.TokenJWT = _authService.GenerateJWT(member.DocumentNumber!, member.Username!);
 

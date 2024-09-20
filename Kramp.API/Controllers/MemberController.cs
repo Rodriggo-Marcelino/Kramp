@@ -26,7 +26,7 @@ namespace Kramp.API.Controllers
             var members = await _repository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<GymInfoViewModel>>(members));
         }
-        
+
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<MemberInfoViewModel>> GetMemberById(Guid Id)
         {
@@ -36,7 +36,7 @@ namespace Kramp.API.Controllers
             {
                 return NotFound();
             }
-            
+
             return Ok(_mapper.Map<GymInfoViewModel>(member));
         }
 

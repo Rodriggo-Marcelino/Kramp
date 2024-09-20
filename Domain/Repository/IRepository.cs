@@ -11,19 +11,19 @@ namespace Domain.Repository
         Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy, int page, int pageSize);
         Task<bool> ExistsById(Guid Id);
         Task<int> Count();
-        
+
         //POST
         Task<T> AddAsync(T entity, CancellationToken cancellationToken);
-        
+
         //PUT
         Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
-        
+
         //DELETE
         Task DeleteAsync(T entity, CancellationToken cancellationToken);
         Task DeleteByIdAsync(Guid Id, CancellationToken cancellationToken);
         Task DeleteAllByIdAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken);
         Task DeleteAllAsync(CancellationToken cancellationToken);
         Task DeleteAllAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
- 
+
     }
 }

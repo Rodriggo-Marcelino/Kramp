@@ -4,7 +4,6 @@ using Application.Response;
 using AutoMapper;
 using Domain.Abstractions;
 using Domain.Entity;
-using Infrastructure.Persistence;
 using MediatR;
 using Services.Repositories;
 
@@ -22,7 +21,7 @@ namespace Application.GymCQ.Handlers
             _repository = repository;
             _mapper = mapper;
         }
-        
+
         public async Task<ResponseBase<GymInfoViewModel?>> Handle(CreateGymCommand request,
                                                    CancellationToken cancellationToken)
         {
@@ -33,7 +32,7 @@ namespace Application.GymCQ.Handlers
             gym.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
             await _repository.AddAsync(gym, cancellationToken);
-            
+
             GymInfoViewModel gymInfoVm = _mapper.Map<GymInfoViewModel>(gym);
             gymInfoVm.TokenJWT = _authService.GenerateJWT(gym.DocumentNumber!, gym.Username!);
 

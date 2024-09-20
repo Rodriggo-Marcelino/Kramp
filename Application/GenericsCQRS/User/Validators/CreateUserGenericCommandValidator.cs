@@ -34,7 +34,7 @@ public class CreateUserGenericCommandValidator<T> : AbstractValidator<T> where T
             .NotEmpty().WithMessage("O número do documento é obrigatório.")
             .MinimumLength(5).WithMessage("O número do documento deve ter no mínimo 5 caracteres.");
     }
-    
+
     private bool BeAtLeast18YearsOld(DateTime birthDate)
     {
         var currentDate = DateTime.Today;

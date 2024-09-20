@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using Domain.Entity;
+using System.Text.Json.Serialization;
 
 namespace Application.PlanCQ.Commands;
 

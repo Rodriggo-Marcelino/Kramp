@@ -1,5 +1,4 @@
 using Application.WorkoutCQ.ViewModels;
-using Domain.Entity;
 
 namespace Application.PlanCQ.ViewModels;
 

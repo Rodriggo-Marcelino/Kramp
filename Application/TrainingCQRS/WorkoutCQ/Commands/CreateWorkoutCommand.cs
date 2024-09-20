@@ -6,7 +6,7 @@ namespace Application.WorkoutCQ.Commands;
 public class CreateWorkoutCommand
 {
     public string? Name { get; set; }
-    public string? Descritption {get; set;}
+    public string? Descritption { get; set; }
     public List<Muscle>? TargetedMuscles { get; set; }
     public ICollection<Exercise>? Exercises { get; set; }
 }

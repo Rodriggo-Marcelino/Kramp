@@ -25,17 +25,17 @@ namespace Kramp.API.Controllers
             var professionals = await _repository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<ProfessionalInfoViewModel>>(professionals));
         }
-        
+
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<ProfessionalInfoViewModel>> GetProfessionalById(Guid Id)
         {
             Professional? professional = await _repository.GetByIdAsync(Id);
-            
-            if(professional == null)
+
+            if (professional == null)
             {
                 return NotFound();
             }
-            
+
             return Ok(_mapper.Map<ProfessionalInfoViewModel>(professional));
         }
 
