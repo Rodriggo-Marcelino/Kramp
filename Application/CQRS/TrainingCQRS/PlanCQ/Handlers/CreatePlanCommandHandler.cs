@@ -47,7 +47,9 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
 
         IEnumerable<Workout> workouts = await _workoutRepository.FindAllByIdAsync(request.Workouts);
 
-        plan.Workouts = workouts.ToList();
+        List<PlanWorkout> planWorkouts = SaveAllPlanWorkouts(workouts, plan);
+
+        plan.Workouts = planWorkouts;
 
         await _repository.AddAsync(plan, cancellationToken);
 
@@ -57,7 +59,7 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
             Description = plan.Description,
             StartDate = plan.StartDate,
             EndDate = plan.EndDate,
-            Workouts = plan.Workouts.ToList()
+            Workouts = workouts.ToList()
         };
 
         return new ResponseBase<PlanInfoViewModel?>
@@ -66,4 +68,24 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
             Value = planInfoVm
         };
     }
+
+    protected List<PlanWorkout> SaveAllPlanWorkouts(IEnumerable<Workout> workouts, Plan plan)
+    {
+        List<PlanWorkout> planWorkouts = new List<PlanWorkout>();
+
+        foreach (var workout in workouts)
+        {
+            planWorkouts.Add(new PlanWorkout
+            {
+                PlanId = plan.Id,
+                Plan = plan,
+                WorkoutId = workout.Id,
+                Workout = workout
+            });
+        }
+
+        return planWorkouts;
+    }
+
+
 }
