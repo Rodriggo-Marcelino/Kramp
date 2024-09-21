@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entity;
 
 [Table("workout")]
-public class Workout : ITraining
+public class Workout : TrainingGeneric, ITraining
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -37,8 +37,7 @@ public class Workout : ITraining
     [Required]
     public List<Muscle>? TargetedMuscles { get; set; }
 
-    // TODO: Aplicar o Required quando o Json for Controlado
-    // [Required] 
+    [Required]
     public ICollection<WorkoutExercise>? Exercises { get; set; }
 
     public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Treino (Editar, Ver)

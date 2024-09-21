@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entity;
 
 [Table("plan")]
-public class Plan : ITraining
+public class Plan : TrainingGeneric, ITraining
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -32,7 +32,7 @@ public class Plan : ITraining
     [DataType(DataType.Date)]
     public DateTime EndDate { get; set; }
 
-    // TODO: Aplicar o Required quando o Json for Controlado
+    // TODO: Aplicar o Required quando possivel
     //[Required] 
     public ICollection<Workout>? Workouts { get; set; } //Exercicios do Plano
 

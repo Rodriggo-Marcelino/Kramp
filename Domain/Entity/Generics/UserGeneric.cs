@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entity.Generics;
 
 [Table("users")]
-public class UserGeneric : IUser
+public class UserGeneric : EntityGeneric, IUser
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();

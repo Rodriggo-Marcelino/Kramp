@@ -1,4 +1,5 @@
 using Domain.Entity.Enum;
+using Domain.Entity.Generics;
 using Domain.Entity.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,10 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entity;
 
 [Table("exercise")]
-public class Exercise : ITraining
+public class Exercise : TrainingGeneric, ITraining
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     [Required]
     [StringLength(50, MinimumLength = 3)]

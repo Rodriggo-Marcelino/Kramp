@@ -1,7 +1,8 @@
-﻿
+﻿using Domain.Entity.Generics;
+
 namespace Domain.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : EntityGeneric
     {
         //GET
         Task<IEnumerable<T>> GetAllAsync();
