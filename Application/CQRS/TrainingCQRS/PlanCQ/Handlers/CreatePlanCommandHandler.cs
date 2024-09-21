@@ -27,6 +27,7 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
         _mapper = mapper;
         _workoutRepository = workoutRepository;
     }
+
     public async Task<ResponseBase<PlanInfoViewModel?>> Handle(CreatePlanCommand request,
         CancellationToken cancellationToken)
     {

@@ -68,12 +68,31 @@ namespace Application.Mapping
 
             CreateMap<Professional, ProfessionalInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
 
-            CreateMap<CreateWorkoutCommand, Workout>().ReverseMap();
-            CreateMap<UpdateWorkoutCommand, Workout>().ReverseMap();
-            CreateMap<Workout, WorkoutInfoViewModel>().ReverseMap();
+            CreateMap<CreateWorkoutCommand, Workout>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Exercises, opt => opt.Ignore())
+                .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
+                .ReverseMap();
 
-            CreateMap<CreatePlanCommand, Plan>().ReverseMap();
-            CreateMap<UpdatePlanCommand, Plan>().ReverseMap();
+            CreateMap<UpdateWorkoutCommand, Workout>()
+                .ForMember(dest => dest.Exercises, opt => opt.Ignore())
+                .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<Workout, WorkoutInfoViewModel>()
+                .ForMember(dest => dest.Exercises, opt => opt.Ignore())
+                .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<CreatePlanCommand, Plan>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdatePlanCommand, Plan>()
+                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+                .ReverseMap();
+
             CreateMap<Plan, PlanInfoViewModel>().ReverseMap();
         }
 

@@ -36,15 +36,10 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
 
     public async Task<ResponseBase<WorkoutInfoViewModel?>> Handle(CreateWorkoutCommand request, CancellationToken cancellationToken)
     {
-        Workout workout = new Workout
-        {
-            Name = request.Name,
-            Description = request.Description,
-            Period = request.Period,
-            TargetedMuscles = new List<Muscle>(),
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
-        };
+        Workout? workout = _mapper.Map<Workout>(request);
+        workout.TargetedMuscles = new List<Muscle>();
+        workout.CreatedAt = DateTime.UtcNow;
+        workout.UpdatedAt = DateTime.UtcNow;
 
         if (!request.Exercises.Any())
         {
@@ -58,20 +53,15 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
 
         List<WorkoutExercise> workoutExercises = SaveAllWorkoutExercises(exercises, workout);
 
+        workout.SeriesCount = countSeries(workoutExercises);
+        workout.RepetitionCount = countRepetitions(workoutExercises);
         workout.Exercises = workoutExercises;
 
         await _repository.AddAsync(workout, cancellationToken);
 
-        WorkoutInfoViewModel workoutInfoVm = new WorkoutInfoViewModel
-        {
-            Name = workout.Name,
-            Description = workout.Description,
-            Period = workout.Period.ToString(),
-            SeriesCount = countSeries(workoutExercises),
-            RepetitionCount = countRepetitions(workoutExercises),
-            TargetedMuscles = workout.TargetedMuscles,
-            Exercises = exercises.ToList()
-        };
+        var workoutInfoVm = _mapper.Map<WorkoutInfoViewModel>(workout);
+        workoutInfoVm.TargetedMuscles = workout.TargetedMuscles;
+        workoutInfoVm.Exercises = workout.Exercises.ToList();
 
         return new ResponseBase<WorkoutInfoViewModel?>
         {

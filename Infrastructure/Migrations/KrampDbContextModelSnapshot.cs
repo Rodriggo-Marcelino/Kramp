@@ -57,7 +57,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("exercise");
+                    b.ToTable("exercise", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Generics.UserGeneric", b =>
@@ -109,7 +109,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("users");
+                    b.ToTable("users", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
@@ -143,7 +143,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("training_plan");
+                    b.ToTable("training_plan", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.PlanWorkout", b =>
@@ -164,7 +164,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("plan_workout");
+                    b.ToTable("plan_workout", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Workout", b =>
@@ -203,7 +203,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("workout");
+                    b.ToTable("workout", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.WorkoutExercise", b =>
@@ -236,7 +236,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("workout_exercise");
+                    b.ToTable("workout_exercise", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Gym", b =>
@@ -247,7 +247,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(240)
                         .HasColumnType("varchar(240)");
 
-                    b.ToTable("gym");
+                    b.ToTable("gym", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Manager", b =>
@@ -270,7 +270,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(240)
                         .HasColumnType("varchar(240)");
 
-                    b.ToTable("manager");
+                    b.ToTable("manager", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Member", b =>
@@ -289,7 +289,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(240)
                         .HasColumnType("varchar(240)");
 
-                    b.ToTable("member");
+                    b.ToTable("member", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Professional", b =>
@@ -311,7 +311,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(240)
                         .HasColumnType("varchar(240)");
 
-                    b.ToTable("professional");
+                    b.ToTable("professional", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Generics.UserGeneric", b =>

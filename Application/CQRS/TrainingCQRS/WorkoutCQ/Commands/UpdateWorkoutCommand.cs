@@ -13,5 +13,5 @@ public record UpdateWorkoutCommand : IRequest<ResponseBase<WorkoutInfoViewModel>
     public string? Name { get; set; }
     public string? Description { get; set; }
     public Period Period { get; set; }
-    public ICollection<Guid>? Exercises { get; set; }
+    public IEnumerable<Guid>? Exercises { get; set; }
 }

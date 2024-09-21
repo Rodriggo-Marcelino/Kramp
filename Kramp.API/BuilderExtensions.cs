@@ -14,6 +14,8 @@ using Services.AuthService;
 using Services.Repositories;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Kramp.API
 {
@@ -68,7 +70,12 @@ namespace Kramp.API
         public static void AddServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddProblemDetails(); //Padrão ProblemDetails para ser usado nas Exceptions
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
         }
@@ -76,8 +83,6 @@ namespace Kramp.API
         {
             var configuration = builder.Configuration;
             builder.Services.AddDbContext<KrampDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            // builder.Services.AddEntityFrameworkNpgsql().AddDbContext<KrampDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-            // "Server=localhost;Port=5432;Database=kramp;User Id=andrade;Password=Andrade*5432;"
         }
 
         public static void AddValidations(this WebApplicationBuilder builder)
