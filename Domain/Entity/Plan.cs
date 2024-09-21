@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity;
 
-[Table("plan")]
+[Table("training_plan")]
 public class Plan : TrainingGeneric, ITraining
 {
     [Key]
@@ -32,9 +32,8 @@ public class Plan : TrainingGeneric, ITraining
     [DataType(DataType.Date)]
     public DateTime EndDate { get; set; }
 
-    // TODO: Aplicar o Required quando possivel
-    //[Required] 
-    public ICollection<Workout>? Workouts { get; set; } //Exercicios do Plano
+    [Required]
+    public ICollection<Workout>? Workouts { get; set; } //Treinos do Plano
 
     public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Plano (Editar, Ver)
 }
