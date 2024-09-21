@@ -1,5 +1,4 @@
-﻿using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
-using Application.CQRS.UsersCQRS.MemberCQ.Commands;
+﻿using Application.CQRS.UsersCQRS.MemberCQ.Commands;
 using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity.User;
@@ -24,7 +23,7 @@ namespace Kramp.API.Controllers
         public async Task<ActionResult<MemberInfoViewModel>> GetAllMembers()
         {
             var members = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<GymInfoViewModel>>(members));
+            return Ok(_mapper.Map<IEnumerable<MemberInfoViewModel>>(members));
         }
 
         [HttpGet("{Id:guid}")]
@@ -37,7 +36,7 @@ namespace Kramp.API.Controllers
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<GymInfoViewModel>(member));
+            return Ok(_mapper.Map<MemberInfoViewModel>(member));
         }
 
         [HttpPut("Update")]
