@@ -100,6 +100,7 @@ namespace Kramp.API
             builder.Services.AddTransient<ProfessionalRepository>();
 
             builder.Services.AddTransient<PlanRepository>();
+            builder.Services.AddTransient<PlanWorkoutRepository>();
             builder.Services.AddTransient<WorkoutRepository>();
             builder.Services.AddTransient<WorkoutExerciseRepository>();
             builder.Services.AddTransient<ExerciseRepository>();

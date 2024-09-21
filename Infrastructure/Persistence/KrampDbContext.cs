@@ -12,6 +12,7 @@ namespace Infrastructure.Persistence
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Professional> Professionals { get; set; }
+
         public DbSet<Plan> Plans { get; set; }
         public DbSet<PlanWorkout> PlanWorkout { get; set; }
         public DbSet<Workout> Workouts { get; set; }
