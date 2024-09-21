@@ -29,6 +29,7 @@ public class UpdatePlanCommandHandler : IRequestHandler<UpdatePlanCommand, Respo
         }
 
         Plan newPlan = _mapper.Map(request, oldPlan);
+        newPlan.UpdatedAt = DateTime.Now;
 
         await _repository.UpdateAsync(newPlan, cancellationToken);
 

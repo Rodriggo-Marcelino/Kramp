@@ -25,6 +25,7 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
         CancellationToken cancellationToken)
     {
         Plan plan = _mapper.Map<Plan>(request);
+        plan.CreatedAt = DateTime.Now;
 
         await _repository.AddAsync(plan, cancellationToken);
 
