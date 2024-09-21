@@ -41,16 +41,7 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     [HttpGet("{Id:guid}/Exercises")]
     public async Task<ActionResult<WorkoutInfoViewModel>> GetWorkoutExercisesById(Guid Id)
     {
-        Workout? workout = await _repository.GetByIdAsync(Id);
-
-        if (workout == null)
-        {
-            return NotFound();
-        }
-
-        var workoutViewModel = _mapper.Map<WorkoutInfoViewModel>(workout);
-
-        return Ok(workoutViewModel.Exercises);
+        throw new NotImplementedException();
     }
 
     [HttpPut("Update/{Id:guid}")]
@@ -67,4 +58,6 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
         await _repository.DeleteByIdAsync(Id, new CancellationToken());
         return NoContent();
     }
+
+    // TODO: Endpoint de Workout+Exercises (GET)
 }
