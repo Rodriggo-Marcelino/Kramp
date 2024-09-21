@@ -93,13 +93,17 @@ namespace Kramp.API
         public static void AddInjections(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
+
             builder.Services.AddTransient<ManagerRepository>();
             builder.Services.AddTransient<GymRepository>();
             builder.Services.AddTransient<MemberRepository>();
             builder.Services.AddTransient<ProfessionalRepository>();
-            builder.Services.AddTransient<ExerciseRepository>();
-            builder.Services.AddTransient<WorkoutRepository>();
+
             builder.Services.AddTransient<PlanRepository>();
+            builder.Services.AddTransient<WorkoutRepository>();
+            builder.Services.AddTransient<WorkoutExerciseRepository>();
+            builder.Services.AddTransient<ExerciseRepository>();
+
             builder.Services.AddSingleton<ExceptionHandlingHelper>();
         }
 
