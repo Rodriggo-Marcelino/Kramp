@@ -1,4 +1,4 @@
-using Domain.Entity;
+using Domain.Entity.Training;
 using Infrastructure.Persistence;
 
 namespace Services.Repositories;

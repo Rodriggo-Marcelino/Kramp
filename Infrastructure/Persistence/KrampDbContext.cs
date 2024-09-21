@@ -1,5 +1,6 @@
-﻿using Domain.Entity;
-using Domain.Entity.Generics;
+﻿using Domain.Entity.Generics;
+using Domain.Entity.Training;
+using Domain.Entity.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -12,6 +13,7 @@ namespace Infrastructure.Persistence
         public DbSet<Member> Members { get; set; }
         public DbSet<Professional> Professionals { get; set; }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<PlanWorkout> PlanWorkout { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public DbSet<Exercise> Exercises { get; set; }

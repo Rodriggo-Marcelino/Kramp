@@ -2,7 +2,7 @@
 using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.User;
 using MediatR;
 using Services.Repositories;
 

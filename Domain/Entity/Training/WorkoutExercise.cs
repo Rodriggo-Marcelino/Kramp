@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entity
+namespace Domain.Entity.Training
 {
     [Table("workout_exercise")]
     public class WorkoutExercise : TrainingGeneric

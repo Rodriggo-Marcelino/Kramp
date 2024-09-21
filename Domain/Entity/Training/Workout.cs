@@ -4,7 +4,7 @@ using Domain.Entity.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entity;
+namespace Domain.Entity.Training;
 
 [Table("workout")]
 public class Workout : TrainingGeneric, ITraining

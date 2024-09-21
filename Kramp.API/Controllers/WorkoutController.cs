@@ -1,7 +1,7 @@
 using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.Training;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;

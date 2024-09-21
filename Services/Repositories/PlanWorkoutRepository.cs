@@ -3,7 +3,7 @@ using Infrastructure.Persistence;
 
 namespace Services.Repositories
 {
-    public class WorkoutExerciseRepository(KrampDbContext context) : GenericRepository<WorkoutExercise>(context)
+    public class PlanWorkoutRepository(KrampDbContext context) : GenericRepository<PlanWorkout>(context)
     {
     }
 }

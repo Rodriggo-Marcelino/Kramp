@@ -1,17 +1,16 @@
-﻿using Domain.Entity.Enum;
 using Domain.Entity.Generics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entity
+namespace Domain.Entity.User
 {
-    [Table("manager")]
-    public class Manager : UserGeneric
+    [Table("member")]
+    public class Member : UserGeneric
     {
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        [Column(TypeName = "varchar(50)")]
+        [StringLength(100, MinimumLength = 3)]
+        [Column(TypeName = "varchar(100)")]
         public string? Surname { get; set; }
 
         [StringLength(240)]
@@ -21,7 +20,5 @@ namespace Domain.Entity
         [Required]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-
-        public List<Permission> Permission { get; set; } = new List<Permission>();
     }
 }

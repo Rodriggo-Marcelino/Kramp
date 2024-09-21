@@ -1,5 +1,5 @@
-using Domain.Entity;
 using Domain.Entity.Enum;
+using Domain.Entity.Training;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 

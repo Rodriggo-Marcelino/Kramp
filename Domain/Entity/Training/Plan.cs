@@ -1,16 +1,15 @@
-using Domain.Entity.Enum;
 using Domain.Entity.Generics;
 using Domain.Entity.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entity;
+namespace Domain.Entity.Training;
 
-[Table("exercise")]
-public class Exercise : TrainingGeneric, ITraining
+[Table("training_plan")]
+public class Plan : TrainingGeneric, ITraining
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
     [StringLength(50, MinimumLength = 3)]
@@ -25,10 +24,16 @@ public class Exercise : TrainingGeneric, ITraining
 
     public DateTime UpdatedAt { get; set; }
 
-    public string? Photo { get; set; }
-    public string? Video { get; set; }
+    [Required]
+    [DataType(DataType.Date)]
+    public DateTime StartDate { get; set; }
 
     [Required]
-    public Muscle TargetedMuscle { get; set; }
-    public Muscle SynergistMuscle { get; set; }
+    [DataType(DataType.Date)]
+    public DateTime EndDate { get; set; }
+
+    [Required]
+    public ICollection<PlanWorkout>? Workouts { get; set; } //Treinos do Plano
+
+    public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Plano (Editar, Ver)
 }

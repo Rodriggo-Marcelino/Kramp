@@ -1,4 +1,4 @@
-using Domain.Entity;
+using Domain.Entity.Training;
 
 namespace Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 

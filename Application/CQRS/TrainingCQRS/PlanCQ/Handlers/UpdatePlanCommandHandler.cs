@@ -2,7 +2,7 @@ using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.Training;
 using MediatR;
 using Services.Repositories;
 

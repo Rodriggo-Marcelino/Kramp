@@ -3,8 +3,8 @@ using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
 using Domain.Abstractions;
-using Domain.Entity;
 using Domain.Entity.Enum;
+using Domain.Entity.Training;
 using MediatR;
 using Services.Repositories;
 

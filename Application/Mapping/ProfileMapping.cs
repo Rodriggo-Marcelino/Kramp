@@ -11,7 +11,8 @@ using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.Training;
+using Domain.Entity.User;
 
 namespace Application.Mapping
 {
