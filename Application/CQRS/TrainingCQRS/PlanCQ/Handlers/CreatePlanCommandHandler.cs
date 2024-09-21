@@ -13,23 +13,52 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
 {
     private readonly IAuthService _authService;
     private readonly PlanRepository _repository;
+    private readonly WorkoutRepository _workoutRepository;
     private readonly IMapper _mapper;
 
-    public CreatePlanCommandHandler(IAuthService authService, PlanRepository repository, IMapper mapper)
+    public CreatePlanCommandHandler(
+        IAuthService authService,
+        PlanRepository repository,
+        WorkoutRepository workoutRepository,
+        IMapper mapper)
     {
         _authService = authService;
         _repository = repository;
         _mapper = mapper;
+        _workoutRepository = workoutRepository;
     }
     public async Task<ResponseBase<PlanInfoViewModel?>> Handle(CreatePlanCommand request,
         CancellationToken cancellationToken)
     {
-        Plan plan = _mapper.Map<Plan>(request);
-        plan.CreatedAt = DateTime.Now;
+        Plan plan = new Plan
+        {
+            Name = request.Name,
+            Description = request.Description,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        };
+
+        if (!request.Workouts.Any())
+        {
+            throw new Exception("Workouts cannot be null");
+        }
+
+        IEnumerable<Workout> workouts = await _workoutRepository.FindAllByIdAsync(request.Workouts);
+
+        plan.Workouts = workouts.ToList();
 
         await _repository.AddAsync(plan, cancellationToken);
 
-        PlanInfoViewModel planInfoVm = _mapper.Map<PlanInfoViewModel>(plan);
+        PlanInfoViewModel planInfoVm = new PlanInfoViewModel
+        {
+            Name = plan.Name,
+            Description = plan.Description,
+            StartDate = plan.StartDate,
+            EndDate = plan.EndDate,
+            Workouts = plan.Workouts.ToList()
+        };
 
         return new ResponseBase<PlanInfoViewModel?>
         {

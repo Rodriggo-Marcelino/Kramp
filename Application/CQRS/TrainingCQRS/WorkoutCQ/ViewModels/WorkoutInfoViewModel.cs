@@ -11,5 +11,6 @@ public class WorkoutInfoViewModel
     public int RepetitionCount { get; set; }
     public string? Period { get; set; }
     public List<Muscle>? TargetedMuscles { get; set; }
+    //TODO: Classe de View model para exercise (e o mapper)
     public List<Exercise>? Exercises { get; set; }
 }

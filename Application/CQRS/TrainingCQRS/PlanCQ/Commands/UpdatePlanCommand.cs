@@ -1,6 +1,5 @@
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 using Application.Response;
-using Domain.Entity;
 using MediatR;
 using System.Text.Json.Serialization;
 
@@ -14,5 +13,5 @@ public record UpdatePlanCommand : IRequest<ResponseBase<PlanInfoViewModel>>
     public string? Description { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public ICollection<Workout>? Workouts { get; set; }
+    public IEnumerable<Guid>? Workouts { get; set; }
 }
