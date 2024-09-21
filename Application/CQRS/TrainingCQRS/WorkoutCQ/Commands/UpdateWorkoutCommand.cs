@@ -1,15 +1,17 @@
-using Domain.Entity;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+using Application.Response;
 using Domain.Entity.Enum;
+using MediatR;
 using System.Text.Json.Serialization;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 
-public class UpdateWorkoutCommand
+public record UpdateWorkoutCommand : IRequest<ResponseBase<WorkoutInfoViewModel>>
 {
     [JsonIgnore]
     public Guid Id { get; set; }
     public string? Name { get; set; }
-    public string? Descritption { get; set; }
-    public List<Muscle>? TargetedMuscles { get; set; }
-    public ICollection<Exercise>? Exercises { get; set; }
+    public string? Description { get; set; }
+    public Period Period { get; set; }
+    public ICollection<Guid>? Exercises { get; set; }
 }

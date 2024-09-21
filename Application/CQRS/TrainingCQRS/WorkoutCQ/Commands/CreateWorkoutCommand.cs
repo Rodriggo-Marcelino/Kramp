@@ -1,12 +1,14 @@
+using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+using Application.Response;
 using Domain.Entity.Enum;
+using MediatR;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 
-public class CreateWorkoutCommand
+public record CreateWorkoutCommand : IRequest<ResponseBase<WorkoutInfoViewModel>>
 {
     public string? Name { get; set; }
-    public string? Descritption { get; set; }
-    public List<Muscle>? TargetedMuscles { get; set; }
-
-    //public ICollection<ExerciseId>? Exercises { get; set; }
+    public string? Description { get; set; }
+    public Period Period { get; set; }
+    public IEnumerable<Guid>? Exercises { get; set; }
 }
