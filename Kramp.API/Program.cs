@@ -11,11 +11,15 @@ builder.AddAutoMapper();
 builder.AddSwaggerDocs();
 builder.AddJwtAuth();
 builder.AddInjections();
+builder.AddExceptionHandlers();
 
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Middleware para servir o arquivo JSON do Swagger
+/*
 app.Use(async (context, next) =>
 {
     if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.2.0_openapi.json"))
@@ -30,12 +34,14 @@ app.Use(async (context, next) =>
         await next();
     }
 });
+*/
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/swagger/v1/V1.2.0_openapi.json", "Kramp API v1")
+        //options.SwaggerEndpoint("/swagger/v1/V1.2.0_openapi.json", "Kramp API v1")
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Kramp API v1")
     );
 }
 

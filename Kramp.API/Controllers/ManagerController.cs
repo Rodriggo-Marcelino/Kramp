@@ -1,7 +1,7 @@
-﻿using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.ViewModels;
+﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;
@@ -29,12 +29,12 @@ namespace Kramp.API.Controllers
         public async Task<ActionResult<ManagerInfoViewModel>> GetManagerById(Guid Id)
         {
             Manager? manager = await _repository.GetByIdAsync(Id);
-            
-            if(manager == null)
+
+            if (manager == null)
             {
                 return NotFound();
             }
-            
+
             return Ok(_mapper.Map<ManagerInfoViewModel>(manager));
         }
 

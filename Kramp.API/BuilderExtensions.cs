@@ -1,18 +1,21 @@
-﻿using Application.ManagerCQ.Commands;
-using Application.ManagerCQ.Validators;
+﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
+using Application.ExceptionHandler;
 using Application.Mapping;
+using Domain.Abstractions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Domain.Abstractions;
+using Microsoft.OpenApi.Models;
 using Services.AuthService;
 using Services.Repositories;
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Kramp.API
 {
@@ -31,7 +34,7 @@ namespace Kramp.API
                     {
                         Name = "Exemplo de pagina de contato",
                         Url = new Uri("https://www.exemplo.com.br")
-                    }, 
+                    },
                     License = new OpenApiLicense
                     {
                         Name = "Exemplo de licença",
@@ -63,10 +66,16 @@ namespace Kramp.API
                 });
 
         }
-        
+
         public static void AddServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
+            builder.Services.AddProblemDetails(); //Padrão ProblemDetails para ser usado nas Exceptions
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
         }
@@ -74,8 +83,6 @@ namespace Kramp.API
         {
             var configuration = builder.Configuration;
             builder.Services.AddDbContext<KrampDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            // builder.Services.AddEntityFrameworkNpgsql().AddDbContext<KrampDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-            // "Server=localhost;Port=5432;Database=kramp;User Id=andrade;Password=Andrade*5432;"
         }
 
         public static void AddValidations(this WebApplicationBuilder builder)
@@ -91,10 +98,25 @@ namespace Kramp.API
         public static void AddInjections(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
+
             builder.Services.AddTransient<ManagerRepository>();
             builder.Services.AddTransient<GymRepository>();
             builder.Services.AddTransient<MemberRepository>();
             builder.Services.AddTransient<ProfessionalRepository>();
+
+            builder.Services.AddTransient<PlanRepository>();
+            builder.Services.AddTransient<PlanWorkoutRepository>();
+            builder.Services.AddTransient<WorkoutRepository>();
+            builder.Services.AddTransient<WorkoutExerciseRepository>();
+            builder.Services.AddTransient<ExerciseRepository>();
+
+            builder.Services.AddSingleton<ExceptionHandlingHelper>();
+        }
+
+        public static void AddExceptionHandlers(this WebApplicationBuilder builder)
+        {
+            // THIS SHOULD BE ON THE BOTTOM, ALWAYS
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Application.ProfessionalCQ.Commands;
-using Application.ProfessionalCQ.ViewModels;
+﻿using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;
@@ -25,17 +25,17 @@ namespace Kramp.API.Controllers
             var professionals = await _repository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<ProfessionalInfoViewModel>>(professionals));
         }
-        
+
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<ProfessionalInfoViewModel>> GetProfessionalById(Guid Id)
         {
             Professional? professional = await _repository.GetByIdAsync(Id);
-            
-            if(professional == null)
+
+            if (professional == null)
             {
                 return NotFound();
             }
-            
+
             return Ok(_mapper.Map<ProfessionalInfoViewModel>(professional));
         }
 

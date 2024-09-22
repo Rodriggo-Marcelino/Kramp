@@ -14,8 +14,8 @@ namespace Domain.Entity.Interfaces
         string? DocumentNumber { get; set; }
 
         DateTime CreatedAt { get; set; }
-        string? RefreshToken {get; set;}
-        DateTime? RefreshTokenExpiryTime {get; set;}
+        string? RefreshToken { get; set; }
+        DateTime? RefreshTokenExpiryTime { get; set; }
 
     }
 }

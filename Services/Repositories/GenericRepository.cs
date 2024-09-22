@@ -1,11 +1,11 @@
-﻿
+﻿using Domain.Entity.Generics;
 using Domain.Repository;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories
 {
-    public class GenericRepository<T> : IRepository<T> where T : class
+    public class GenericRepository<T> : IRepository<T> where T : EntityGeneric
     {
         private readonly KrampDbContext _context;
         private readonly DbSet<T> _dbSet;
@@ -15,7 +15,7 @@ namespace Services.Repositories
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        
+
         //GET
         public async Task<IEnumerable<T>> GetAllAsync()
         {
@@ -25,34 +25,25 @@ namespace Services.Repositories
         public async Task<T?> GetByIdAsync(Guid Id)
         {
             var entity = await _dbSet.FindAsync(Id);
-            
-            if(entity == null)
+
+            if (entity == null)
             {
                 throw new Exception($"Entity of type {typeof(T).Name} with id {Id} not found.");
             }
-            
+
             return entity;
         }
 
-        //TODO: TESTAR MAIS
         public async Task<IEnumerable<T>> FindAllByIdAsync(IEnumerable<Guid> Ids)
         {
-            return await _dbSet.Where(e => Ids.Contains
-                    (
-                    (Guid) e.GetType()
-                    .GetProperty("Id")!
-                    .GetValue(e,null)!)
-                    )
-                .ToListAsync();
+            return await _dbSet.Where(entity => Ids.Contains(entity.Id)).ToListAsync();
         }
 
-        //TODO: TESTAR MAIS
         public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy)
         {
             return await OrderBy(_dbSet).ToListAsync();
         }
 
-        //TODO: TESTAR MAIS
         public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy, int page, int pageSize)
         {
             return await OrderBy(_dbSet)

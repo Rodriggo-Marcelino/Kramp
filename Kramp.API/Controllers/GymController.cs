@@ -1,7 +1,7 @@
-﻿using Application.GymCQ.Commands;
-using Application.GymCQ.ViewModels;
+﻿using Application.CQRS.UsersCQRS.GymCQ.Commands;
+using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
 using AutoMapper;
-using Domain.Entity;
+using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;
@@ -15,7 +15,7 @@ namespace Kramp.API.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<GymInfoViewModel>> Create(CreateGymCommand command)
         {
-            return Created("" ,await _mediator.Send(command));
+            return Created("", await _mediator.Send(command));
         }
 
         [HttpGet("All")]
@@ -24,7 +24,7 @@ namespace Kramp.API.Controllers
             var gyms = await _repository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<GymInfoViewModel>>(gyms));
         }
-        
+
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<GymInfoViewModel>> GetGymById(Guid Id)
         {
