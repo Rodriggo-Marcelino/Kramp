@@ -80,7 +80,6 @@ namespace Application.Mapping
                 .ReverseMap();
 
             CreateMap<Workout, WorkoutInfoViewModel>()
-                .ForMember(dest => dest.Exercises, opt => opt.Ignore())
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 

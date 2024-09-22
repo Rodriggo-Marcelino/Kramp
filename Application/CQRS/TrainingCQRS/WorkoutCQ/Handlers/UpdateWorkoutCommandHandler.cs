@@ -2,8 +2,8 @@ using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
+using Domain.Entity.Enum;
 using Domain.Entity.Training;
-using Infrastructure.Persistence;
 using MediatR;
 using Services.Repositories;
 
@@ -13,23 +13,24 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
 {
     private readonly WorkoutRepository _repository;
     private readonly ExerciseRepository _exerciseRepository;
+    private readonly WorkoutExerciseRepository _workoutExerciseRepository;
     private readonly IMapper _mapper;
-    private readonly KrampDbContext _context;
 
     public UpdateWorkoutCommandHandler(
         WorkoutRepository repository,
         IMapper mapper,
         ExerciseRepository exerciseRepository,
-        KrampDbContext context)
+        WorkoutExerciseRepository workoutExerciseRepository)
     {
         _repository = repository;
         _mapper = mapper;
         _exerciseRepository = exerciseRepository;
-        _context = context;
+        _workoutExerciseRepository = workoutExerciseRepository;
     }
 
     public async Task<ResponseBase<WorkoutInfoViewModel>> Handle(UpdateWorkoutCommand request, CancellationToken cancellationToken)
     {
+        List<WorkoutExercise> workoutExercises = new List<WorkoutExercise>();
         Workout? oldWorkout = await _repository.GetByIdAsync(request.Id);
 
         if (oldWorkout == null)
@@ -42,27 +43,21 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
         newWorkout.CreatedAt = DateTime.UtcNow;
         newWorkout.UpdatedAt = DateTime.UtcNow;
 
-        if (!request.Exercises.Any())
+        if (request.Exercises.Any())
         {
-            throw new Exception("Exercises cannot be null");
+            IEnumerable<Exercise> exercises = await _exerciseRepository.FindAllByIdAsync(request.Exercises);
+            SaveAllTargetedMuscles(newWorkout, exercises);
+            workoutExercises = await SaveAllWorkoutExercises(exercises, newWorkout);
+
+            newWorkout.SeriesCount = CountSeries(workoutExercises);
+            newWorkout.RepetitionCount = CountRepetitions(workoutExercises);
+            newWorkout.Exercises = workoutExercises;
         }
-
-        IEnumerable<Exercise> exercises = await _exerciseRepository
-            .FindAllByIdAsync(request.Exercises);
-
-        SaveAllTargetedMuscles(newWorkout, exercises);
-
-        List<WorkoutExercise> workoutExercises = SaveAllWorkoutExercises(exercises, newWorkout);
-
-        newWorkout.SeriesCount = CountSeries(workoutExercises);
-        newWorkout.RepetitionCount = CountRepetitions(workoutExercises);
-        newWorkout.Exercises = workoutExercises;
 
         await _repository.UpdateAsync(newWorkout, cancellationToken);
 
         var workoutInfoVm = _mapper.Map<WorkoutInfoViewModel>(newWorkout);
         workoutInfoVm.TargetedMuscles = newWorkout.TargetedMuscles;
-        workoutInfoVm.Exercises = newWorkout.Exercises.ToList();
 
         return new ResponseBase<WorkoutInfoViewModel>
         {
@@ -71,7 +66,7 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
         };
     }
 
-    private List<WorkoutExercise> SaveAllWorkoutExercises(IEnumerable<Exercise> exercises, Workout newWorkout)
+    private async Task<List<WorkoutExercise>> SaveAllWorkoutExercises(IEnumerable<Exercise> exercises, Workout newWorkout)
     {
         List<WorkoutExercise> workoutExercises = new List<WorkoutExercise>();
         foreach (Exercise exercise in exercises)
@@ -82,7 +77,13 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
                 Exercise = exercise,
                 WorkoutId = newWorkout.Id,
                 Workout = newWorkout,
+                Series = 3,
+                Repetitions = 12,
+                RestTimeInSeconds = 60,
+                ExerciseTimeInSeconds = 20
             });
+
+            await _workoutExerciseRepository.AddAsync(workoutExercises.Last(), default);
         }
         return workoutExercises;
     }
@@ -93,6 +94,8 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
 
     protected void SaveAllTargetedMuscles(Workout workout, IEnumerable<Exercise> exercises)
     {
+        workout.TargetedMuscles = new List<Muscle>();
+
         foreach (var exercise in exercises)
         {
             workout.TargetedMuscles.Add(exercise.TargetedMuscle);

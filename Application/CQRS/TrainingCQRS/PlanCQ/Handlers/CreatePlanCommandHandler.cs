@@ -60,7 +60,7 @@ public class CreatePlanCommandHandler : IRequestHandler<CreatePlanCommand, Respo
             Description = plan.Description,
             StartDate = plan.StartDate,
             EndDate = plan.EndDate,
-            Workouts = workouts.ToList()
+            //Workouts = workouts.ToList()
         };
 
         return new ResponseBase<PlanInfoViewModel?>

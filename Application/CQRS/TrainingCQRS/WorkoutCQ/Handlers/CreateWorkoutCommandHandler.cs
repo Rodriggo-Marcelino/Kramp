@@ -61,7 +61,6 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
 
         var workoutInfoVm = _mapper.Map<WorkoutInfoViewModel>(workout);
         workoutInfoVm.TargetedMuscles = workout.TargetedMuscles;
-        workoutInfoVm.Exercises = workout.Exercises.ToList();
 
         return new ResponseBase<WorkoutInfoViewModel?>
         {

@@ -3,9 +3,7 @@ using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
 using Domain.Entity.Training;
-using Infrastructure.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.PlanCQ.Handlers;
@@ -14,51 +12,40 @@ public class UpdatePlanCommandHandler : IRequestHandler<UpdatePlanCommand, Respo
 {
     private readonly PlanRepository _repository;
     private readonly WorkoutRepository _workoutRepository;
+    private readonly PlanWorkoutRepository _planWorkoutRepository;
     private readonly IMapper _mapper;
-    private readonly KrampDbContext _context;
 
     public UpdatePlanCommandHandler(
         PlanRepository repository,
         IMapper mapper,
         WorkoutRepository workoutRepository,
-        KrampDbContext context)
+        PlanWorkoutRepository planWorkoutRepository)
     {
         _repository = repository;
         _mapper = mapper;
         _workoutRepository = workoutRepository;
-        _context = context;
+        _planWorkoutRepository = planWorkoutRepository;
     }
 
     public async Task<ResponseBase<PlanInfoViewModel>> Handle(UpdatePlanCommand request, CancellationToken cancellationToken)
     {
-        //TODO: Fix DbUpdateConcurrencyException
-        Plan? plan = await _repository.GetByIdAsync(request.Id);
+        List<PlanWorkout> planWorkouts = new List<PlanWorkout>();
+        Plan? oldPlan = await _repository.GetByIdAsync(request.Id);
 
-        if (plan == null)
+        if (oldPlan == null)
         {
             throw new Exception("Plan not found.");
         }
 
-        Plan newPlan = new Plan
-        {
-            Id = request.Id,
-            Name = request.Name,
-            Description = request.Description,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
-            UpdatedAt = DateTime.UtcNow,
-        };
+        var newPlan = _mapper.Map(request, oldPlan);
 
-        _context.Entry(newPlan).State = EntityState.Detached;
-
-        if (!request.Workouts.Any())
+        if (request.Workouts.Any())
         {
-            throw new Exception("Workouts cannot be null");
+            IEnumerable<Workout> workouts = await _workoutRepository.FindAllByIdAsync(request.Workouts);
+            planWorkouts = await SaveAllPlanWorkouts(workouts, newPlan);
+
+            newPlan.Workouts = planWorkouts;
         }
-
-        IEnumerable<Workout> workouts = await _workoutRepository.FindAllByIdAsync(request.Workouts);
-        List<PlanWorkout> planWorkouts = SaveAllPlanWorkouts(workouts, newPlan);
-        newPlan.Workouts = planWorkouts;
 
         await _repository.UpdateAsync(newPlan, cancellationToken);
 
@@ -72,7 +59,7 @@ public class UpdatePlanCommandHandler : IRequestHandler<UpdatePlanCommand, Respo
 
     }
 
-    private List<PlanWorkout> SaveAllPlanWorkouts(IEnumerable<Workout> workouts, Plan newPlan)
+    private async Task<List<PlanWorkout>> SaveAllPlanWorkouts(IEnumerable<Workout> workouts, Plan newPlan)
     {
         List<PlanWorkout> planWorkouts = new List<PlanWorkout>();
 
@@ -85,6 +72,8 @@ public class UpdatePlanCommandHandler : IRequestHandler<UpdatePlanCommand, Respo
                 WorkoutId = workout.Id,
                 Workout = workout
             });
+
+            await _planWorkoutRepository.AddAsync(planWorkouts.Last(), default);
         }
 
         return planWorkouts;
