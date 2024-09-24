@@ -22,9 +22,9 @@ app.UseExceptionHandler();
 
 app.Use(async (context, next) =>
 {
-    if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.3.0_openapi.json"))
+    if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.3.1_openapi.json"))
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "Swagger", "V1.3.0_openapi.json");
+        var filePath = Path.Combine(AppContext.BaseDirectory, "Swagger", "V1.3.1_openapi.json");
         var jsonContent = await File.ReadAllTextAsync(filePath);
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(jsonContent);
@@ -40,7 +40,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/swagger/v1/V1.3.0_openapi.json", "Kramp API v1")
+        options.SwaggerEndpoint("/swagger/v1/V1.3.1_openapi.json", "Kramp API v1")
     );
 }
 
