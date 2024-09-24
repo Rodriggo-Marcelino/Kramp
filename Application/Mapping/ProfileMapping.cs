@@ -83,12 +83,12 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<CreatePlanCommand, Plan>()
+            CreateMap<CreateSimplePlanCommand, Plan>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<UpdatePlanCommand, Plan>()
+            CreateMap<UpdateSimplePlanCommand, Plan>()
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
