@@ -25,6 +25,17 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
         return Ok(_mapper.Map<IEnumerable<WorkoutInfoViewModel>>(workouts));
     }
 
+    // TODO: Implementar os métodos abaixo
+    [HttpGet("All")]
+    public async Task<ActionResult<List<WorkoutInfoViewModel>>> GetAllWorkouts(int pageNumber = 1, int pageSize = 10)
+    {
+        //var workouts = await _repository.GetAllAsync(pageNumber, pageSize);
+        //var mappedWorkouts = _mapper.Map<List<WorkoutInfoViewModel>>(workouts);
+        //var pagedWorkouts = new PagedList<WorkoutInfoViewModel>(mappedWorkouts, workouts.TotalCount, workouts.CurrentPage, workouts.PageSize);
+
+        return Ok();
+    }
+
     [HttpGet("{Id:guid}")]
     public async Task<ActionResult<WorkoutInfoViewModel>> GetWorkoutById(Guid Id)
     {
@@ -38,10 +49,20 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
         return Ok(_mapper.Map<WorkoutInfoViewModel>(workout));
     }
 
+    // TODO: Implementar os métodos abaixo
     [HttpGet("{Id:guid}/Exercises")]
     public async Task<ActionResult<WorkoutInfoViewModel>> GetWorkoutExercisesById(Guid Id)
     {
         throw new NotImplementedException();
+    }
+
+    // TODO: Implementar os métodos abaixo
+    [HttpPost("{workoutId:guid}/Exercises")]
+    public async Task<IActionResult> AddExerciseToWorkout(Guid workoutId /*, AddExerciseToWorkoutCommand command*/)
+    {
+        //command.WorkoutId = workoutId;
+        // Lógica para adicionar o exercício ao Workout
+        return Ok();
     }
 
     [HttpPut("Update/{Id:guid}")]
@@ -56,6 +77,14 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     {
         //TODO: Retirar o método de delete do controller (má prática)
         await _repository.DeleteByIdAsync(Id, new CancellationToken());
+        return NoContent();
+    }
+
+    // TODO: Implementar os métodos abaixo
+    [HttpDelete("{workoutId:guid}/Exercises/{exerciseId:guid}")]
+    public async Task<IActionResult> RemoveExerciseFromWorkout(Guid workoutId, Guid exerciseId)
+    {
+        // Lógica para remover o exercício do Workout
         return NoContent();
     }
 
