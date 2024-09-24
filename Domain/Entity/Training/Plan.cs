@@ -32,7 +32,6 @@ public class Plan : TrainingGeneric, ITraining
     [DataType(DataType.Date)]
     public DateTime EndDate { get; set; }
 
-    [Required]
     public ICollection<PlanWorkout>? Workouts { get; set; } //Treinos do Plano
 
     public ICollection<UserGeneric>? Users { get; set; } //Consumidores do Plano (Editar, Ver)
