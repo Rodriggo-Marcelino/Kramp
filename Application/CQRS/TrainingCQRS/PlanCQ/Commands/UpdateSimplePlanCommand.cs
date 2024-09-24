@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 
-public record UpdatePlanCommand : IRequest<ResponseBase<PlanInfoViewModel>>
+public record UpdateSimplePlanCommand : IRequest<ResponseBase<SimplePlanViewModel>>
 {
     [JsonIgnore]
     public Guid Id { get; set; }

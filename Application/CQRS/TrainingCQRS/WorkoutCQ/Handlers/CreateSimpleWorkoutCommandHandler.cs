@@ -3,14 +3,13 @@ using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.Response;
 using AutoMapper;
 using Domain.Abstractions;
-using Domain.Entity.Enum;
 using Domain.Entity.Training;
 using MediatR;
 using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Handlers;
 
-public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand, ResponseBase<WorkoutInfoViewModel?>>
+public class CreateSimpleWorkoutCommandHandler : IRequestHandler<CreateSimpleWorkoutCommand, ResponseBase<SimpleWorkoutViewModel?>>
 {
     private readonly IAuthService _authService;
     private readonly WorkoutRepository _repository;
@@ -18,7 +17,7 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
     private readonly ExerciseRepository _exerciseRepository;
     private readonly IMapper _mapper;
 
-    public CreateWorkoutCommandHandler
+    public CreateSimpleWorkoutCommandHandler
         (
         IAuthService authService,
         WorkoutRepository repository,
@@ -34,39 +33,9 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
         _exerciseRepository = exerciseRepository;
     }
 
-    public async Task<ResponseBase<WorkoutInfoViewModel?>> Handle(CreateWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseBase<SimpleWorkoutViewModel?>> Handle(CreateSimpleWorkoutCommand request, CancellationToken cancellationToken)
     {
-        Workout? workout = _mapper.Map<Workout>(request);
-        workout.TargetedMuscles = new List<Muscle>();
-        workout.CreatedAt = DateTime.UtcNow;
-        workout.UpdatedAt = DateTime.UtcNow;
-
-        if (!request.Exercises.Any())
-        {
-            throw new Exception("Exercises cannot be null");
-        }
-
-        IEnumerable<Exercise> exercises = await _exerciseRepository
-            .FindAllByIdAsync(request.Exercises);
-
-        saveAllTargetedMuscles(workout, exercises);
-
-        List<WorkoutExercise> workoutExercises = SaveAllWorkoutExercises(exercises, workout);
-
-        workout.SeriesCount = countSeries(workoutExercises);
-        workout.RepetitionCount = countRepetitions(workoutExercises);
-        workout.Exercises = workoutExercises;
-
-        await _repository.AddAsync(workout, cancellationToken);
-
-        var workoutInfoVm = _mapper.Map<WorkoutInfoViewModel>(workout);
-        workoutInfoVm.TargetedMuscles = workout.TargetedMuscles;
-
-        return new ResponseBase<WorkoutInfoViewModel?>
-        {
-            ResponseInfo = null,
-            Value = workoutInfoVm
-        };
+        throw new NotImplementedException();
     }
 
     protected List<WorkoutExercise> SaveAllWorkoutExercises(IEnumerable<Exercise> exercises, Workout workout)

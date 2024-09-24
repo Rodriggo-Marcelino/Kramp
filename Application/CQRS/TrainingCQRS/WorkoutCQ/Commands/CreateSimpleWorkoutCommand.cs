@@ -5,10 +5,9 @@ using MediatR;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 
-public record CreateWorkoutCommand : IRequest<ResponseBase<WorkoutInfoViewModel>>
+public record CreateSimpleWorkoutCommand : IRequest<ResponseBase<SimpleWorkoutViewModel>>
 {
     public string? Name { get; set; }
     public string? Description { get; set; }
     public Period Period { get; set; }
-    public IEnumerable<Guid>? Exercises { get; set; }
 }

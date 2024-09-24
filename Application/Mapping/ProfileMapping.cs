@@ -79,7 +79,7 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<Workout, WorkoutInfoViewModel>()
+            CreateMap<Workout, SimpleWorkoutViewModel>()
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
