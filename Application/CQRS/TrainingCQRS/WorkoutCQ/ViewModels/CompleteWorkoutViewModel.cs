@@ -2,7 +2,7 @@ using Domain.Entity.Enum;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 
-public record WorkoutInfoViewModel
+public record CompleteWorkoutViewModel
 {
     public string? Name { get; set; }
     public string? Description { get; set; }

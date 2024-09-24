@@ -1,7 +1,9 @@
-﻿namespace Application.CQRS.TrainingCQRS.PlanCQ.ViewModels
+﻿using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+
+namespace Application.CQRS.TrainingCQRS.PlanCQ.ViewModels
 {
     public record PlanWorkoutViewModel
     {
-        public Guid WorkoutId { get; set; }
+        public SimpleWorkoutViewModel Workout { get; set; }
     }
 }

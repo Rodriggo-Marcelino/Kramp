@@ -68,13 +68,13 @@ namespace Application.Mapping
 
             CreateMap<Professional, ProfessionalInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
 
-            CreateMap<CreateWorkoutCommand, Workout>()
+            CreateMap<CreateSimpleWorkoutCommand, Workout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Exercises, opt => opt.Ignore())
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<UpdateWorkoutCommand, Workout>()
+            CreateMap<UpdateSimpleWorkoutCommand, Workout>()
                 .ForMember(dest => dest.Exercises, opt => opt.Ignore())
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
@@ -92,7 +92,7 @@ namespace Application.Mapping
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<Plan, PlanInfoViewModel>().ReverseMap();
+            CreateMap<Plan, SimplePlanViewModel>().ReverseMap();
         }
 
     }
