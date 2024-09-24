@@ -34,6 +34,7 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         return Ok(_mapper.Map<IEnumerable<PlanInfoViewModel>>(plans));
     }
 
+    /*
     // TODO: Implementar os métodos abaixo
     [HttpGet("All")]
     public async Task<ActionResult<List<PlanInfoViewModel>>> GetAllPlans(int pageNumber = 1, int pageSize = 10)
@@ -41,6 +42,7 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         // Lógica para buscar os planos com paginação
         return Ok();
     }
+    */
 
     [HttpGet("{Id:guid}")]
     public async Task<ActionResult<PlanInfoViewModel>> GetPlanById(Guid Id)

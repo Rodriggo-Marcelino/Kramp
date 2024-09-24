@@ -25,6 +25,7 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
         return Ok(_mapper.Map<IEnumerable<WorkoutInfoViewModel>>(workouts));
     }
 
+    /*
     // TODO: Implementar os métodos abaixo
     [HttpGet("All")]
     public async Task<ActionResult<List<WorkoutInfoViewModel>>> GetAllWorkouts(int pageNumber = 1, int pageSize = 10)
@@ -35,6 +36,7 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
 
         return Ok();
     }
+    */
 
     [HttpGet("{Id:guid}")]
     public async Task<ActionResult<WorkoutInfoViewModel>> GetWorkoutById(Guid Id)

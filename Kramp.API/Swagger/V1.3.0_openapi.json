@@ -1,0 +1,3917 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Kramp API",
+    "description": "Kramp API",
+    "contact": {
+      "name": "Página de Contato",
+      "url": "https://www.exemplo.com.br"
+    },
+    "license": {
+      "name": "Licença",
+      "url": "https://www.exemplo.com.br"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Gym/Create": {
+      "post": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Cria uma nova academia",
+        "description": "Este endpoint permite a criação de uma nova academia no sistema.\nA requisição deve incluir as informações necessárias, como nome da academia, descrição, nome de usuário, senha e número do documento.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymCommand"
+              },
+              "examples": {
+                "valid-request": {
+                  "summary": "Exemplo de requisição válida",
+                  "value": {
+                    "name": "Academia XYZ",
+                    "description": "Uma academia completa para todas as idades.",
+                    "username": "academia_xyz",
+                    "password": "senhaSegura123",
+                    "documentNumber": "123456789"
+                  }
+                },
+                "missing-fields": {
+                  "summary": "Campos obrigatórios ausentes",
+                  "value": {
+                    "name": "",
+                    "description": "Uma academia moderna.",
+                    "username": "academia_mod",
+                    "password": "",
+                    "documentNumber": "987654321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Criação bem-sucedida",
+                    "value": {
+                      "name": "Academia XYZ",
+                      "description": "Uma academia completa para todas as idades.",
+                      "username": "academia_xyz",
+                      "refreshToken": "abc123",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição Inválida - Erros de Validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "missing-name": {
+                    "summary": "Nome ausente",
+                    "value": {
+                      "errors": [
+                        "O nome é obrigatório."
+                      ]
+                    }
+                  },
+                  "invalid-password": {
+                    "summary": "Senha muito curta",
+                    "value": {
+                      "errors": [
+                        "A senha deve ter no mínimo 6 caracteres."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não Autorizado - Credenciais Inválidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Acesso não autorizado. Verifique suas credenciais."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/All": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Retorna todas as academias",
+        "description": "Este endpoint recupera uma lista de todas as academias cadastradas no sistema.\n",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GymInfoViewModel"
+                  }
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Lista de academias",
+                    "value": [
+                      {
+                        "name": "Academia XYZ",
+                        "description": "Uma academia completa para todas as idades.",
+                        "username": "academia_xyz",
+                        "refreshToken": "abc123",
+                        "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                        "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      },
+                      {
+                        "name": "Academia ABC",
+                        "description": "Uma academia moderna com equipamentos de ponta.",
+                        "username": "academia_abc",
+                        "refreshToken": "def456",
+                        "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                        "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado ao processar sua solicitação. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/{Id}": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Retorna uma academia específica",
+        "description": "Este endpoint recupera os detalhes de uma academia específica com base no ID fornecido.\n",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O ID da academia que deseja recuperar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Academia encontrada",
+                    "value": {
+                      "name": "Academia XYZ",
+                      "description": "Uma academia completa para todas as idades.",
+                      "username": "academia_xyz",
+                      "refreshToken": "abc123",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não Encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Academia não encontrada com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado ao processar sua solicitação. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Atualiza uma academia específica",
+        "description": "Este endpoint permite a atualização das informações de uma academia específica com base no ID fornecido.\n",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O ID da academia que deseja atualizar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGymCommand"
+              },
+              "examples": {
+                "valid-update": {
+                  "summary": "Exemplo de atualização válida",
+                  "value": {
+                    "name": "Academia XYZ Atualizada",
+                    "description": "Uma academia renovada para todas as idades.",
+                    "username": "academia_xyz_atualizada",
+                    "documentNumber": "123456789"
+                  }
+                },
+                "partial-update": {
+                  "summary": "Exemplo de atualização parcial",
+                  "value": {
+                    "name": "Academia XYZ Nova"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Atualização bem-sucedida",
+                    "value": {
+                      "name": "Academia XYZ Atualizada",
+                      "description": "Uma academia renovada para todas as idades.",
+                      "username": "academia_xyz_atualizada",
+                      "refreshToken": "abc123",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição Inválida - Erros de Validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "missing-fields": {
+                    "summary": "Campos obrigatórios ausentes",
+                    "value": {
+                      "errors": [
+                        "O nome é obrigatório.",
+                        "O número do documento é obrigatório."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não Encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Academia não encontrada com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado ao processar sua solicitação. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gym/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Exclui uma academia específica",
+        "description": "Este endpoint permite a exclusão de uma academia específica com base no ID fornecido.\n",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O ID da academia que deseja excluir.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso - Nenhum conteúdo retornado após exclusão."
+          },
+          "404": {
+            "description": "Não Encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Academia não encontrada com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado ao processar sua solicitação. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/Create": {
+      "post": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Cria um Manager",
+        "description": "Endpoint para criação de um novo gerente de academia.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateManagerCommand"
+              },
+              "examples": {
+                "validRequest": {
+                  "summary": "Exemplo de uma requisição válida",
+                  "value": {
+                    "name": "João",
+                    "surname": "Silva",
+                    "userBio": "Gerente com vasta experiência em logística.",
+                    "birthDate": "1985-07-20",
+                    "username": "joaosilva",
+                    "password": "segura123",
+                    "documentNumber": "123456789"
+                  }
+                },
+                "invalidRequest": {
+                  "summary": "Exemplo de uma requisição inválida",
+                  "value": {
+                    "name": "",
+                    "surname": "S",
+                    "userBio": "Curta",
+                    "birthDate": "2010-01-01",
+                    "username": "",
+                    "password": "123",
+                    "documentNumber": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Retorna o novo item criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerInfoViewModel"
+                },
+                "examples": {
+                  "createdResponse": {
+                    "summary": "Exemplo de resposta de criação",
+                    "value": {
+                      "responseInfo": null,
+                      "value": {
+                        "name": "Maria",
+                        "surname": "Pereira",
+                        "userBio": "Experiência em gestão de academias de bairro.",
+                        "birthDate": "1990-02-15",
+                        "username": "mariapereira",
+                        "refreshToken": "YW5vdGhlcnVzZXI6c2VjdXJlcGFzczEyMw==",
+                        "refreshTokenExpiryTime": "2025-01-15T23:59:59Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Se houver erro da parte do usuário no preenchimento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "problemDetail": {
+                    "summary": "Exemplo de erro de validação",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Um ou mais erros de validação ocorreram.",
+                      "status": 400,
+                      "errors": {
+                        "Name": [
+                          "O nome é obrigatório.",
+                          "O nome deve ter no mínimo 2 caracteres."
+                        ],
+                        "Surname": [
+                          "O sobrenome deve ter no mínimo 2 caracteres."
+                        ],
+                        "UserBio": [
+                          "A biografia deve ter no mínimo 10 caracteres."
+                        ],
+                        "Password": [
+                          "A senha deve ter no mínimo 6 caracteres."
+                        ],
+                        "Username": [
+                          "O nome de usuário é obrigatório."
+                        ],
+                        "BirthDate": [
+                          "O gerente deve ter pelo menos 18 anos."
+                        ],
+                        "DocumentNumber": [
+                          "O número do documento deve ter no mínimo 5 caracteres."
+                        ]
+                      },
+                      "traceId": "00-f831d795a9d6b9cfef10038505155ce4-b9bc766eb9eb421a-00"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/All": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Obtém a lista de todos os gerentes cadastrados.",
+        "description": "Endpoint para recuperar todos os gerentes cadastrados na academia.",
+        "responses": {
+          "200": {
+            "description": "Lista de gerentes retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManagerInfoViewModel"
+                  }
+                },
+                "examples": {
+                  "singleManagerResponse": {
+                    "summary": "Exemplo de resposta contendo um único gerente",
+                    "value": [
+                      {
+                        "name": "João",
+                        "surname": "Silva",
+                        "userBio": "Gerente com vasta experiência em logística.",
+                        "birthDate": "1985-07-20",
+                        "username": "joaosilva",
+                        "refreshToken": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+                        "refreshTokenExpiryTime": "2024-12-31T23:59:59Z"
+                      }
+                    ]
+                  },
+                  "multipleManagersResponse": {
+                    "summary": "Exemplo de resposta contendo múltiplos gerentes",
+                    "value": [
+                      {
+                        "name": "João",
+                        "surname": "Silva",
+                        "userBio": "Gerente com vasta experiência em logística.",
+                        "birthDate": "1985-07-20",
+                        "username": "joaosilva",
+                        "refreshToken": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+                        "refreshTokenExpiryTime": "2024-12-31T23:59:59Z"
+                      },
+                      {
+                        "name": "Maria",
+                        "surname": "Pereira",
+                        "userBio": "Experiência em gestão de academias de bairro.",
+                        "birthDate": "1990-02-15",
+                        "username": "mariapereira",
+                        "refreshToken": "YW5vdGhlcnVzZXI6c2VjdXJlcGFzczEyMw==",
+                        "refreshTokenExpiryTime": "2025-01-15T23:59:59Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Nenhum gerente encontrado.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/Manager/{Id}": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Obtém informações de um gerente específico pelo ID.",
+        "description": "Endpoint para recuperar os detalhes de um gerente específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do gerente que deseja recuperar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do gerente retornadas com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerInfoViewModel"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Gerente com vasta experiência em logística.",
+                      "birthDate": "1985-07-20",
+                      "username": "joaosilva",
+                      "refreshToken": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gerente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "managerNotFoundError": {
+                    "summary": "Erro quando o gerente com o ID fornecido não é encontrado",
+                    "value": {
+                      "type": "https://example.com/probs/not-found",
+                      "title": "Recurso não encontrado.",
+                      "status": 404,
+                      "detail": "Gerente não encontrado com o ID fornecido.",
+                      "instance": "/api/Manager/{Id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Atualiza as informações de um gerente específico.",
+        "description": "Endpoint para atualizar os detalhes de um gerente utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do gerente que deseja atualizar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateManagerCommand"
+              },
+              "examples": {
+                "validRequest": {
+                  "summary": "Exemplo de uma requisição válida",
+                  "value": {
+                    "name": "João Atualizado",
+                    "surname": "Silva",
+                    "userBio": "Gerente com nova experiência em gerenciamento.",
+                    "birthDate": "1985-07-20",
+                    "username": "joao.atualizado",
+                    "documentNumber": "987654321"
+                  }
+                },
+                "invalidRequest": {
+                  "summary": "Exemplo de uma requisição inválida",
+                  "value": {
+                    "name": "",
+                    "surname": "S",
+                    "userBio": "Curta",
+                    "birthDate": "2010-01-01",
+                    "username": "",
+                    "documentNumber": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gerente atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerInfoViewModel"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "name": "João Atualizado",
+                      "surname": "Silva",
+                      "userBio": "Gerente com nova experiência em gerenciamento.",
+                      "birthDate": "1985-07-20",
+                      "username": "joao.atualizado",
+                      "documentNumber": "987654321"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Se houver erro da parte do usuário no preenchimento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "validationErrorExample": {
+                    "summary": "Exemplo de erro de validação",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "One or more validation errors occurred.",
+                      "status": 400,
+                      "errors": {
+                        "Name": [
+                          "O nome é obrigatório.",
+                          "O nome deve ter no mínimo 2 caracteres."
+                        ],
+                        "Surname": [
+                          "O sobrenome deve ter no mínimo 2 caracteres."
+                        ],
+                        "UserBio": [
+                          "A biografia deve ter no mínimo 10 caracteres."
+                        ],
+                        "Password": [
+                          "A senha deve ter no mínimo 6 caracteres."
+                        ],
+                        "Username": [
+                          "O nome de usuário é obrigatório."
+                        ],
+                        "BirthDate": [
+                          "O gerente deve ter pelo menos 18 anos."
+                        ],
+                        "DocumentNumber": [
+                          "O número do documento deve ter no mínimo 5 caracteres."
+                        ]
+                      },
+                      "traceId": "00-f831d795a9d6b9cfef10038505155ce4-b9bc766eb9eb421a-00"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gerente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "managerNotFoundError": {
+                    "summary": "Erro quando o gerente com o ID fornecido não é encontrado",
+                    "value": {
+                      "message": "Gerente não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manager/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Deleta um gerente específico pelo ID.",
+        "description": "Endpoint para deletar um gerente específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do gerente que deseja deletar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Gerente deletado com sucesso."
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "invalidIdFormatError": {
+                    "summary": "Erro quando o ID fornecido não está no formato UUID válido",
+                    "value": {
+                      "message": "O formato do ID é inválido. Deve ser um UUID válido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gerente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "managerNotFoundError": {
+                    "summary": "Erro quando o gerente com o ID fornecido não é encontrado",
+                    "value": {
+                      "message": "Gerente não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Create": {
+      "post": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Cria um novo membro",
+        "description": "Este endpoint permite a criação de um novo membro no sistema. A requisição deve incluir as informações necessárias, como nome, sobrenome, nome de usuário, senha e número do documento.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMemberCommand"
+              },
+              "examples": {
+                "valid-request": {
+                  "summary": "Exemplo de requisição válida",
+                  "value": {
+                    "name": "João",
+                    "surname": "Silva",
+                    "userBio": "Um entusiasta do fitness.",
+                    "birthDate": "1990-01-01",
+                    "username": "joaosilva",
+                    "password": "senhaForte123",
+                    "documentNumber": "123456789"
+                  }
+                },
+                "missing-fields": {
+                  "summary": "Campos obrigatórios ausentes",
+                  "value": {
+                    "name": "",
+                    "surname": "",
+                    "username": "joaosilva",
+                    "password": "",
+                    "documentNumber": "987654321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Criação bem-sucedida",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Um entusiasta do fitness.",
+                      "birthDate": "1990-01-01",
+                      "username": "joaosilva",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição Inválida - Erros de Validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "missing-name": {
+                    "summary": "Nome ausente",
+                    "value": {
+                      "errors": [
+                        "O nome é obrigatório."
+                      ]
+                    }
+                  },
+                  "invalid-password": {
+                    "summary": "Senha muito curta",
+                    "value": {
+                      "errors": [
+                        "A senha deve ter no mínimo 6 caracteres."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não Autorizado - Credenciais Inválidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Acesso não autorizado. Verifique suas credenciais."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/All": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Retorna todos os membros",
+        "description": "Este endpoint recupera uma lista de todos os membros cadastrados no sistema.\n",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberInfoViewModel"
+                  }
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Lista de membros",
+                    "value": [
+                      {
+                        "name": "João",
+                        "surname": "Silva",
+                        "userBio": "Um entusiasta do fitness.",
+                        "birthDate": "1990-01-01",
+                        "username": "joaosilva"
+                      },
+                      {
+                        "name": "Maria",
+                        "surname": "Santos",
+                        "userBio": "Apaixonada por musculação.",
+                        "birthDate": "1985-03-15",
+                        "username": "mariasantos"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Sem conteúdo - Nenhum membro encontrado"
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/{Id}": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Retorna um membro específico",
+        "description": "Este endpoint recupera as informações de um membro específico a partir de seu ID.\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "O ID do membro"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Membro encontrado",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Um entusiasta do fitness.",
+                      "birthDate": "1990-01-01",
+                      "username": "joaosilva"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado - Membro não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Membro não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Atualiza as informações de um membro",
+        "description": "Este endpoint permite a atualização das informações de um membro específico.\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "O ID do membro"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMemberCommand"
+              },
+              "examples": {
+                "update-request": {
+                  "summary": "Exemplo de requisição de atualização",
+                  "value": {
+                    "name": "João",
+                    "surname": "Silva",
+                    "userBio": "Agora, entusiasta de corrida.",
+                    "birthDate": "1990-01-01",
+                    "username": "joaocorrida",
+                    "documentNumber": "987654321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Atualização bem-sucedida",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Agora, entusiasta de corrida.",
+                      "birthDate": "1990-01-01",
+                      "username": "joaocorrida"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição Inválida - Erros de Validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "invalid-id": {
+                    "summary": "ID inválido",
+                    "value": {
+                      "errors": [
+                        "O ID fornecido não é válido."
+                      ]
+                    }
+                  },
+                  "invalid-bio": {
+                    "summary": "Bio muito curta",
+                    "value": {
+                      "errors": [
+                        "A biografia deve ter no mínimo 10 caracteres."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado - Membro não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Membro não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Exclui um membro",
+        "description": "Este endpoint permite a exclusão de um membro específico a partir de seu ID.\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "O ID do membro"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NoContent - Membro excluído com sucesso"
+          },
+          "404": {
+            "description": "Não encontrado - Membro não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Membro não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Create": {
+      "post": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Cria um novo profissional",
+        "description": "Este endpoint permite a criação de um novo profissional no sistema. A requisição deve incluir as informações necessárias, como nome do profissional, sobrenome, biografia, data de nascimento, nome de usuário, senha, cargo e número do documento.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalCommand"
+              },
+              "examples": {
+                "valid-request": {
+                  "summary": "Exemplo de requisição válida",
+                  "value": {
+                    "name": "João",
+                    "surname": "Silva",
+                    "userBio": "Profissional com vasta experiência.",
+                    "birthDate": "1985-07-20",
+                    "username": "joaosilva",
+                    "password": "segura123",
+                    "job": 1,
+                    "documentNumber": "123456789"
+                  }
+                },
+                "missing-fields": {
+                  "summary": "Campos obrigatórios ausentes",
+                  "value": {
+                    "name": "",
+                    "surname": "Silva",
+                    "userBio": "",
+                    "birthDate": "1985-07-20",
+                    "username": "",
+                    "password": "",
+                    "job": 1,
+                    "documentNumber": "987654321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Criação bem-sucedida",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Profissional com vasta experiência.",
+                      "username": "joaosilva",
+                      "refreshToken": "abc123",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição Inválida - Erros de Validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "missing-name": {
+                    "summary": "Nome ausente",
+                    "value": {
+                      "errors": [
+                        "O nome é obrigatório."
+                      ]
+                    }
+                  },
+                  "invalid-password": {
+                    "summary": "Senha muito curta",
+                    "value": {
+                      "errors": [
+                        "A senha deve ter no mínimo 6 caracteres."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não Autorizado - Credenciais Inválidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Acesso não autorizado. Verifique suas credenciais."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/All": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Lista todos os profissionais",
+        "description": "Este endpoint retorna uma lista de todos os profissionais cadastrados no sistema.\n",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                  }
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Exemplo de resposta com sucesso",
+                    "value": [
+                      {
+                        "name": "João",
+                        "surname": "Silva",
+                        "userBio": "Profissional com vasta experiência.",
+                        "username": "joaosilva",
+                        "job": 1,
+                        "refreshToken": "abc123",
+                        "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                        "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      },
+                      {
+                        "name": "Maria",
+                        "surname": "Souza",
+                        "userBio": "Nutricionista certificada.",
+                        "username": "mariasouza",
+                        "job": 2,
+                        "refreshToken": "def456",
+                        "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                        "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/{Id}": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Consulta um profissional por ID",
+        "description": "Este endpoint retorna as informações de um profissional específico com base no ID fornecido.\n",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Exemplo de resposta com sucesso",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Profissional com vasta experiência.",
+                      "username": "joaosilva",
+                      "job": 1,
+                      "refreshToken": "abc123",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não Encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Profissional não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Atualiza as informações de um profissional",
+        "description": "Este endpoint permite a atualização das informações de um profissional existente.\n",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfessionalCommand"
+              },
+              "examples": {
+                "valid-request": {
+                  "summary": "Exemplo de requisição válida",
+                  "value": {
+                    "name": "João",
+                    "surname": "Silva",
+                    "userBio": "Atualizado para incluir mais experiência.",
+                    "birthDate": "1985-07-20",
+                    "username": "joaosilva",
+                    "job": 1,
+                    "documentNumber": "123456789"
+                  }
+                },
+                "missing-fields": {
+                  "summary": "Campos obrigatórios ausentes",
+                  "value": {
+                    "name": "",
+                    "surname": "",
+                    "userBio": "",
+                    "birthDate": "1985-07-20",
+                    "username": "",
+                    "job": 1,
+                    "documentNumber": "987654321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Exemplo de resposta com sucesso",
+                    "value": {
+                      "name": "João",
+                      "surname": "Silva",
+                      "userBio": "Atualizado para incluir mais experiência.",
+                      "username": "joaosilva",
+                      "job": 1,
+                      "refreshToken": "abc123",
+                      "refreshTokenExpiryTime": "2024-12-31T23:59:59Z",
+                      "tokenJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição Inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "missing-name": {
+                    "summary": "Nome ausente",
+                    "value": {
+                      "errors": [
+                        "O nome é obrigatório."
+                      ]
+                    }
+                  },
+                  "invalid-job": {
+                    "summary": "Cargo inválido",
+                    "value": {
+                      "errors": [
+                        "O cargo selecionado é inválido."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não Encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Profissional não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professional/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Deleta um profissional",
+        "description": "Este endpoint permite a remoção de um profissional do sistema com base no ID fornecido.\n",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Não Encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Profissional não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workout/Create": {
+      "post": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Cria um novo treino (Workout).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkoutCommand"
+              },
+              "examples": {
+                "requisicao-valida": {
+                  "summary": "Exemplo de requisição válida",
+                  "value": {
+                    "name": "Treino de Peito e Tríceps",
+                    "description": "Foco em hipertrofia para peito e tríceps.",
+                    "period": 2,
+                    "exercises": [
+                      {
+                        "exerciseId": "565c4a54-e4f8-4c1c-a3be-08db428e781e",
+                        "workoutId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "restTimeInSeconds": 60,
+                        "exerciseTimeInSeconds": 30,
+                        "series": 3,
+                        "repetitions": 12
+                      },
+                      {
+                        "exerciseId": "a1b2c3d4-e5f6-4d1e-a4bf-09ec539f892f",
+                        "workoutId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "restTimeInSeconds": 45,
+                        "exerciseTimeInSeconds": 45,
+                        "series": 4,
+                        "repetitions": 10
+                      }
+                    ]
+                  }
+                },
+                "requisicao-invalida": {
+                  "summary": "Exemplo de requisição inválida (faltando nome)",
+                  "value": {
+                    "description": "Foco em hipertrofia para peito e tríceps.",
+                    "period": 2,
+                    "exercises": [
+                      {
+                        "exerciseId": "565c4a54-e4f8-4c1c-a3be-08db428e781e",
+                        "workoutId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "restTimeInSeconds": 60,
+                        "exerciseTimeInSeconds": 30,
+                        "series": 3,
+                        "repetitions": 12
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workout"
+                },
+                "examples": {
+                  "resposta-201": {
+                    "summary": "Exemplo de resposta (201 Created)",
+                    "value": {
+                      "name": "Treino de Peito e Tríceps",
+                      "description": "Foco em hipertrofia para peito e tríceps.",
+                      "seriesCount": 0,
+                      "repetitionCount": 0,
+                      "period": 2,
+                      "targetedMuscles": [],
+                      "exercises": [],
+                      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "createdAt": "2023-12-06T12:34:56Z",
+                      "updatedAt": "2023-12-06T12:34:56Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "nome-obrigatorio": {
+                    "summary": "Erro - Nome é obrigatório",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Um ou mais erros de validação ocorreram.",
+                      "status": 400,
+                      "errors": {
+                        "Name": [
+                          "O nome é obrigatório."
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "erro-inesperado": {
+                    "summary": "Erro interno durante a criação do treino.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Erro interno do servidor.",
+                      "status": 500,
+                      "detail": "Ocorreu um erro inesperado ao processar a solicitação."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workout/All": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Retorna todos os treinos (Workouts).",
+        "description": "Este endpoint recupera uma lista de todos os treinos cadastrados no sistema.",
+        "responses": {
+          "200": {
+            "description": "Sucesso - Lista de treinos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Nome do treino.",
+                        "maxLength": 50,
+                        "minLength": 3,
+                        "nullable": true
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Descrição detalhada do treino.",
+                        "maxLength": 240,
+                        "nullable": true
+                      },
+                      "seriesCount": {
+                        "type": "integer",
+                        "description": "Número total de séries do treino."
+                      },
+                      "repetitionCount": {
+                        "type": "integer",
+                        "description": "Número de repetições por série no treino."
+                      },
+                      "period": {
+                        "type": "integer",
+                        "description": "Define a frequência de repetição do treino, considerando os dias de descanso.\n",
+                        "enum": [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5
+                        ],
+                        "example": 1,
+                        "x-enum-descriptions": {
+                          "1": "DAILY",
+                          "2": "WEEKLY",
+                          "3": "JUMP_ONE_DAY",
+                          "4": "JUMP_TWO_DAYS",
+                          "5": "JUMP_THREE_DAYS"
+                        }
+                      },
+                      "targetedMuscles": {
+                        "type": "array",
+                        "description": "Lista de músculos alvo do treino.",
+                        "items": {
+                          "type": "integer",
+                          "description": "Representa um grupo muscular alvo de exercícios.",
+                          "enum": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11
+                          ],
+                          "x-enum-descriptions": {
+                            "1": "PEITO",
+                            "2": "BÍCEPS",
+                            "3": "TRÍCEPS",
+                            "4": "COSTAS",
+                            "5": "OMBRO",
+                            "6": "ANTEBRAÇOS",
+                            "7": "ABDÔMEN",
+                            "8": "QUADRÍCEPS",
+                            "9": "ISQUIOTIBIAIS",
+                            "10": "GLÚTEOS",
+                            "11": "PANTURRILHAS"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "sucesso": {
+                    "summary": "Lista de treinos.",
+                    "value": [
+                      {
+                        "name": "Treino de Peito e Tríceps",
+                        "description": "Foco em hipertrofia para peito e tríceps.",
+                        "seriesCount": 3,
+                        "repetitionCount": 12,
+                        "period": 2,
+                        "targetedMuscles": [
+                          "CHEST",
+                          "TRICEPS"
+                        ]
+                      },
+                      {
+                        "name": "Treino de Costas e Bíceps",
+                        "description": "Intenso treino para costas e bíceps.",
+                        "seriesCount": 4,
+                        "repetitionCount": 10,
+                        "period": 1,
+                        "targetedMuscles": [
+                          "BACK",
+                          "BICEPS"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro Interno no Servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "erro-inesperado": {
+                    "summary": "Erro interno ao recuperar treinos.",
+                    "value": {
+                      "error": "Ocorreu um erro inesperado ao processar sua solicitação. Por favor, tente novamente mais tarde."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workout/{Id}": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Retorna um treino específico pelo ID.",
+        "description": "Este endpoint recupera os detalhes de um treino específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do treino que deseja recuperar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do treino retornadas com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutInfoViewModel"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "name": "Treino A",
+                      "description": "Treino para iniciantes",
+                      "seriesCount": 3,
+                      "repetitionCount": 12,
+                      "period": "DAILY",
+                      "targetedMuscles": [
+                        "CHEST",
+                        "TRICEPS"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Treino não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Treino não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workout/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Atualiza um treino específico.",
+        "description": "Este endpoint permite a atualização das informações de um treino utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do treino que deseja atualizar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWorkoutCommand"
+              },
+              "examples": {
+                "validRequest": {
+                  "summary": "Exemplo de uma requisição válida",
+                  "value": {
+                    "Name": "Treino A - Atualizado",
+                    "Description": "Treino para intermediários",
+                    "Period": "WEEKLY",
+                    "Exercises": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Treino atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workout"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Exemplo de resposta de sucesso",
+                    "value": {
+                      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "name": "Treino A - Atualizado",
+                      "description": "Treino para intermediários",
+                      "createdAt": "2023-10-26T12:34:56Z",
+                      "updatedAt": "2023-10-26T13:34:56Z",
+                      "seriesCount": 3,
+                      "repetitionCount": 12,
+                      "period": "WEEKLY",
+                      "targetedMuscles": [
+                        "CHEST",
+                        "TRICEPS"
+                      ],
+                      "exercises": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Treino não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Treino não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Workout/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Exclui um treino específico.",
+        "description": "Este endpoint permite a exclusão de um treino específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do treino que deseja excluir.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Treino excluído com sucesso."
+          },
+          "404": {
+            "description": "Treino não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Treino não encontrado com o ID fornecido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Plan/Create": {
+      "post": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Cria um novo plano de treino.",
+        "description": "Este endpoint permite a criação de um novo plano de treino com o nome, descrição, data de início, data de fim e treinos relacionados.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePlanCommand"
+              },
+              "examples": {
+                "Exemplo de Requisição": {
+                  "summary": "Um exemplo de requisição para criar um plano de treino.",
+                  "value": {
+                    "Name": "Plano de Treino para Iniciantes",
+                    "Description": "Plano de treino para quem está começando a se exercitar.",
+                    "StartDate": "2024-03-08T00:00:00Z",
+                    "EndDate": "2024-04-08T00:00:00Z",
+                    "Workouts": [
+                      {
+                        "Id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                      },
+                      {
+                        "Id": "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Plano de treino criado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanInfoViewModel"
+                },
+                "examples": {
+                  "Exemplo de Resposta": {
+                    "summary": "Um exemplo de resposta para a criação de um plano de treino.",
+                    "value": {
+                      "Name": "Plano de Treino para Iniciantes",
+                      "Description": "Plano de treino para quem está começando a se exercitar.",
+                      "StartDate": "2024-03-08T00:00:00Z",
+                      "EndDate": "2024-04-08T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "Valores inválidos": {
+                    "summary": "Erro quando os valores fornecidos são inválidos.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Um ou mais erros de validação ocorreram.",
+                      "status": 400,
+                      "detail": "Verifique os erros para mais detalhes.",
+                      "instance": "/api/Plan/Create",
+                      "errors": {
+                        "Name": [
+                          "O nome é obrigatório."
+                        ],
+                        "StartDate": [
+                          "A data de início é obrigatória."
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "Erro interno": {
+                    "summary": "Erro inesperado ao processar a requisição.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Erro interno no servidor.",
+                      "status": 500,
+                      "detail": "Ocorreu um erro inesperado ao processar a sua requisição. Tente novamente mais tarde.",
+                      "instance": "/api/Plan/Create"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Plan/{Id}": {
+      "get": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Retorna um plano de treino específico.",
+        "description": "Este endpoint recupera os detalhes de um plano de treino específico com base no ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do plano de treino que deseja recuperar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plano de treino encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Plano de treino encontrado com sucesso.",
+                    "value": {
+                      "name": "Plano de Treino A",
+                      "description": "Plano para iniciantes",
+                      "startDate": "2024-01-15T00:00:00Z",
+                      "endDate": "2024-02-15T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "invalidIdFormatError": {
+                    "summary": "Erro quando o ID fornecido não está no formato UUID válido",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Formato de ID inválido.",
+                      "status": 400,
+                      "detail": "O formato do ID é inválido. Deve ser um UUID válido.",
+                      "instance": "/api/Plan/{Id}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plano de treino não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "planNotFoundError": {
+                    "summary": "Erro quando o plano de treino com o ID fornecido não é encontrado",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Plano não encontrado.",
+                      "status": 404,
+                      "detail": "Plano de treino não encontrado com o ID fornecido.",
+                      "instance": "/api/Plan/{Id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Plan/All": {
+      "get": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Retorna todos os planos de treino.",
+        "description": "Este endpoint recupera uma lista de todos os planos de treino cadastrados no sistema.",
+        "responses": {
+          "200": {
+            "description": "Sucesso - Lista de planos de treino retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlanInfoViewModel"
+                  }
+                },
+                "examples": {
+                  "planInfoViewModel": {
+                    "summary": "Lista de planos de treino.",
+                    "value": [
+                      {
+                        "name": "Plano de Força A",
+                        "description": "Foco em hipertrofia com treinos intensos.",
+                        "startDate": "2024-01-01T00:00:00Z",
+                        "endDate": "2024-02-28T23:59:59Z"
+                      },
+                      {
+                        "name": "Plano de Emagrecimento B",
+                        "description": "Combinação de exercícios aeróbicos e dieta balanceada.",
+                        "startDate": "2024-03-15T00:00:00Z",
+                        "endDate": "2024-06-15T23:59:59Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "internalServerError": {
+                    "summary": "Erro inesperado durante o processamento da requisição.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Erro interno do servidor.",
+                      "status": 500,
+                      "detail": "Ocorreu um erro inesperado ao processar a requisição. Tente novamente mais tarde.",
+                      "instance": "/api/Plan/All"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Plan/Update/{Id}": {
+      "put": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Atualiza um plano de treino específico.",
+        "description": "Este endpoint permite a atualização das informações de um plano de treino específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do plano de treino que deseja atualizar.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePlanCommand"
+              },
+              "examples": {
+                "valid-request": {
+                  "summary": "Exemplo de requisição válida para atualizar um plano de treino.",
+                  "value": {
+                    "Name": "Plano de Treino Atualizado",
+                    "Description": "Descrição atualizada do plano.",
+                    "StartDate": "2024-01-15T00:00:00Z",
+                    "EndDate": "2024-02-15T00:00:00Z",
+                    "Workouts": [
+                      {
+                        "Id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Plano de treino atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanInfoViewModel"
+                },
+                "examples": {
+                  "success-response": {
+                    "summary": "Exemplo de resposta com sucesso após atualizar um plano de treino.",
+                    "value": {
+                      "Name": "Plano de Treino Atualizado",
+                      "Description": "Descrição atualizada do plano.",
+                      "StartDate": "2024-01-15T00:00:00Z",
+                      "EndDate": "2024-02-15T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "invalidIdFormatError": {
+                    "summary": "Erro quando o ID fornecido não está no formato UUID válido.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Formato de ID inválido.",
+                      "status": 400,
+                      "detail": "O formato do ID é inválido. Deve ser um UUID válido.",
+                      "instance": "/api/Plan/Update/{Id}"
+                    }
+                  },
+                  "invalidPlanData": {
+                    "summary": "Erro quando os dados fornecidos para o plano são inválidos.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Dados do plano inválidos.",
+                      "status": 400,
+                      "detail": "Ocorreu um erro ao validar os dados do plano. Verifique os detalhes.",
+                      "instance": "/api/Plan/Update/{Id}",
+                      "errors": {
+                        "Name": [
+                          "O nome do plano é obrigatório."
+                        ],
+                        "StartDate": [
+                          "A data de início deve ser anterior à data de término."
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plano de treino não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "planNotFoundError": {
+                    "summary": "Erro quando o plano de treino com o ID fornecido não é encontrado.",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Plano não encontrado.",
+                      "status": 404,
+                      "detail": "Plano de treino não encontrado com o ID fornecido.",
+                      "instance": "/api/Plan/Update/{Id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Plan/Delete/{Id}": {
+      "delete": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Exclui um plano de treino específico.",
+        "description": "Este endpoint permite a exclusão de um plano de treino específico utilizando o ID fornecido.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "description": "O UUID do plano de treino que deseja excluir.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Plano de treino excluído com sucesso."
+          },
+          "400": {
+            "description": "Erro de validação de entrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "invalidIdFormatError": {
+                    "summary": "Erro quando o ID fornecido não está no formato UUID válido",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Formato de ID inválido.",
+                      "status": 400,
+                      "detail": "O formato do ID é inválido. Deve ser um UUID válido.",
+                      "instance": "/api/Plan/Delete/{Id}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plano de treino não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "planNotFoundError": {
+                    "summary": "Erro quando o plano de treino com o ID fornecido não é encontrado",
+                    "value": {
+                      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                      "title": "Plano não encontrado.",
+                      "status": 404,
+                      "detail": "Plano de treino não encontrado com o ID fornecido.",
+                      "instance": "/api/Plan/Delete/{Id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateWorkoutCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do treino (opcional)",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição do treino (opcional)",
+            "nullable": true
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period",
+            "description": "Define a frequência de repetição do treino."
+          },
+          "exercises": {
+            "type": "array",
+            "description": "Lista de exercícios do treino (opcional)",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/WorkoutExercise"
+            }
+          }
+        }
+      },
+      "CreateGymCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome da academia",
+            "minLength": 2,
+            "nullable": true,
+            "example": "Academia Fitness"
+          },
+          "description": {
+            "type": "string",
+            "description": "Uma breve descrição da academia",
+            "maxLength": 244,
+            "nullable": true,
+            "example": "A melhor academia da cidade!"
+          },
+          "username": {
+            "type": "string",
+            "description": "O nome de usuário para a conta da academia",
+            "nullable": true,
+            "example": "fitnessuser"
+          },
+          "password": {
+            "type": "string",
+            "description": "A senha para a conta da academia",
+            "minLength": 6,
+            "nullable": true,
+            "example": "senha123"
+          },
+          "documentNumber": {
+            "type": "string",
+            "description": "O número do documento associado à academia",
+            "minLength": 5,
+            "nullable": true,
+            "example": 123456789
+          }
+        },
+        "required": [
+          "name",
+          "username",
+          "password",
+          "documentNumber"
+        ]
+      },
+      "CreateManagerCommand": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "O nome do gerente.",
+            "minLength": 2,
+            "example": "João"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "O sobrenome do gerente.",
+            "minLength": 2,
+            "example": "Silva"
+          },
+          "UserBio": {
+            "type": "string",
+            "description": "A biografia do gerente.",
+            "minLength": 10,
+            "example": "Gerente com vasta experiência em logística.",
+            "nullable": true
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do gerente.",
+            "example": "1985-07-20"
+          },
+          "Username": {
+            "type": "string",
+            "description": "O nome de usuário do gerente.",
+            "example": "joaosilva"
+          },
+          "Password": {
+            "type": "string",
+            "description": "A senha do gerente.",
+            "minLength": 6,
+            "example": "segura123"
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "description": "O número do documento do gerente.",
+            "minLength": 5,
+            "example": "123456789"
+          }
+        },
+        "required": [
+          "Name",
+          "Surname",
+          "BirthDate",
+          "Username",
+          "Password",
+          "DocumentNumber"
+        ]
+      },
+      "CreateMemberCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome do membro",
+            "minLength": 2,
+            "nullable": true,
+            "example": "Maria"
+          },
+          "surname": {
+            "type": "string",
+            "description": "O sobrenome do membro",
+            "minLength": 2,
+            "nullable": true,
+            "example": "Souza"
+          },
+          "userBio": {
+            "type": "string",
+            "description": "A biografia do usuário",
+            "minLength": 10,
+            "nullable": true,
+            "example": "Entusiasta de Yoga e Pilates."
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do membro",
+            "example": "1995-06-10"
+          },
+          "username": {
+            "type": "string",
+            "description": "O nome de usuário para a conta do membro",
+            "example": "mariasouza"
+          },
+          "password": {
+            "type": "string",
+            "description": "A senha para a conta do membro",
+            "minLength": 6,
+            "nullable": true,
+            "example": "senha456"
+          },
+          "documentNumber": {
+            "type": "string",
+            "description": "O número do documento associado ao membro",
+            "minLength": 5,
+            "nullable": true,
+            "example": 987654321
+          }
+        },
+        "required": [
+          "birthDate",
+          "username",
+          "password",
+          "documentNumber"
+        ]
+      },
+      "CreateProfessionalCommand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome do profissional",
+            "minLength": 2,
+            "nullable": true,
+            "example": "Pedro"
+          },
+          "surname": {
+            "type": "string",
+            "description": "O sobrenome do profissional",
+            "minLength": 2,
+            "nullable": true,
+            "example": "Alves"
+          },
+          "userBio": {
+            "type": "string",
+            "description": "A biografia do profissional",
+            "minLength": 10,
+            "nullable": true,
+            "example": "Fisioterapeuta especialista em recuperação muscular."
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do profissional",
+            "example": "1980-12-05"
+          },
+          "username": {
+            "type": "string",
+            "description": "O nome de usuário para a conta do profissional",
+            "example": "pedroalves"
+          },
+          "password": {
+            "type": "string",
+            "description": "A senha para a conta do profissional",
+            "minLength": 6,
+            "nullable": true,
+            "example": "senha789"
+          },
+          "job": {
+            "type": "integer",
+            "description": "O cargo do profissional",
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "example": 2
+          },
+          "documentNumber": {
+            "type": "string",
+            "description": "O número do documento associado ao profissional",
+            "minLength": 5,
+            "nullable": true,
+            "example": 123456789
+          }
+        },
+        "required": [
+          "birthDate",
+          "username",
+          "password",
+          "job",
+          "documentNumber"
+        ]
+      },
+      "CreatePlanCommand": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Nome do Plano de Treino.",
+            "maxLength": 50,
+            "minLength": 3,
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Descrição do Plano de Treino.",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "StartDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de início do Plano de Treino.",
+            "example": "2024-03-08"
+          },
+          "EndDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de término do Plano de Treino.",
+            "example": "2024-04-08"
+          },
+          "Workouts": {
+            "type": "array",
+            "description": "Lista de IDs de Treinos associados ao Plano.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": [
+              "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+            ]
+          }
+        },
+        "required": [
+          "Name",
+          "StartDate",
+          "EndDate",
+          "Workouts"
+        ]
+      },
+      "UpdateManagerCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Unique identifier of the manager. This field is ignored in the request and is set internally.",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "Name": {
+            "type": "string",
+            "description": "Nome do gerente.",
+            "example": "João"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "Sobrenome do gerente.",
+            "example": "Silva"
+          },
+          "UserBio": {
+            "type": "string",
+            "description": "Biografia do gerente.",
+            "example": "Gerente com vasta experiência em logística."
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de nascimento do gerente.",
+            "example": "1985-07-20"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Nome de usuário do gerente.",
+            "example": "joaosilva"
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "description": "Número do documento do gerente (CPF).",
+            "example": "123456789"
+          }
+        }
+      },
+      "UpdateGymCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Unique identifier of the gym. This field is ignored in the request and is set internally.",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the gym.",
+            "example": "Academia Fitness Plus"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "A brief description of the gym.",
+            "example": "A melhor academia da cidade, agora com mais modalidades!"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Username associated with the gym.",
+            "example": "fitnessuserplus"
+          },
+          "documentNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Document number of the gym, such as a business ID.",
+            "example": 9876543210
+          }
+        }
+      },
+      "UpdateMemberCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Unique identifier of the member. This field is ignored in the request and is set internally.",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "First name of the member.",
+            "example": "Maria"
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true,
+            "description": "Last name of the member.",
+            "example": "Souza"
+          },
+          "userBio": {
+            "type": "string",
+            "nullable": true,
+            "description": "A short biography of the member.",
+            "example": "Agora também pratico Crossfit!"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of birth of the member.",
+            "example": "1995-06-10T00:00:00Z"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Username associated with the member.",
+            "example": "mariasouzafit"
+          },
+          "documentNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Document number of the member, such as an ID or passport number.",
+            "example": 9876543210
+          }
+        }
+      },
+      "UpdateProfessionalCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Unique identifier of the professional. This field is ignored in the request and is set internally.",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "First name of the professional.",
+            "example": "Pedro"
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true,
+            "description": "Last name of the professional.",
+            "example": "Alves"
+          },
+          "userBio": {
+            "type": "string",
+            "nullable": true,
+            "description": "A short biography of the professional.",
+            "example": "Fisioterapeuta especialista em recuperação muscular e performance esportiva."
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of birth of the professional.",
+            "example": "1980-12-05T00:00:00Z"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Username associated with the professional.",
+            "example": "pedroalvespro"
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job",
+            "description": "Job information of the professional."
+          },
+          "documentNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Document number of the professional, such as an ID or license number.",
+            "example": 98765432101
+          }
+        }
+      },
+      "UpdateWorkoutCommand": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Identificador único do treino. Este campo é ignorado na requisição e definido internamente.",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nome do treino.",
+            "example": "Treino A - Atualizado"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descrição do treino.",
+            "example": "Treino para intermediários"
+          },
+          "Period": {
+            "$ref": "#/components/schemas/Period",
+            "description": "Define a frequência de repetição do treino."
+          },
+          "Exercises": {
+            "type": "array",
+            "description": "Lista de exercícios do treino.",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/WorkoutExercise"
+            }
+          }
+        }
+      },
+      "UpdatePlanCommand": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Identificador único do Plano de Treino. Este campo é ignorado na requisição e definido internamente.",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "Name": {
+            "type": "string",
+            "description": "Nome do Plano de Treino.",
+            "maxLength": 50,
+            "minLength": 3,
+            "nullable": true
+          },
+          "Description": {
+            "type": "string",
+            "description": "Descrição do Plano de Treino.",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "StartDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de início do Plano de Treino.",
+            "example": "2024-03-08"
+          },
+          "EndDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Data de término do Plano de Treino.",
+            "example": "2024-04-08"
+          },
+          "Workouts": {
+            "type": "array",
+            "description": "Lista de IDs de Treinos associados ao Plano.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": [
+              "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+            ]
+          }
+        },
+        "required": [
+          "Name",
+          "StartDate",
+          "EndDate",
+          "Workouts"
+        ]
+      },
+      "GymInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome da academia",
+            "nullable": true,
+            "example": "Academia Fitness"
+          },
+          "description": {
+            "type": "string",
+            "description": "Uma breve descrição da academia",
+            "nullable": true,
+            "example": "A melhor academia da cidade!"
+          },
+          "username": {
+            "type": "string",
+            "description": "O nome de usuário para a conta da academia",
+            "nullable": true,
+            "example": "fitnessuser"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "O token de atualização (refresh token) associado à sessão do usuário",
+            "nullable": true,
+            "example": "abcdef12345"
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora de expiração do token de atualização",
+            "nullable": true,
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "tokenJWT": {
+            "type": "string",
+            "description": "O token JWT para autenticação do usuário",
+            "nullable": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "ManagerInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "O nome do gerente.",
+            "example": "João"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "O sobrenome do gerente.",
+            "example": "Silva"
+          },
+          "UserBio": {
+            "type": "string",
+            "description": "A biografia do gerente.",
+            "example": "Gerente com vasta experiência em logística.",
+            "nullable": true
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do gerente.",
+            "example": "1985-07-20"
+          },
+          "Username": {
+            "type": "string",
+            "description": "O nome de usuário do gerente.",
+            "example": "joaosilva"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "Token de atualização utilizado para renovar a sessão do gerente.",
+            "example": "dXNlcm5hbWU6cGFzc3dvcmQ=",
+            "nullable": true
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A data e hora de expiração do token de atualização.",
+            "example": "2024-12-31T23:59:59Z",
+            "nullable": true
+          }
+        }
+      },
+      "MemberInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome do membro",
+            "nullable": true,
+            "example": "Maria"
+          },
+          "surname": {
+            "type": "string",
+            "description": "O sobrenome do membro",
+            "nullable": true,
+            "example": "Souza"
+          },
+          "userBio": {
+            "type": "string",
+            "description": "A biografia do membro",
+            "nullable": true,
+            "example": "Entusiasta de Yoga e Pilates."
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do membro",
+            "example": "1995-06-10"
+          },
+          "username": {
+            "type": "string",
+            "description": "O nome de usuário do membro",
+            "nullable": true,
+            "example": "mariasouza"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "O token de atualização (refresh token) associado à sessão do membro",
+            "nullable": true,
+            "example": "ghijkl67890"
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora de expiração do token de atualização",
+            "nullable": true,
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "tokenJWT": {
+            "type": "string",
+            "description": "O token JWT para autenticação do membro",
+            "nullable": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "ProfessionalInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "O nome do profissional",
+            "nullable": true,
+            "example": "Pedro"
+          },
+          "surname": {
+            "type": "string",
+            "description": "O sobrenome do profissional",
+            "nullable": true,
+            "example": "Alves"
+          },
+          "userBio": {
+            "type": "string",
+            "description": "A biografia do profissional",
+            "nullable": true,
+            "example": "Fisioterapeuta especialista em recuperação muscular."
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "A data de nascimento do profissional",
+            "example": "1980-12-05"
+          },
+          "username": {
+            "type": "string",
+            "description": "O nome de usuário do profissional",
+            "nullable": true,
+            "example": "pedroalves"
+          },
+          "job": {
+            "type": "integer",
+            "description": "O cargo do profissional",
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "example": 2
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "O token de atualização (refresh token) associado à sessão do profissional",
+            "nullable": true,
+            "example": "mnoqrs78901"
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora de expiração do token de atualização",
+            "nullable": true,
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "tokenJWT": {
+            "type": "string",
+            "description": "O token JWT para autenticação do profissional",
+            "nullable": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "WorkoutInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nome do treino."
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descrição do treino."
+          },
+          "SeriesCount": {
+            "type": "integer",
+            "description": "Número total de séries do treino."
+          },
+          "RepetitionCount": {
+            "type": "integer",
+            "description": "Número de repetições por série no treino."
+          },
+          "Period": {
+            "$ref": "#/components/schemas/Period",
+            "description": "Define a frequência de repetição do treino (diário, semanal, etc.).",
+            "nullable": true
+          },
+          "TargetedMuscles": {
+            "type": "array",
+            "description": "Lista de músculos alvo do treino.",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Muscle"
+            }
+          }
+        }
+      },
+      "PlanInfoViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Nome do Plano de Treino.",
+            "example": "Plano de Força A"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Descrição do Plano de Treino.",
+            "example": "Foco em hipertrofia com treinos intensos."
+          },
+          "StartDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de início do Plano de Treino.",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "EndDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de término do Plano de Treino.",
+            "example": "2024-02-28T23:59:59Z"
+          }
+        }
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Um URI de referência sobre o tipo de problema."
+          },
+          "title": {
+            "type": "string",
+            "description": "Um título curto que descreve o problema."
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "description": "O código de status HTTP correspondente ao problema."
+          },
+          "detail": {
+            "type": "string",
+            "description": "Uma explicação detalhada do problema, geralmente incluindo informações da exceção."
+          },
+          "instance": {
+            "type": "string",
+            "description": "Um URI que identifica a instância específica do problema."
+          },
+          "errorCode": {
+            "type": "string",
+            "description": "Um código de erro específico que indica o tipo de falha da aplicação."
+          },
+          "traceId": {
+            "type": "string",
+            "description": "Um identificador único para rastrear a requisição específica no sistema."
+          },
+          "data": {
+            "type": "object",
+            "description": "Dados adicionais fornecidos pela exceção, geralmente valores chave do dicionário de dados da exceção."
+          }
+        },
+        "required": [
+          "title",
+          "status"
+        ],
+        "example": {
+          "type": "https://example.com/probs/out-of-credit",
+          "title": "Erro interno no servidor.",
+          "status": 500,
+          "detail": "System.NullReferenceException = Object reference not set to an instance of an object.",
+          "instance": "/minha-api/v1/resource",
+          "errorCode": "500_ERR",
+          "traceId": "00-ab123cd4ef567gh8-1234567890abcdef-01",
+          "data": {
+            "ChaveExemplo": "ValorExemplo"
+          }
+        }
+      },
+      "WorkoutExercise": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Identificador único do WorkoutExercise.  Este campo é ignorado na requisição e definido internamente.\n"
+          },
+          "exerciseId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Identificador do Exercício (Exercise) relacionado."
+          },
+          "workoutId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Identificador do Treino (Workout) relacionado."
+          },
+          "restTimeInSeconds": {
+            "type": "integer",
+            "description": "Tempo de descanso entre as séries em segundos."
+          },
+          "exerciseTimeInSeconds": {
+            "type": "integer",
+            "description": "Tempo de duração do exercício em segundos."
+          },
+          "series": {
+            "type": "integer",
+            "description": "Número de séries do exercício."
+          },
+          "repetitions": {
+            "type": "integer",
+            "description": "Número de repetições por série."
+          }
+        },
+        "required": [
+          "exerciseId",
+          "workoutId",
+          "restTimeInSeconds",
+          "series",
+          "repetitions"
+        ]
+      },
+      "Workout": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Identificador único do treino. Este campo é gerado automaticamente e não deve ser fornecido na requisição."
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do treino.",
+            "maxLength": 50,
+            "minLength": 3,
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição detalhada do treino.",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora de criação do treino.",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora da última atualização do treino.",
+            "readOnly": true
+          },
+          "seriesCount": {
+            "type": "integer",
+            "description": "Número total de séries do treino."
+          },
+          "repetitionCount": {
+            "type": "integer",
+            "description": "Número de repetições por série no treino."
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period",
+            "description": "Define a frequência de repetição do treino."
+          },
+          "targetedMuscles": {
+            "type": "array",
+            "description": "Lista de músculos alvo do treino.",
+            "items": {
+              "$ref": "#/components/schemas/Muscle"
+            }
+          },
+          "exercises": {
+            "type": "array",
+            "description": "Lista de exercícios que compõem o treino.",
+            "items": {
+              "$ref": "#/components/schemas/WorkoutExercise"
+            }
+          }
+        }
+      },
+      "Exercise": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Identificador único do exercício. Este campo é gerado automaticamente e não deve ser fornecido na requisição."
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do exercício.",
+            "maxLength": 50,
+            "minLength": 3,
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição detalhada do exercício.",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora de criação do exercício.",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora da última atualização do exercício.",
+            "readOnly": true
+          },
+          "photo": {
+            "type": "string",
+            "description": "URL da foto ilustrativa do exercício.",
+            "nullable": true
+          },
+          "video": {
+            "type": "string",
+            "description": "URL do vídeo demonstrativo do exercício.",
+            "nullable": true
+          },
+          "targetedMuscle": {
+            "$ref": "#/components/schemas/Muscle",
+            "description": "Músculo principal que o exercício trabalha."
+          },
+          "synergistMuscle": {
+            "$ref": "#/components/schemas/Muscle",
+            "description": "Músculo secundário que auxilia no exercício.",
+            "nullable": true
+          }
+        }
+      },
+      "Job": {
+        "type": "integer",
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "description": "Enumeração representando os diferentes cargos na academia.",
+        "example": 1,
+        "x-enum-descriptions": {
+          "1": "PERSONAL_TRAINER",
+          "2": "NUTRICIONIST",
+          "3": "GYM_PROFESSOR"
+        }
+      },
+      "Period": {
+        "type": "integer",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "description": "Define a frequência de repetição do treino, considerando os dias de descanso.\n",
+        "example": 1,
+        "x-enum-descriptions": {
+          "1": "DAILY",
+          "2": "WEEKLY",
+          "3": "JUMP_ONE_DAY",
+          "4": "JUMP_TWO_DAYS",
+          "5": "JUMP_THREE_DAYS"
+        }
+      },
+      "Muscle": {
+        "type": "integer",
+        "description": "Representa um grupo muscular alvo de exercícios.",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "x-enum-descriptions": {
+          "1": "PEITO",
+          "2": "BÍCEPS",
+          "3": "TRÍCEPS",
+          "4": "COSTAS",
+          "5": "OMBRO",
+          "6": "ANTEBRAÇOS",
+          "7": "ABDÔMEN",
+          "8": "QUADRÍCEPS",
+          "9": "ISQUIOTIBIAIS",
+          "10": "GLÚTEOS",
+          "11": "PANTURRILHAS"
+        }
+      }
+    }
+  }
+}
