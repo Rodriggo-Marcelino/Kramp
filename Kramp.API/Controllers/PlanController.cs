@@ -12,68 +12,48 @@ namespace Kramp.API.Controllers;
 [ApiController]
 public class PlanController(IMediator _mediator, PlanRepository _repository, IMapper _mapper) : ControllerBase
 {
-    /*
-     * Lista de Endpoints Necessários para Plans:
-     * 
-     * -- Criar Plano --
-     * POST /api/plans (Cria um novo plano com informações básicas)
-     * POST /api/plans/complete (Cria um novo plano com detalhes completos, incluindo treinos)
-     * 
-     * -- Adicionar Treinos ao Plano --
-     * POST /api/plans/{planId}/workouts (Adiciona um treino a um plano existente)
-     * POST /api/plans/{planId}/workouts/list (Adiciona uma lista de treino a um plano especifico)
-     * 
-     * -- Ler Planos (Plans) --
-     * GET /api/plans (Retorna todos os planos cadastrados)
-     * GET /api/plans/{id} (Retorna um plano específico pelo ID)
-     * GET /api/plans/details (Retorna todos os planos com detalhes completos, incluindo treinos)
-     * GET /api/plans/{pageNumber}/{pageSize} (Retorna todos os planos cadastrados com paginação)
-     * GET /api/plans/details/{pageNumber}/{pageSize} (Retorna todos os planos cadastrados com paginação)
-     * GET /api/plans/{planId}/workouts (Retorna todos os treinos associados a um plano específico)
-     * 
-     * -- Atualizar Plano (Plans) --
-     * PUT /api/plans/{id} (Atualiza as informações de um plano específico)
-     * PUT /api/plans/{id}/workouts (Atualiza os workouts de um plano específico)
-     * 
-     * -- Remover Plano ou Treinos do Plano --
-     * DELETE /api/plans/{id} (Remove um plano específico do sistema)
-     * DELETE /api/plans/{planId}/workouts/{workoutId} (Remove um treino específico de um plano)
-     * DELETE /api/plans/{planId}/workouts (Remove todos os treinos de um plano específico)
-     */
-
-    [HttpPost("Create")]
-    public async Task<ActionResult<SimplePlanViewModel>> Create(CreatePlanCommand command)
+    #region POST
+    [HttpPost("Create/Simple")]
+    public async Task<ActionResult<SimplePlanViewModel>> CreateSimple(CreateSimplePlanCommand command)
     {
         return Created("", await _mediator.Send(command));
     }
 
-    // TODO: Implementar os métodos abaixo
-    [HttpPost("{planId:guid}/Workouts")]
-    public async Task<IActionResult> AddWorkoutToPlan(Guid planId /*, AddWorkoutToPlanCommand command*/)
+    [HttpPost("Create/Complete")]
+    public async Task<ActionResult<SimplePlanViewModel>> CreateComplete(CreateCompletePlanCommand command)
     {
-        //command.PlanId = planId;
-        // Lógica para adicionar o Workout ao Plan
-        return Ok();
+        return Created("", await _mediator.Send(command));
     }
 
-    [HttpGet("All")]
+    [HttpPost("{planId:guid}/Workouts")]
+    public async Task<IActionResult> AddWorkoutToPlan(Guid planId, AddWorkoutToPlanCommand command)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost("{planId:guid}/Workouts/List")]
+    public async Task<IActionResult> AddListWorkoutToPlan(Guid planId, List<AddWorkoutToPlanCommand> command)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    #region GET
+    [HttpGet("All/Simple")]
     public async Task<ActionResult<IEnumerable<SimplePlanViewModel>>> GetAllPlans()
     {
         var plans = await _repository.GetAllAsync();
         return Ok(_mapper.Map<IEnumerable<SimplePlanViewModel>>(plans));
     }
 
-    /*
-    // TODO: Implementar os métodos abaixo
-    [HttpGet("All")]
-    public async Task<ActionResult<List<PlanInfoViewModel>>> GetAllPlans(int pageNumber = 1, int pageSize = 10)
+    [HttpGet("All/Details")]
+    public async Task<ActionResult<IEnumerable<CompletePlanViewModel>>> GetAllPlansDetail()
     {
-        // Lógica para buscar os planos com paginação
-        return Ok();
+        var plans = await _repository.GetAllAsync();
+        return Ok(_mapper.Map<IEnumerable<CompletePlanViewModel>>(plans));
     }
-    */
 
-    [HttpGet("{Id:guid}")]
+    [HttpGet("{Id:guid}/Simple")]
     public async Task<ActionResult<SimplePlanViewModel>> GetPlanById(Guid Id)
     {
         Plan? plan = await _repository.GetByIdAsync(Id);
@@ -86,13 +66,54 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         return Ok(_mapper.Map<SimplePlanViewModel>(plan));
     }
 
+    [HttpGet("{Id:guid}/Details")]
+    public async Task<ActionResult<CompletePlanViewModel>> GetPlanDetailById(Guid Id)
+    {
+        Plan? plan = await _repository.GetByIdAsync(Id);
+
+        if (plan == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<CompletePlanViewModel>(plan));
+    }
+
+    [HttpGet("All/Simple/{pageSize: int}/{pageNumber: int}")]
+    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans(int pageNumber = 1, int pageSize = 10)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpGet("All/Details/{pageSize: int}/{pageNumber: int}")]
+    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail(int pageNumber = 1, int pageSize = 10)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpGet("{planId:guid}/Workouts")]
+    public async Task<ActionResult<List<PlanWorkoutViewModel>>> GetPlanWorkoutsById(Guid planId)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    #region PUT 
     [HttpPut("Update/{Id:guid}")]
-    public async Task<ActionResult<SimplePlanViewModel>> Update(Guid Id, UpdatePlanCommand command)
+    public async Task<ActionResult<SimplePlanViewModel>> Update(Guid Id, UpdateSimplePlanCommand command)
     {
         command.Id = Id;
         return Ok(await _mediator.Send(command));
     }
 
+    [HttpPut("{planId:guid}/Workouts")]
+    public async Task<IActionResult> UpdateWorkouts(Guid planId, UpdateWorkoutsInPlanCommand command)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    #region DELETE
     [HttpDelete("Delete/{Id:guid}")]
     public async Task<ActionResult> DeleteById(Guid Id)
     {
@@ -101,11 +122,16 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         return NoContent();
     }
 
-    // TODO: Implementar os métodos abaixo
     [HttpDelete("{planId:guid}/Workouts/{workoutId:guid}")]
     public async Task<IActionResult> RemoveWorkoutFromPlan(Guid planId, Guid workoutId)
     {
-        // Lógica para remover o Workout do Plan
-        return NoContent();
+        throw new NotImplementedException();
     }
+
+    [HttpDelete("{planId:guid}/Workouts")]
+    public async Task<IActionResult> RemoveAllWorkoutsFromPlan(Guid planId)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
 }
