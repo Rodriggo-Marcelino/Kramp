@@ -11,16 +11,16 @@ namespace Domain.Entity.Training
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        public Guid ExerciseId { get; set; }
-
-        [ForeignKey("ExerciseId")]
-        public Exercise Exercise { get; set; }
-
-        [Required]
         public Guid WorkoutId { get; set; }
 
         [ForeignKey("WorkoutId")]
         public Workout Workout { get; set; }
+
+        [Required]
+        public Guid ExerciseId { get; set; }
+
+        [ForeignKey("ExerciseId")]
+        public Exercise Exercise { get; set; }
 
         [Required]
         public int RestTimeInSeconds { get; set; }
