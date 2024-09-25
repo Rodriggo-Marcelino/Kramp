@@ -1,8 +1,6 @@
-using Application.CQRS.GenericsCQRS.User.ViewModel;
-
 namespace Application.CQRS.GenericsCQRS.User.Commands;
 
-public record CreateUserGenericCommand : CreateEntityCommand<UserGenericViewModel>
+public record CreateUserGenericCommand
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }

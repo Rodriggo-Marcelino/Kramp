@@ -1,5 +1,5 @@
 ﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
-using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.Validators;
 using Application.ExceptionHandler;
 using Application.Mapping;
 using Domain.Abstractions;
@@ -87,7 +87,7 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateManagerCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateProfessionalCommandValidator>();
             builder.Services.AddFluentValidationAutoValidation();
         }
 

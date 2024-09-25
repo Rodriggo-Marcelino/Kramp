@@ -1,47 +1,47 @@
 ﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
 using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
-using Application.Response;
 using AutoMapper;
 using Domain.Abstractions;
 using Domain.Entity.User;
-using MediatR;
 using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Handlers
 {
-    public class CreateManagerCommandHandler : IRequestHandler<CreateManagerCommand, ResponseBase<ManagerInfoViewModel?>>
+    public class CreateManagerCommandHandler : CreateEntityTemplate<CreateManagerCommand, Manager, ManagerInfoViewModel, ManagerRepository>
     {
         private readonly IAuthService _authService;
         private readonly ManagerRepository _repository;
         private readonly IMapper _mapper;
 
-        public CreateManagerCommandHandler(IAuthService authService, ManagerRepository repository, IMapper mapper)
+        public CreateManagerCommandHandler(ManagerRepository repository, IMapper mapper, IAuthService authService) : base(repository, mapper)
         {
-            _authService = authService;
             _repository = repository;
             _mapper = mapper;
+            _authService = authService;
         }
 
-        public async Task<ResponseBase<ManagerInfoViewModel?>> Handle(CreateManagerCommand request,
-                                                       CancellationToken cancellationToken)
+        protected override Manager CreateEntity(CreateManagerCommand request)
         {
-            Manager manager = _mapper.Map<Manager>(request);
+            var manager = base.CreateEntity(request);
 
             manager.PasswordHash = request.Password;
             manager.CreatedAt = DateTime.UtcNow;
             manager.RefreshToken = Guid.NewGuid().ToString();
             manager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.AddAsync(manager);
+            return manager;
+        }
 
-            ManagerInfoViewModel managerInfoVm = _mapper.Map<ManagerInfoViewModel>(manager);
+        protected override void ValidateEntity(Manager entity)
+        {
+            base.ValidateEntity(entity);
+        }
+
+        protected override ManagerInfoViewModel ConvertToViewModel(Manager manager)
+        {
+            var managerInfoVm = base.ConvertToViewModel(manager);
             managerInfoVm.TokenJWT = _authService.GenerateJWT(manager.DocumentNumber!, manager.Username!);
-
-            return new ResponseBase<ManagerInfoViewModel?>
-            {
-                ResponseInfo = null,
-                Value = managerInfoVm
-            };
+            return managerInfoVm;
         }
     }
 }
