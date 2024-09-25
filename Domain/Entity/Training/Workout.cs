@@ -21,10 +21,6 @@ public class Workout : TrainingGeneric, ITraining
     [Column(TypeName = "varchar(240)")]
     public string? Description { get; set; }
 
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
-
     public int SeriesCount { get; set; }
 
     public int RepetitionCount { get; set; }

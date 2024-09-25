@@ -53,13 +53,13 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
         return Ok(_mapper.Map<IEnumerable<CompleteWorkoutViewModel>>(workouts));
     }
 
-    [HttpGet("All/Simple/{pageNumber: int}/{pageSize: int}")]
+    [HttpGet("All/Simple/{pageNumber:int}/{pageSize:int}")]
     public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable(int pageNumber = 1, int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details/{pageNumber: int}/{pageSize: int}")]
+    [HttpGet("All/Details/{pageNumber:int}/{pageSize:int}")]
     public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(int pageNumber = 1, int pageSize = 10)
     {
         throw new NotImplementedException();
@@ -118,7 +118,7 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     public async Task<ActionResult> DeleteById(Guid Id)
     {
         //TODO: Retirar o método de delete do controller (má prática)
-        await _repository.DeleteByIdAsync(Id, new CancellationToken());
+        await _repository.DeleteByIdAsync(Id);
         return NoContent();
     }
 

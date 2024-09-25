@@ -32,7 +32,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Handlers
             professional.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
             professional.SetTypeDocument();
 
-            await _repository.AddAsync(professional, cancellationToken);
+            await _repository.AddAsync(professional);
 
             ProfessionalInfoViewModel professionalInfoVm = _mapper.Map<ProfessionalInfoViewModel>(professional);
             professionalInfoVm.TokenJWT = _authService.GenerateJWT(professional.DocumentNumber!, professional.Username!);

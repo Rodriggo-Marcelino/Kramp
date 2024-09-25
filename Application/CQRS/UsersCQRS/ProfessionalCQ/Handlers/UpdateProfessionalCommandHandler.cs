@@ -30,7 +30,7 @@ public class UpdateProfessionalCommandHandler : IRequestHandler<UpdateProfession
 
         Professional newProfessional = _mapper.Map(request, oldProfessional);
 
-        await _repository.UpdateAsync(newProfessional, cancellationToken);
+        await _repository.UpdateAsync(newProfessional);
 
         ProfessionalInfoViewModel professionalInfoVm = _mapper.Map<ProfessionalInfoViewModel>(newProfessional);
 

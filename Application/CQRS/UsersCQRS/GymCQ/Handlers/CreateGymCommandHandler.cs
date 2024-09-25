@@ -31,7 +31,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Handlers
             gym.RefreshToken = Guid.NewGuid().ToString();
             gym.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.AddAsync(gym, cancellationToken);
+            await _repository.AddAsync(gym);
 
             GymInfoViewModel gymInfoVm = _mapper.Map<GymInfoViewModel>(gym);
             gymInfoVm.TokenJWT = _authService.GenerateJWT(gym.DocumentNumber!, gym.Username!);

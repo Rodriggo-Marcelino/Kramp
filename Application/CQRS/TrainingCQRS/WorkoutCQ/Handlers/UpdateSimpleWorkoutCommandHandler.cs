@@ -50,7 +50,7 @@ public class UpdateSimpleWorkoutCommandHandler : IRequestHandler<UpdateSimpleWor
                 ExerciseTimeInSeconds = 20
             });
 
-            await _workoutExerciseRepository.AddAsync(workoutExercises.Last(), default);
+            await _workoutExerciseRepository.AddAsync(workoutExercises.Last());
         }
         return workoutExercises;
     }

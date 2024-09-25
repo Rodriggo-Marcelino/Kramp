@@ -33,7 +33,7 @@ public class UpdateGymCommandHandler : IRequestHandler<UpdateGymCommand, Respons
         newGym.RefreshToken = Guid.NewGuid().ToString();
         newGym.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-        await _repository.UpdateAsync(newGym, cancellationToken);
+        await _repository.UpdateAsync(newGym);
 
         GymInfoViewModel gymInfoVm = _mapper.Map<GymInfoViewModel>(newGym);
 

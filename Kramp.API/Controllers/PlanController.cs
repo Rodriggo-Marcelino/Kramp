@@ -79,13 +79,13 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         return Ok(_mapper.Map<CompletePlanViewModel>(plan));
     }
 
-    [HttpGet("All/Simple/{pageSize: int}/{pageNumber: int}")]
+    [HttpGet("All/Simple/{pageSize:int}/{pageNumber:int}")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans(int pageNumber = 1, int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details/{pageSize: int}/{pageNumber: int}")]
+    [HttpGet("All/Details/{pageSize:int}/{pageNumber:int}")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail(int pageNumber = 1, int pageSize = 10)
     {
         throw new NotImplementedException();
@@ -118,7 +118,7 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     public async Task<ActionResult> DeleteById(Guid Id)
     {
         //TODO: Retirar o método de delete do controller (má prática)
-        await _repository.DeleteByIdAsync(Id, new CancellationToken());
+        await _repository.DeleteByIdAsync(Id);
         return NoContent();
     }
 

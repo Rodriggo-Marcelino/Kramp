@@ -1,30 +1,32 @@
 ﻿using Domain.Entity.Generics;
+using System.Linq.Expressions;
 
 namespace Domain.Repository
 {
     public interface IRepository<T> where T : EntityGeneric
     {
-        //GET
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T?> GetByIdAsync(Guid Id);
-        Task<IEnumerable<T>> FindAllByIdAsync(IEnumerable<Guid> Ids);
-        Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy);
-        Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy, int page, int pageSize);
-        Task<bool> ExistsById(Guid Id);
+        // GET
+        Task<IEnumerable<T?>> GetAllAsync();
+        Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
+        Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, int page, int pageSize);
+        Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        Task<T?> GetByIdAsync(Guid id);
+        Task<IEnumerable<T?>> FindAllByIdAsync(IEnumerable<Guid> ids);
+        Task<bool> ExistsById(Guid id);
         Task<int> Count();
 
-        //POST
-        Task<T> AddAsync(T entity, CancellationToken cancellationToken);
+        // POST
+        Task<T?> AddAsync(T entity);
+        Task<IEnumerable<T?>?> AddAsync(IEnumerable<T?> entities);
 
-        //PUT
-        Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
+        // PUT
+        Task<T?> UpdateAsync(T entity);
+        Task<IEnumerable<T?>?> UpdateAsync(IEnumerable<T?> entities);
 
-        //DELETE
-        Task DeleteAsync(T entity, CancellationToken cancellationToken);
-        Task DeleteByIdAsync(Guid Id, CancellationToken cancellationToken);
-        Task DeleteAllByIdAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken);
-        Task DeleteAllAsync(CancellationToken cancellationToken);
-        Task DeleteAllAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
-
+        // DELETE
+        Task DeleteAsync(T entity);
+        Task DeleteAsync(IEnumerable<T?> entities);
+        Task DeleteByIdAsync(Guid id);
+        Task DeleteAllByIdAsync(IEnumerable<Guid> ids);
     }
 }
