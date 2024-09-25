@@ -21,10 +21,6 @@ public class Exercise : TrainingGeneric, ITraining
     [Column(TypeName = "varchar(240)")]
     public string? Description { get; set; }
 
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
-
     public string? Photo { get; set; }
     public string? Video { get; set; }
 

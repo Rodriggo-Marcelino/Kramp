@@ -20,10 +20,6 @@ public class Plan : TrainingGeneric, ITraining
     [Column(TypeName = "varchar(240)")]
     public string? Description { get; set; }
 
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
-
     [Required]
     [DataType(DataType.Date)]
     public DateTime StartDate { get; set; }

@@ -2,6 +2,7 @@
 using Domain.Repository;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Services.Repositories
 {
@@ -16,106 +17,141 @@ namespace Services.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        //GET
-        public async Task<IEnumerable<T>> GetAllAsync()
+        #region Repository READ
+        public async Task<IEnumerable<T?>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.Where(entity => !entity.Deleted).ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(Guid Id)
+        public async Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
         {
-            var entity = await _dbSet.FindAsync(Id);
-
-            if (entity == null)
-            {
-                throw new Exception($"Entity of type {typeof(T).Name} with id {Id} not found.");
-            }
-
-            return entity;
+            return await orderBy(_dbSet)
+                .Where(entity => !entity.Deleted)
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> FindAllByIdAsync(IEnumerable<Guid> Ids)
+        public async Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, int page, int pageSize)
         {
-            return await _dbSet.Where(entity => Ids.Contains(entity.Id)).ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy)
-        {
-            return await OrderBy(_dbSet).ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> FindAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy, int page, int pageSize)
-        {
-            return await OrderBy(_dbSet)
+            return await orderBy(_dbSet)
+                .Where(entity => !entity.Deleted)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
         }
 
-        public async Task<bool> ExistsById(Guid Id)
+        public async Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.FindAsync(Id) != null;
+            return await _dbSet
+                .Where(predicate)
+                .Where(entity => !entity.Deleted)
+                .ToListAsync();
+        }
+
+        public async Task<T?> GetByIdAsync(Guid id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            if (entity == null || entity.Deleted)
+            {
+                throw new Exception($"Entity of type {typeof(T).Name} with id {id} not found.");
+            }
+
+            return entity;
+        }
+
+        public async Task<IEnumerable<T?>> FindAllByIdAsync(IEnumerable<Guid> ids)
+        {
+            return await _dbSet
+                .Where(entity => ids.Contains(entity.Id) && !entity.Deleted)
+                .ToListAsync();
+        }
+
+        public async Task<bool> ExistsById(Guid id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            return entity != null && !entity.Deleted;
         }
 
         public async Task<int> Count()
         {
-            return await _dbSet.CountAsync();
+            return await _dbSet.Where(entity => !entity.Deleted).CountAsync();
+        }
+        #endregion
+
+        #region Repository CREATE
+        public async Task<T?> AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        //POST
-        public async Task<T> AddAsync(T entity, CancellationToken cancellationToken)
+        public async Task<IEnumerable<T?>?> AddAsync(IEnumerable<T?> entities)
         {
-            var added = await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync(cancellationToken);
-            return await Task.FromResult(added.Entity);
+            if (entities != null && entities.Any())
+            {
+                await _dbSet.AddRangeAsync(entities);
+                await _context.SaveChangesAsync();
+                return entities;
+            }
+            return null;
+        }
+        #endregion
+
+        #region Repository UPDATE
+        public async Task<T?> UpdateAsync(T entity)
+        {
+            entity.MarkAsUpdated();
+            _dbSet.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        //PUT
-        public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)
+        public async Task<IEnumerable<T?>?> UpdateAsync(IEnumerable<T?> entities)
         {
-            var updated = _dbSet.Update(entity);
-            await _context.SaveChangesAsync(cancellationToken);
-            return await Task.FromResult(updated.Entity);
+            if (entities != null && entities.Any())
+            {
+                foreach (var entity in entities)
+                {
+                    entity.MarkAsUpdated();
+                }
+                _dbSet.UpdateRange(entities);
+                await _context.SaveChangesAsync();
+                return entities;
+            }
+            return null;
+        }
+        #endregion
+
+        #region Repository DELETE (Logic)
+        public async Task DeleteAsync(T entity)
+        {
+            entity.MarkAsDeleted();
+            await UpdateAsync(entity);
         }
 
-        //DELETE
-        public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
+        public async Task DeleteAsync(IEnumerable<T?> entities)
         {
-            _dbSet.Remove(entity);
-            await _context.SaveChangesAsync(cancellationToken);
+            foreach (var entity in entities)
+            {
+                entity?.MarkAsDeleted();
+            }
+            await UpdateAsync(entities);
         }
 
-        public async Task DeleteByIdAsync(Guid Id, CancellationToken cancellationToken)
+        public async Task DeleteByIdAsync(Guid id)
         {
-            var entity = await GetByIdAsync(Id);
+            var entity = await GetByIdAsync(id);
             if (entity != null)
             {
-                var deleted = _dbSet.Remove(entity);
-                await _context.SaveChangesAsync(cancellationToken);
+                await DeleteAsync(entity);
             }
         }
 
-        public async Task DeleteAllByIdAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
+        public async Task DeleteAllByIdAsync(IEnumerable<Guid> ids)
         {
-            foreach (var Id in Ids)
-            {
-                await DeleteByIdAsync(Id, cancellationToken);
-            }
+            var entities = await FindAllByIdAsync(ids);
+            await DeleteAsync(entities);
         }
-
-        public async Task DeleteAllAsync(CancellationToken cancellationToken)
-        {
-            foreach (var entity in _dbSet)
-            {
-                _dbSet.Remove(entity);
-            }
-            await _context.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task DeleteAllAsync(IEnumerable<T> entities, CancellationToken cancellationToken)
-        {
-            _dbSet.RemoveRange(entities);
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+        #endregion
     }
 }
