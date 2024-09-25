@@ -20,6 +20,7 @@ namespace Application.Mapping
     {
         public ProfileMappings()
         {
+            #region Manager Mappings
             CreateMap<CreateManagerCommand, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -30,8 +31,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Manager, ManagerInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
+            CreateMap<Manager, ManagerInfoViewModel>()
+                .ForMember(x => x.TokenJWT, x => x.AllowNull());
+            #endregion
 
+            #region Gym Mappings
             CreateMap<CreateGymCommand, Gym>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -42,8 +46,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Gym, GymInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
+            CreateMap<Gym, GymInfoViewModel>()
+                .ForMember(x => x.TokenJWT, x => x.AllowNull());
+            #endregion
 
+            #region Member Mappings
             CreateMap<CreateMemberCommand, Member>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -54,8 +61,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Member, MemberInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
+            CreateMap<Member, MemberInfoViewModel>()
+                .ForMember(x => x.TokenJWT, x => x.AllowNull());
+            #endregion
 
+            #region Professional Mappings
             CreateMap<CreateProfessionalCommand, Professional>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -66,8 +76,11 @@ namespace Application.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Professional, ProfessionalInfoViewModel>().ForMember(x => x.TokenJWT, x => x.AllowNull());
+            CreateMap<Professional, ProfessionalInfoViewModel>()
+                .ForMember(x => x.TokenJWT, x => x.AllowNull());
+            #endregion
 
+            #region Workout Mappings
             CreateMap<CreateSimpleWorkoutCommand, Workout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Exercises, opt => opt.Ignore())
@@ -83,6 +96,15 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
+            CreateMap<CreateCompleteWorkoutCommand, Workout>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src => src.Exercises))
+                .ReverseMap();
+
+            CreateMap<Workout, CompleteWorkoutViewModel>().ReverseMap();
+            #endregion
+
+            #region Plan Mappings
             CreateMap<CreateSimplePlanCommand, Plan>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
@@ -93,6 +115,13 @@ namespace Application.Mapping
                 .ReverseMap();
 
             CreateMap<Plan, SimplePlanViewModel>().ReverseMap();
+            CreateMap<CreateCompletePlanCommand, Plan>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Workouts, opt => opt.MapFrom(src => src.Workouts))
+                .ReverseMap();
+
+            CreateMap<Plan, CompletePlanViewModel>().ReverseMap();
+            #endregion
         }
 
     }
