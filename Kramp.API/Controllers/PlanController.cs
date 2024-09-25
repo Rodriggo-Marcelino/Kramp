@@ -79,13 +79,13 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         return Ok(_mapper.Map<CompletePlanViewModel>(plan));
     }
 
-    [HttpGet("All/Simple/{pageSize: int}/{pageNumber: int}")]
+    [HttpGet("All/Simple/{pageSize:int}/{pageNumber:int}")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans(int pageNumber = 1, int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details/{pageSize: int}/{pageNumber: int}")]
+    [HttpGet("All/Details/{pageSize:int}/{pageNumber:int}")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail(int pageNumber = 1, int pageSize = 10)
     {
         throw new NotImplementedException();
