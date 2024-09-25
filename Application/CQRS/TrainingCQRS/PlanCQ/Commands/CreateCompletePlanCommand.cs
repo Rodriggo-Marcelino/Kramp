@@ -1,6 +1,10 @@
-﻿namespace Application.CQRS.TrainingCQRS.PlanCQ.Commands
+﻿using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
+using Application.Response;
+using MediatR;
+
+namespace Application.CQRS.TrainingCQRS.PlanCQ.Commands
 {
-    public record CreateCompletePlanCommand
+    public record CreateCompletePlanCommand : IRequest<ResponseBase<CompletePlanViewModel>>
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
