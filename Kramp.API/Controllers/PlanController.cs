@@ -118,7 +118,7 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     public async Task<ActionResult> DeleteById(Guid Id)
     {
         //TODO: Retirar o método de delete do controller (má prática)
-        await _repository.DeleteByIdAsync(Id, new CancellationToken());
+        await _repository.DeleteByIdAsync(Id);
         return NoContent();
     }
 

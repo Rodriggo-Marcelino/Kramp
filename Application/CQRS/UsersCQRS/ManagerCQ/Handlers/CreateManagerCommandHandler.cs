@@ -32,7 +32,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Handlers
             manager.RefreshToken = Guid.NewGuid().ToString();
             manager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.AddAsync(manager, cancellationToken);
+            await _repository.AddAsync(manager);
 
             ManagerInfoViewModel managerInfoVm = _mapper.Map<ManagerInfoViewModel>(manager);
             managerInfoVm.TokenJWT = _authService.GenerateJWT(manager.DocumentNumber!, manager.Username!);

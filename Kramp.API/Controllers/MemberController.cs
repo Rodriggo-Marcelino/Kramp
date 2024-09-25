@@ -49,7 +49,7 @@ namespace Kramp.API.Controllers
         [HttpDelete("Delete/{Id:guid}")]
         public async Task<ActionResult<MemberInfoViewModel>> DeleteById(Guid Id)
         {
-            await _repository.DeleteByIdAsync(Id, new CancellationToken());
+            await _repository.DeleteByIdAsync(Id);
             return NoContent();
         }
     }

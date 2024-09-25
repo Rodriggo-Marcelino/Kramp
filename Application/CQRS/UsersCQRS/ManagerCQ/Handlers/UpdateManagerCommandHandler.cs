@@ -34,7 +34,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Handlers
             newManager.RefreshToken = Guid.NewGuid().ToString();
             newManager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.UpdateAsync(newManager, cancellationToken);
+            await _repository.UpdateAsync(newManager);
 
             ManagerInfoViewModel managerInfoVm = _mapper.Map<ManagerInfoViewModel>(newManager);
 

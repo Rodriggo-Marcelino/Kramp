@@ -32,7 +32,7 @@ public class UpdateMemberCommandHandler : IRequestHandler<UpdateMemberCommand, R
         newMember.RefreshToken = Guid.NewGuid().ToString();
         newMember.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-        await _repository.UpdateAsync(newMember, cancellationToken);
+        await _repository.UpdateAsync(newMember);
 
         MemberInfoViewModel memberInfoVm = _mapper.Map<MemberInfoViewModel>(newMember);
 

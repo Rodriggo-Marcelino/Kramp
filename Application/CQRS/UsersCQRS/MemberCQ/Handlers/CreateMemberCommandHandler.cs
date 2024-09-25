@@ -31,7 +31,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Handlers
             member.RefreshToken = Guid.NewGuid().ToString();
             member.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
 
-            await _repository.AddAsync(member, cancellationToken);
+            await _repository.AddAsync(member);
 
             MemberInfoViewModel memberInfoVm = _mapper.Map<MemberInfoViewModel>(member);
             memberInfoVm.TokenJWT = _authService.GenerateJWT(member.DocumentNumber!, member.Username!);

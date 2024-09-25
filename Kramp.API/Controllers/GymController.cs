@@ -49,7 +49,7 @@ namespace Kramp.API.Controllers
         public async Task<ActionResult<GymInfoViewModel>> DeleteById(Guid Id)
         {
             //TODO: Retirar o método de delete do controller (má prática)
-            await _repository.DeleteByIdAsync(Id, new CancellationToken());
+            await _repository.DeleteByIdAsync(Id);
             return NoContent();
         }
     }
