@@ -1,9 +1,12 @@
 using Application.CQRS.GenericsCQRS.User.Commands;
+using Domain.Entity.Generics;
 using FluentValidation;
 
 namespace Application.CQRS.GenericsCQRS.User.Validators;
 
-public class CreateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand> where TCommand : CreateUserGenericCommand<TEntity, TViewModel>
+public class CreateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand>
+    where TEntity : UserGeneric
+    where TCommand : CreateUserGenericCommand<TEntity, TViewModel>
 {
     public CreateUserGenericCommandValidator()
     {

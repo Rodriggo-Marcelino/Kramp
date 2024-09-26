@@ -9,14 +9,10 @@ using Services.Repositories;
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class CreateManagerTemplate : CreateEntityTemplate
-        <
-        Manager,
-        CreateUserGenericCommand
-            <Manager,
-            UserGenericViewModel>,
+        <Manager,
+        CreateUserGenericCommand<Manager, UserGenericViewModel>,
         UserGenericViewModel,
-        ManagerRepository
-        >
+        ManagerRepository>
     {
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;

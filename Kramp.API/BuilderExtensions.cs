@@ -83,7 +83,7 @@ namespace Kramp.API
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateUserGenericCommand<Manager, UserGenericViewModel>).Assembly));
+            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(IRequest<ResponseBase<UserGenericViewModel>>).Assembly));
         }
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
