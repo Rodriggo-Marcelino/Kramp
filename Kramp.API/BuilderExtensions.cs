@@ -1,11 +1,17 @@
-﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
-using Application.CQRS.UsersCQRS.ProfessionalCQ.Validators;
+﻿using Application.CQRS.GenericsCQRS.Generic.Handlers;
+using Application.CQRS.GenericsCQRS.User.Validators;
+using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
+using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
 using Application.ExceptionHandler;
 using Application.Mapping;
+using Application.Response;
 using Domain.Abstractions;
+using Domain.Entity.User;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -87,7 +93,10 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateProfessionalCommandValidator>();
+            builder.Services.AddScoped(typeof(CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>),
+                   typeof(CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>));
+
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>>();
             builder.Services.AddFluentValidationAutoValidation();
         }
 
@@ -98,6 +107,13 @@ namespace Kramp.API
         public static void AddInjections(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
+
+            builder.Services.AddScoped(typeof(IRequestHandler<CreateManagerCommand, ResponseBase<ManagerInfoViewModel>>),
+                   typeof(CreateEntityCommandHandler<Manager, CreateManagerCommand, ManagerInfoViewModel, ManagerRepository,
+                   CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>>));
+
+            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateManagerCommand, ManagerInfoViewModel, ManagerRepository,
+                CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>>), typeof(CreateManagerTemplate));
 
             builder.Services.AddTransient<ManagerRepository>();
             builder.Services.AddTransient<GymRepository>();
