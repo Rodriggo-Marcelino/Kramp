@@ -1,11 +1,12 @@
 ﻿using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using Application.Response;
+using Domain.Entity.User;
 using MediatR;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Commands
 {
-    public record CreateMemberCommand : CreateUserGenericCommand, IRequest<ResponseBase<MemberInfoViewModel>>
+    public record CreateMemberCommand : CreateUserGenericCommand<Member, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
     {
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.UsersCQRS.MemberCQ.Commands;
+using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
+using Domain.Entity.User;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Validators
 {
-    public class CreateMemberCommandValidator : CreateUserGenericCommandValidator<CreateMemberCommand>
+    public class CreateMemberCommandValidator : CreateUserGenericCommandValidator<Member, CreateMemberCommand, MemberInfoViewModel>
     {
-        //TODO: Implementar validação de usuario para criação de treino 
     }
 }
