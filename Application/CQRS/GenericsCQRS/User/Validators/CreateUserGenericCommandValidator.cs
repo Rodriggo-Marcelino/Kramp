@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.CQRS.GenericsCQRS.User.Validators;
 
-public class CreateUserGenericCommandValidator<T> : AbstractValidator<T> where T : CreateUserGenericCommand
+public class CreateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand> where TCommand : CreateUserGenericCommand<TEntity, TViewModel>
 {
     public CreateUserGenericCommandValidator()
     {
