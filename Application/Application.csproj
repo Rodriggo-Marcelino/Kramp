@@ -16,7 +16,10 @@
   <ItemGroup>
     <Folder Include="CQRS\GenericsCQRS\Generic\Validators\" />
     <Folder Include="CQRS\GenericsCQRS\User\Handlers\" />
+    <Folder Include="CQRS\UsersCQRS\ManagerCQ\Commands\" />
+    <Folder Include="CQRS\UsersCQRS\ManagerCQ\Handlers\" />
     <Folder Include="CQRS\UsersCQRS\ManagerCQ\Validators\" />
+    <Folder Include="CQRS\UsersCQRS\ManagerCQ\ViewModels\" />
   </ItemGroup>
 
   <PropertyGroup>

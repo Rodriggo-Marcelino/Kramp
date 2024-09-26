@@ -1,11 +1,11 @@
-﻿using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
+﻿using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.User.ViewModel;
+using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.CQRS.UsersCQRS.GymCQ.Commands;
 using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
-using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
-using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
 using Application.CQRS.UsersCQRS.MemberCQ.Commands;
 using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
@@ -21,17 +21,19 @@ namespace Application.Mapping
         public ProfileMappings()
         {
             #region Manager Mappings
-            CreateMap<CreateManagerCommand, Manager>()
+            CreateMap<CreateUserGenericCommand<Manager, UserGenericViewModel>, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
+            /*
             CreateMap<UpdateManagerCommand, Manager>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+            */
 
-            CreateMap<Manager, ManagerInfoViewModel>()
+            CreateMap<Manager, UserGenericViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
             #endregion
 

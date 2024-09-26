@@ -1,5 +1,5 @@
-﻿using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
-using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
+﻿using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.User.ViewModel;
 using AutoMapper;
 using Domain.Entity.User;
 using MediatR;
@@ -13,20 +13,20 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
         [HttpPost("Create")]
-        public async Task<ActionResult<ManagerInfoViewModel>> Create(CreateManagerCommand command)
+        public async Task<ActionResult<UserGenericViewModel>> Create(CreateUserGenericCommand<Manager, UserGenericViewModel> command)
         {
             return Created("", await _mediator.Send(command));
         }
 
         [HttpGet("All")]
-        public async Task<ActionResult<IEnumerable<ManagerInfoViewModel>>> GetAllManagers()
+        public async Task<ActionResult<IEnumerable<UserGenericViewModel>>> GetAllManagers()
         {
             var managers = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<ManagerInfoViewModel>>(managers));
+            return Ok(_mapper.Map<IEnumerable<UserGenericViewModel>>(managers));
         }
 
         [HttpGet("{Id:guid}")]
-        public async Task<ActionResult<ManagerInfoViewModel>> GetManagerById(Guid Id)
+        public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid Id)
         {
             Manager? manager = await _repository.GetByIdAsync(Id);
 
@@ -35,14 +35,17 @@ namespace Kramp.API.Controllers
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<ManagerInfoViewModel>(manager));
+            return Ok(_mapper.Map<UserGenericViewModel>(manager));
         }
 
         [HttpPut("Update/{Id:guid}")]
-        public async Task<ActionResult<ManagerInfoViewModel>> Update(Guid Id, UpdateManagerCommand command)
+        public async Task<ActionResult<UserGenericViewModel>> Update(Guid Id/* UpdateManagerCommand command*/)
         {
+            /*
             command.Id = Id;
             return Ok(await _mediator.Send(command));
+            */
+            throw new NotImplementedException();
         }
 
         [HttpDelete("Delete/{Id:guid}")]

@@ -1,6 +1,6 @@
-﻿using Application.CQRS.GenericsCQRS.User.Validators;
-using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
-using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
+﻿using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.User.Validators;
+using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.Response;
 using AutoMapper;
 using Domain.Abstractions;
@@ -12,30 +12,32 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
     public class CreateManagerTemplate : CreateEntityTemplate
         <
         Manager,
-        CreateManagerCommand,
-        ManagerInfoViewModel,
+        CreateUserGenericCommand
+            <Manager,
+            UserGenericViewModel>,
+        UserGenericViewModel,
         ManagerRepository,
-        CreateUserGenericCommandValidator<
-            Manager,
-            CreateManagerCommand,
-            ManagerInfoViewModel
-            >
+        CreateUserGenericCommandValidator
+            <Manager,
+            CreateUserGenericCommand<Manager, UserGenericViewModel>,
+            UserGenericViewModel>
         >
     {
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
+
         public CreateManagerTemplate(
             ManagerRepository repository,
             IMapper mapper,
             IAuthService authService,
-            CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel> validator)
+            CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel> validator)
             : base(repository, mapper, validator)
         {
             _mapper = mapper;
             _authService = authService;
         }
 
-        protected override Manager MapCommandToEntity(CreateManagerCommand request)
+        protected override Manager MapCommandToEntity(CreateUserGenericCommand<Manager, UserGenericViewModel> request)
         {
             Manager manager = base.MapCommandToEntity(request);
 
@@ -47,11 +49,11 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             return manager;
         }
 
-        protected override ResponseBase<ManagerInfoViewModel> CreateResponse(Manager entity)
+        protected override ResponseBase<UserGenericViewModel> CreateResponse(Manager entity)
         {
-            var viewModel = _mapper.Map<ManagerInfoViewModel>(entity);
+            var viewModel = _mapper.Map<UserGenericViewModel>(entity);
             viewModel.TokenJWT = _authService.GenerateJWT(entity.DocumentNumber!, entity.Username!);
-            return new ResponseBase<ManagerInfoViewModel>(new ResponseInfo(), viewModel, viewModel);
+            return new ResponseBase<UserGenericViewModel>(new ResponseInfo(), viewModel, viewModel);
         }
     }
 }

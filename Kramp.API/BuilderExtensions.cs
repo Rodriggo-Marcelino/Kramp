@@ -1,8 +1,8 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Handlers;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.Validators;
-using Application.CQRS.UsersCQRS.ManagerCQ.Commands;
+using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
-using Application.CQRS.UsersCQRS.ManagerCQ.ViewModels;
 using Application.ExceptionHandler;
 using Application.Mapping;
 using Application.Response;
@@ -83,7 +83,7 @@ namespace Kramp.API
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateManagerCommand).Assembly));
+            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(CreateUserGenericCommand<Manager, UserGenericViewModel>).Assembly));
         }
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
@@ -93,10 +93,10 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped(typeof(CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>),
-                   typeof(CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>));
+            builder.Services.AddScoped(typeof(CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>),
+                   typeof(CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>));
 
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>();
             builder.Services.AddFluentValidationAutoValidation();
         }
 
@@ -108,12 +108,12 @@ namespace Kramp.API
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
 
-            builder.Services.AddScoped(typeof(IRequestHandler<CreateManagerCommand, ResponseBase<ManagerInfoViewModel>>),
-                   typeof(CreateEntityCommandHandler<Manager, CreateManagerCommand, ManagerInfoViewModel, ManagerRepository,
-                   CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>>));
+            builder.Services.AddScoped(typeof(IRequestHandler<CreateUserGenericCommand<Manager, UserGenericViewModel>, ResponseBase<UserGenericViewModel>>),
+                   typeof(CreateEntityCommandHandler<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository,
+                   CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>));
 
-            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateManagerCommand, ManagerInfoViewModel, ManagerRepository,
-                CreateUserGenericCommandValidator<Manager, CreateManagerCommand, ManagerInfoViewModel>>), typeof(CreateManagerTemplate));
+            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository,
+                CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>), typeof(CreateManagerTemplate));
 
             builder.Services.AddTransient<ManagerRepository>();
             builder.Services.AddTransient<GymRepository>();
