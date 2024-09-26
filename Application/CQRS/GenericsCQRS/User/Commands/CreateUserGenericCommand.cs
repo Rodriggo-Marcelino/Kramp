@@ -1,6 +1,9 @@
+using Application.Response;
+using MediatR;
+
 namespace Application.CQRS.GenericsCQRS.User.Commands;
 
-public record CreateUserGenericCommand<TEntity, TViewModel> : CreateEntityCommand<TEntity, TViewModel>
+public record CreateUserGenericCommand<TEntity, TViewModel> : IRequest<ResponseBase<TViewModel>>
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }

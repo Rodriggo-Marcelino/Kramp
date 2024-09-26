@@ -93,9 +93,6 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped(typeof(CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>),
-                   typeof(CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>));
-
             builder.Services.AddValidatorsFromAssemblyContaining<CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>();
             builder.Services.AddFluentValidationAutoValidation();
         }
@@ -109,11 +106,9 @@ namespace Kramp.API
             builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddScoped(typeof(IRequestHandler<CreateUserGenericCommand<Manager, UserGenericViewModel>, ResponseBase<UserGenericViewModel>>),
-                   typeof(CreateEntityCommandHandler<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository,
-                   CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>));
+                   typeof(CreateEntityCommandHandler<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>));
 
-            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository,
-                CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>), typeof(CreateManagerTemplate));
+            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>), typeof(CreateManagerTemplate));
 
             builder.Services.AddTransient<ManagerRepository>();
             builder.Services.AddTransient<GymRepository>();

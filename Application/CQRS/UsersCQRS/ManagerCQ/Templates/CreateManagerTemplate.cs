@@ -1,5 +1,4 @@
 ﻿using Application.CQRS.GenericsCQRS.User.Commands;
-using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.Response;
 using AutoMapper;
@@ -16,11 +15,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             <Manager,
             UserGenericViewModel>,
         UserGenericViewModel,
-        ManagerRepository,
-        CreateUserGenericCommandValidator
-            <Manager,
-            CreateUserGenericCommand<Manager, UserGenericViewModel>,
-            UserGenericViewModel>
+        ManagerRepository
         >
     {
         private readonly IAuthService _authService;
@@ -29,9 +24,8 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
         public CreateManagerTemplate(
             ManagerRepository repository,
             IMapper mapper,
-            IAuthService authService,
-            CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel> validator)
-            : base(repository, mapper, validator)
+            IAuthService authService)
+            : base(repository, mapper)
         {
             _mapper = mapper;
             _authService = authService;

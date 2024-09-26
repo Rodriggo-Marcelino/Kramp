@@ -2,34 +2,28 @@
 using Application.Response;
 using AutoMapper;
 using Domain.Entity.Generics;
-using FluentValidation;
 using MediatR;
 using Services.Repositories;
 
-public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepository, TValidator>
+public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepository>
     where TEntity : EntityGeneric
     where TCommand : IRequest<ResponseBase<TViewModel>>
     where TViewModel : GenericViewModel
     where TRepository : GenericRepository<TEntity>
-    where TValidator : AbstractValidator<TCommand>
 {
     private readonly TRepository _repository;
     private readonly IMapper _mapper;
-    private readonly TValidator _validator;
 
-    public CreateEntityTemplate(TRepository repository, IMapper mapper, TValidator validator)
+    public CreateEntityTemplate(TRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
-        _validator = validator;
     }
 
     public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)
     {
         // Fase 1: Manipular o request antes de criar a entidade
         ManipulateRequest(request);
-
-        await ValidateCommandAsync(request);
 
         // Fase 2: Mapeia o comando para a entidade (pode ser personalizada)
         TEntity entity = MapCommandToEntity(request);
@@ -58,15 +52,6 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
     {
         // Lógica padrão de mapeamento (pode ser personalizada)
         return _mapper.Map<TEntity>(request);
-    }
-
-    protected virtual async Task ValidateCommandAsync(TCommand command)
-    {
-        var validationResult = await _validator.ValidateAsync(command);
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
     }
 
     protected virtual void ManipulateEntityBeforeSave(TEntity entity)
