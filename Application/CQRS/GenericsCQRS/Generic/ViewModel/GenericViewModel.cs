@@ -2,6 +2,5 @@
 {
     public record GenericViewModel
     {
-        public string? Name { get; set; }
     }
 }
