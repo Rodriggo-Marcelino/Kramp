@@ -72,6 +72,6 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
     protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
     {
         var viewModel = _mapper.Map<TViewModel>(entity);
-        return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel, viewModel);
+        return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
     }
 }
