@@ -53,14 +53,14 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
         return Ok(_mapper.Map<IEnumerable<CompleteWorkoutViewModel>>(workouts));
     }
 
-    [HttpGet("All/Simple/{pageNumber:int}/{pageSize:int}")]
-    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable(int pageNumber = 1, int pageSize = 10)
+    [HttpGet("All/Simple/Page")]
+    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details/{pageNumber:int}/{pageSize:int}")]
-    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(int pageNumber = 1, int pageSize = 10)
+    [HttpGet("All/Details/Page")]
+    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }

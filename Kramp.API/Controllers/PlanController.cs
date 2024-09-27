@@ -79,14 +79,14 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
         return Ok(_mapper.Map<CompletePlanViewModel>(plan));
     }
 
-    [HttpGet("All/Simple/{pageSize:int}/{pageNumber:int}")]
-    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans(int pageNumber = 1, int pageSize = 10)
+    [HttpGet("All/Simple/Page")]
+    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details/{pageSize:int}/{pageNumber:int}")]
-    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail(int pageNumber = 1, int pageSize = 10)
+    [HttpGet("All/Details/Page")]
+    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
