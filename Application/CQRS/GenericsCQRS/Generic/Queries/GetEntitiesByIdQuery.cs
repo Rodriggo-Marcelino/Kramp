@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Queries
 {
-    public record GetEntitiesByIdQuery<TViewModel> : IRequest<ResponseBase<TViewModel>>, IRequest<ResponseBase<IEnumerable<TViewModel>>>
+    public record GetEntitiesByIdQuery<TViewModel> : IRequest<ResponseBase<TViewModel>>
     {
         public Guid? Id { get; }
 
