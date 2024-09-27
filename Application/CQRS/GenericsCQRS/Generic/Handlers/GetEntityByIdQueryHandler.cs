@@ -14,9 +14,9 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
         where TViewModel : GenericViewModel
         where TRepository : GenericRepository<TEntity>
     {
-        private readonly GetEntityTemplate<TEntity, TQuery, TViewModel, TRepository> _template;
+        private readonly GetEntityByIdTemplate<TEntity, TQuery, TViewModel, TRepository> _template;
 
-        public GetEntityByIdQueryHandler(GetEntityTemplate<TEntity, TQuery, TViewModel, TRepository> template)
+        public GetEntityByIdQueryHandler(GetEntityByIdTemplate<TEntity, TQuery, TViewModel, TRepository> template)
         {
             _template = template;
         }
