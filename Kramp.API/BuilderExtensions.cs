@@ -1,7 +1,9 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Handlers;
+using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
+using Application.CQRS.UsersCQRS.ManagerCQ.Queries;
 using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
 using Application.ExceptionHandler;
 using Application.Mapping;
@@ -101,14 +103,31 @@ namespace Kramp.API
         {
             builder.Services.AddAutoMapper(typeof(ProfileMappings).Assembly);
         }
+
+        public static void AddCQRS(this WebApplicationBuilder builder)
+        {
+
+            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>),
+                                       typeof(CreateManagerTemplate));
+
+            builder.Services.AddScoped(typeof(IRequestHandler<CreateUserGenericCommand<Manager, UserGenericViewModel>, ResponseBase<UserGenericViewModel>>),
+                                       typeof(CreateEntityCommandHandler<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>));
+
+            builder.Services.AddScoped<GetAllEntitiesTemplate<Manager, GetAllManagersQuery, UserGenericViewModel, ManagerRepository>,
+                GetManagerTemplate>();
+
+            builder.Services.AddScoped<GetEntityByIdTemplate<Manager, GetManagerByIdQuery, UserGenericViewModel, ManagerRepository>,
+                GetManagerByIdTemplate>();
+
+            builder.Services.AddScoped<IRequestHandler<GetAllManagersQuery, ResponseBase<IEnumerable<UserGenericViewModel>>>,
+                   GetAllEntitiesQueryHandler<Manager, GetAllManagersQuery, UserGenericViewModel, ManagerRepository>>();
+
+            builder.Services.AddScoped<IRequestHandler<GetManagerByIdQuery, ResponseBase<UserGenericViewModel>>,
+                   GetEntityByIdQueryHandler<Manager, GetManagerByIdQuery, UserGenericViewModel, ManagerRepository>>();
+        }
         public static void AddInjections(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
-
-            builder.Services.AddScoped(typeof(IRequestHandler<CreateUserGenericCommand<Manager, UserGenericViewModel>, ResponseBase<UserGenericViewModel>>),
-                   typeof(CreateEntityCommandHandler<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>));
-
-            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>), typeof(CreateManagerTemplate));
 
             builder.Services.AddTransient<ManagerRepository>();
             builder.Services.AddTransient<GymRepository>();
