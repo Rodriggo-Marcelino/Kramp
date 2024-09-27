@@ -43,7 +43,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
         {
             var viewModel = _mapper.Map<UserGenericViewModel>(entity);
             viewModel.TokenJWT = _authService.GenerateJWT(entity.DocumentNumber!, entity.Username!);
-            return new ResponseBase<UserGenericViewModel>(new ResponseInfo(), viewModel, viewModel);
+            return new ResponseBase<UserGenericViewModel>(new ResponseInfo(), viewModel);
         }
     }
 }
