@@ -1,5 +1,6 @@
 ﻿using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
+using Application.CQRS.UsersCQRS.ManagerCQ.Queries;
 using AutoMapper;
 using Domain.Entity.User;
 using MediatR;
@@ -21,21 +22,17 @@ namespace Kramp.API.Controllers
         [HttpGet("All")]
         public async Task<ActionResult<IEnumerable<UserGenericViewModel>>> GetAllManagers()
         {
-            var managers = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<UserGenericViewModel>>(managers));
+            var query = new GetAllManagersQuery();
+            var managers = await _mediator.Send(query);
+            return Ok(managers);
         }
 
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid Id)
         {
-            Manager? manager = await _repository.GetByIdAsync(Id);
-
-            if (manager == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<UserGenericViewModel>(manager));
+            var query = new GetManagerByIdQuery(Id);
+            var manager = await _mediator.Send(query);
+            return Ok(manager);
         }
 
         [HttpPut("Update/{Id:guid}")]
