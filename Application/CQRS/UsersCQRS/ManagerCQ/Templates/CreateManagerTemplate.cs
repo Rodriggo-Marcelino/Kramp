@@ -8,8 +8,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
-    public class CreateManagerTemplate : CreateEntityTemplate
-        <Manager,
+    public class CreateManagerTemplate : CreateEntityTemplate<
+        Manager,
         CreateUserGenericCommand<Manager, UserGenericViewModel>,
         UserGenericViewModel,
         ManagerRepository>
@@ -27,16 +27,13 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             _authService = authService;
         }
 
-        protected override Manager MapCommandToEntity(CreateUserGenericCommand<Manager, UserGenericViewModel> request)
+        protected override void ManipulateEntityBeforeSave(CreateUserGenericCommand<Manager, UserGenericViewModel> request,
+            Manager entity)
         {
-            Manager manager = base.MapCommandToEntity(request);
-
-            manager.PasswordHash = request.Password;
-            manager.CreatedAt = DateTime.UtcNow;
-            manager.RefreshToken = Guid.NewGuid().ToString();
-            manager.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
-
-            return manager;
+            entity.PasswordHash = request.Password;
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.RefreshToken = Guid.NewGuid().ToString();
+            entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
         }
 
         protected override ResponseBase<UserGenericViewModel> CreateResponse(Manager entity)

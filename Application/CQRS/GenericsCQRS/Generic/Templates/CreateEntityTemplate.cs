@@ -26,7 +26,7 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
 
         TEntity entity = MapCommandToEntity(request);
 
-        ManipulateEntityBeforeSave(entity);
+        ManipulateEntityBeforeSave(request, entity);
 
         await SaveEntityAsync(entity);
 
@@ -42,7 +42,7 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
         return _mapper.Map<TEntity>(request);
     }
 
-    protected virtual void ManipulateEntityBeforeSave(TEntity entity) { }
+    protected virtual void ManipulateEntityBeforeSave(TCommand request, TEntity entity) { }
 
     protected virtual Task SaveEntityAsync(TEntity entity)
     {
