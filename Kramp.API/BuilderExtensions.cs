@@ -1,4 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.Handlers;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Handlers;
 using Application.CQRS.GenericsCQRS.Generic.Queries;
 using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.User.Commands;
@@ -85,7 +86,9 @@ namespace Kramp.API
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(IRequest<ResponseBase<UserGenericViewModel>>).Assembly));
+
+            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(
+                typeof(GetAllEntitiesQueryHandler<Manager, GetAllEntitiesQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>).Assembly));
         }
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
@@ -106,24 +109,37 @@ namespace Kramp.API
 
         public static void AddCQRS(this WebApplicationBuilder builder)
         {
-
+            #region Create
             builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>),
                                        typeof(CreateManagerTemplate));
 
             builder.Services.AddScoped(typeof(IRequestHandler<CreateUserGenericCommand<Manager, UserGenericViewModel>, ResponseBase<UserGenericViewModel>>),
                                        typeof(CreateEntityCommandHandler<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>));
+            #endregion
 
+            #region GET ALL
             builder.Services.AddScoped<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>,
                 GetAllManagersTemplate>();
 
-            builder.Services.AddScoped<GetEntityByIdTemplate<Manager, GetEntitiesByIdQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>,
-                GetManagerByIdTemplate>();
-
             builder.Services.AddScoped<IRequestHandler<GetAllEntitiesQuery<UserGenericViewModel>, ResponseBase<IEnumerable<UserGenericViewModel>>>,
                    GetAllEntitiesQueryHandler<Manager, GetAllEntitiesQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>>();
+            #endregion
 
-            builder.Services.AddScoped<IRequestHandler<GetEntitiesByIdQuery<UserGenericViewModel>, ResponseBase<UserGenericViewModel>>,
-                   GetEntityByIdQueryHandler<Manager, GetEntitiesByIdQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>>();
+            #region GET BY ID
+            builder.Services.AddScoped<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>,
+                                       GetManagerByIdTemplate>();
+
+            builder.Services.AddScoped<IRequestHandler<GetEntityByIdQuery<UserGenericViewModel>, ResponseBase<UserGenericViewModel>>,
+                   GetEntityByIdQueryHandler<Manager, GetEntityByIdQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>>();
+            #endregion
+
+            #region DELETE
+            builder.Services.AddScoped(typeof(DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>),
+                                       typeof(DeleteManagerTemplate));
+
+            builder.Services.AddScoped(typeof(IRequestHandler<DeleteEntityCommand<Manager>, Unit>),
+                                       typeof(DeleteEntityCommandHandler<Manager, DeleteEntityCommand<Manager>, ManagerRepository>));
+            #endregion
         }
         public static void AddInjections(this WebApplicationBuilder builder)
         {

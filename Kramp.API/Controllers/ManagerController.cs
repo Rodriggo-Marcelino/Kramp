@@ -1,6 +1,7 @@
-﻿using Application.CQRS.GenericsCQRS.User.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
-using Application.CQRS.UsersCQRS.ManagerCQ.Queries;
 using AutoMapper;
 using Domain.Entity.User;
 using MediatR;
@@ -22,7 +23,7 @@ namespace Kramp.API.Controllers
         [HttpGet("All")]
         public async Task<ActionResult<IEnumerable<UserGenericViewModel>>> GetAllManagers()
         {
-            var query = new GetAllManagersQuery();
+            var query = new GetAllEntitiesQuery<UserGenericViewModel>();
             var managers = await _mediator.Send(query);
             return Ok(managers);
         }
@@ -30,7 +31,7 @@ namespace Kramp.API.Controllers
         [HttpGet("{Id:guid}")]
         public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid Id)
         {
-            var query = new GetManagerByIdQuery(Id);
+            var query = new GetEntityByIdQuery<UserGenericViewModel>(Id);
             var manager = await _mediator.Send(query);
             return Ok(manager);
         }
@@ -48,8 +49,8 @@ namespace Kramp.API.Controllers
         [HttpDelete("Delete/{Id:guid}")]
         public async Task<ActionResult> DeleteById(Guid Id)
         {
-            //TODO: Retirar o método de delete do controller (má prática)
-            await _repository.DeleteByIdAsync(Id);
+            var command = new DeleteEntityCommand<Manager>(Id);
+            await _mediator.Send(command);
             return NoContent();
         }
     }

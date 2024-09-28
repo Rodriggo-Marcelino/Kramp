@@ -5,6 +5,7 @@ var configuration = builder.Configuration;
 
 
 builder.AddServices();
+builder.AddCQRS();
 builder.AddDatabase();
 builder.AddValidations();
 builder.AddAutoMapper();
