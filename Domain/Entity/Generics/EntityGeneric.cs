@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Generics
 {
-    [NotMapped]
     public abstract class EntityGeneric
     {
         [Key]

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Generics
 {
-    [NotMapped]
     public abstract class TrainingGeneric : EntityGeneric, ITraining
     {
         [Required]
