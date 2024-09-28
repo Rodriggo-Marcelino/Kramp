@@ -1,4 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.User.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
@@ -26,12 +27,10 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-            /*
-            CreateMap<UpdateManagerCommand, Manager>()
+            CreateMap<UpdateEntityCommand<Manager, UserGenericViewModel>, Manager>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
-            */
 
             CreateMap<Manager, UserGenericViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());

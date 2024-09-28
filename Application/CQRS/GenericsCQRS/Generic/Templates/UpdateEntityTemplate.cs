@@ -24,25 +24,23 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 
         public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)
         {
-            // Fase 1: Manipular o request antes de atualizar a entidade
             ManipulateRequest(request);
 
-            // Fase 2: Buscar a entidade no repositório
             TEntity? entity = await GetEntityAsync(request.Id);
 
-            // Fase 3: Mapeia o comando para a entidade (pode ser personalizada)
-            TEntity newEntity = MapCommandToEntity(request);
+            if (entity == null)
+            {
+                throw new Exception("Entity not found.");
+            }
 
-            // Fase 4: Manipular a entidade após validação, mas antes de salvar
+            TEntity newEntity = MapCommandToEntity(request, entity);
+
             ManipulateEntityBeforeUpdate(entity);
 
-            // Fase 5: Salvar a entidade no repositório
             await UpdateEntityAsync(entity);
 
-            // Fase 6: Manipular a entidade após salvar (opcional)
             ManipulateEntityAfterUpdate(entity);
 
-            // Fase 7: Converter a entidade para o ViewModel e retornar
             return CreateResponse(entity);
         }
 
@@ -53,9 +51,9 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
             return await _repository.GetByIdAsync(id);
         }
 
-        protected virtual TEntity MapCommandToEntity(TCommand request)
+        protected virtual TEntity MapCommandToEntity(TCommand request, TEntity entity)
         {
-            return _mapper.Map<TEntity>(request);
+            return _mapper.Map(request, entity);
         }
 
         protected virtual void ManipulateEntityBeforeUpdate(TEntity entity) { }
