@@ -10,7 +10,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
     public class GetEntityByIdQueryHandler<TEntity, TQuery, TViewModel, TRepository> : IRequestHandler<TQuery, ResponseBase<TViewModel>>
         where TEntity : EntityGeneric
-        where TQuery : GetEntitiesByIdQuery<TViewModel>
+        where TQuery : GetEntityByIdQuery<TViewModel>
         where TViewModel : GenericViewModel
         where TRepository : GenericRepository<TEntity>
     {
