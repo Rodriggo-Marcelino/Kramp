@@ -9,7 +9,7 @@ namespace Domain.Entity.User
     {
 
         [StringLength(240)]
-        [Column(TypeName = "varchar(240)")]
+        [Column("description", TypeName = "varchar(240)")]
         public string? Description { get; set; }
 
         //TODO: Owned Types

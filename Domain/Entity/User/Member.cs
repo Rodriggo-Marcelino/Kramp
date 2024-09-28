@@ -10,15 +10,16 @@ namespace Domain.Entity.User
 
         [Required]
         [StringLength(100, MinimumLength = 3)]
-        [Column(TypeName = "varchar(100)")]
+        [Column("surname", TypeName = "varchar(100)")]
         public string? Surname { get; set; }
 
         [StringLength(240)]
-        [Column(TypeName = "varchar(240)")]
+        [Column("user_bio", TypeName = "varchar(240)")]
         public string? UserBio { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
+        [Column("birth_date")]
         public DateTime BirthDate { get; set; }
     }
 }

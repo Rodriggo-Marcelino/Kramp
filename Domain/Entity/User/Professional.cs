@@ -10,18 +10,20 @@ namespace Domain.Entity.User
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        [Column(TypeName = "varchar(50)")]
+        [Column("surname", TypeName = "varchar(50)")]
         public string? Surname { get; set; }
 
         [StringLength(240)]
-        [Column(TypeName = "varchar(240)")]
+        [Column("user_bio", TypeName = "varchar(240)")]
         public string? UserBio { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
+        [Column("birth_date")]
         public DateTime BirthDate { get; set; }
 
         [Required]
+        [Column("job")]
         public Job Job { get; set; }
 
         public void SetTypeDocument()
