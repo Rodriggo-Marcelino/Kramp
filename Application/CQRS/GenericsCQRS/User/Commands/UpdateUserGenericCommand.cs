@@ -1,11 +1,9 @@
-using System.Text.Json.Serialization;
+using Application.CQRS.GenericsCQRS.Generic.Commands;
 
 namespace Application.CQRS.GenericsCQRS.User.Commands;
 
-public record UpdateUserGenericCommand
+public record UpdateUserGenericCommand<TEntity, TViewModel> : UpdateEntityCommand<TEntity, TViewModel>
 {
-    [JsonIgnore]
-    public Guid Id { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? UserBio { get; set; }
