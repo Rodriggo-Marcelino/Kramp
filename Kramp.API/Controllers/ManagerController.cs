@@ -15,7 +15,7 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
         [HttpPost("Create")]
-        public async Task<ActionResult<UserGenericViewModel>> Create(CreateUserGenericCommand<Manager, UserGenericViewModel> command)
+        public async Task<ActionResult<UserGenericViewModel>> Create([FromBody] CreateUserGenericCommand<Manager, UserGenericViewModel> command)
         {
             return Created("", await _mediator.Send(command));
         }
@@ -37,7 +37,7 @@ namespace Kramp.API.Controllers
         }
 
         [HttpPut("Update/{Id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> Update(Guid Id, UpdateEntityCommand<Manager, UserGenericViewModel> command)
+        public async Task<ActionResult<UserGenericViewModel>> Update(Guid Id, [FromBody] UpdateEntityCommand<Manager, UserGenericViewModel> command)
         {
             command.Id = Id;
             return Ok(await _mediator.Send(command));
