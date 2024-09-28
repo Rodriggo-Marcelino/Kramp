@@ -7,9 +7,9 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
-    public class GetManagerByIdTemplate : GetEntityByIdTemplate<Manager, GetEntitiesByIdQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>
+    public class GetAllManagersTemplate : GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>
     {
-        public GetManagerByIdTemplate(ManagerRepository repository, IMapper mapper) : base(repository, mapper)
+        public GetAllManagersTemplate(ManagerRepository repository, IMapper mapper) : base(repository, mapper)
         {
         }
     }
