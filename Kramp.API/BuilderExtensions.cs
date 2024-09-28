@@ -133,6 +133,13 @@ namespace Kramp.API
                    GetEntityByIdQueryHandler<Manager, GetEntityByIdQuery<UserGenericViewModel>, UserGenericViewModel, ManagerRepository>>();
             #endregion
 
+            #region UPDATE
+            builder.Services.AddScoped(typeof(UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>),
+                                       typeof(UpdateManagerTemplate));
+
+            builder.Services.AddScoped(typeof(IRequestHandler<UpdateEntityCommand<Manager, UserGenericViewModel>, ResponseBase<UserGenericViewModel>>),
+                                       typeof(UpdateEntityCommandHandler<Manager, UpdateEntityCommand<Manager, UserGenericViewModel>, UserGenericViewModel, ManagerRepository>));
+            #endregion
             #region DELETE
             builder.Services.AddScoped(typeof(DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>),
                                        typeof(DeleteManagerTemplate));

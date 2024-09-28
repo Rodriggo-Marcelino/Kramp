@@ -37,13 +37,10 @@ namespace Kramp.API.Controllers
         }
 
         [HttpPut("Update/{Id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> Update(Guid Id/* UpdateManagerCommand command*/)
+        public async Task<ActionResult<UserGenericViewModel>> Update(Guid Id, UpdateEntityCommand<Manager, UserGenericViewModel> command)
         {
-            /*
             command.Id = Id;
             return Ok(await _mediator.Send(command));
-            */
-            throw new NotImplementedException();
         }
 
         [HttpDelete("Delete/{Id:guid}")]
