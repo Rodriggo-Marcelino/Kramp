@@ -108,30 +108,25 @@ namespace Kramp.API
         {
             var services = builder.Services;
 
-            // Register CreateManagerTemplate with its dependencies
             RegisterCQRS<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            // Register UpdateManagerTemplate for update operations
             RegisterCQRS<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerTemplate,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            // Register DeleteManagerTemplate for deletion
             RegisterVoidCQRS<DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
                 DeleteManagerTemplate,
                 DeleteEntityCommand<Manager>>(services);
 
-            // Register GetManagerByIdTemplate for retrieving a single manager by id
             RegisterCQRS<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetManagerByIdTemplate,
                 GetEntityByIdQuery<UserViewModel>,
                 UserViewModel>(services);
 
-            // Register GetAllManagersTemplate for retrieving all managers
             RegisterIEnumerableCQRS<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetAllManagersTemplate,
                 GetAllEntitiesQuery<UserViewModel>,
