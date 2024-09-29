@@ -1,10 +1,6 @@
-using Application.CQRS.GenericsCQRS.Generic.Commands;
-using Domain.Entity.Generics;
-
 namespace Application.CQRS.GenericsCQRS.User.Commands;
 
-public record UpdateUserCommand<TEntity, TViewModel> : UpdateEntityCommandBase<TEntity, TViewModel>
-    where TEntity : UserGeneric
+public record UpdateUserDTO
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }
@@ -12,8 +8,4 @@ public record UpdateUserCommand<TEntity, TViewModel> : UpdateEntityCommandBase<T
     public DateTime BirthDate { get; set; }
     public string? Username { get; set; }
     public string? DocumentNumber { get; set; }
-
-    public UpdateUserCommand(Guid id) : base(id)
-    {
-    }
-};
+}

@@ -9,7 +9,7 @@ namespace Application.CQRS.GenericsCQRS.User.Validators;
 public class CreateUserCommandValidator<TEntity, TCommand, TDTO, TViewModel>
     : AbstractValidator<TCommand>
     where TEntity : UserGeneric
-    where TCommand : CreateEntityCommandBase<TEntity, TDTO, TViewModel>
+    where TCommand : CreateEntityCommand<TEntity, TDTO, TViewModel>
     where TDTO : CreateUserDTO
     where TViewModel : UserViewModel
 {
