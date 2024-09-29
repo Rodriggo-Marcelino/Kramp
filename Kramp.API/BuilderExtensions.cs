@@ -170,7 +170,7 @@ namespace Kramp.API
                 Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel>>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserCommandValidator<
-                Manager, UpdateUserCommand<Manager, UserViewModel>, UserViewModel>>();
+                Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UserViewModel>>();
 
             builder.Services.AddFluentValidationAutoValidation();
         }
