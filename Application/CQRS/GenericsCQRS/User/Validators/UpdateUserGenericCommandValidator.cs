@@ -4,13 +4,13 @@ using FluentValidation;
 
 namespace Application.CQRS.GenericsCQRS.User.Validators;
 
-public class CreateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand>
+public class UpdateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand>
     where TEntity : UserGeneric
-    where TCommand : CreateUserGenericCommand<TEntity, TViewModel>
+    where TCommand : UpdateUserGenericCommand<TEntity, TViewModel>
 {
     private readonly ValidatorHelper _helper;
 
-    public CreateUserGenericCommandValidator(ValidatorHelper helper)
+    public UpdateUserGenericCommandValidator(ValidatorHelper helper)
     {
         _helper = helper;
 
@@ -32,10 +32,6 @@ public class CreateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : 
 
         RuleFor(x => x.Username)
             .NotEmpty().WithMessage("O nome de usuário é obrigatório.");
-
-        RuleFor(x => x.Password)
-            .NotEmpty().WithMessage("A senha é obrigatória.")
-            .MinimumLength(6).WithMessage("A senha deve ter no mínimo 6 caracteres.");
 
         RuleFor(x => x.DocumentNumber)
             .NotEmpty().WithMessage("O número do documento é obrigatório.")
