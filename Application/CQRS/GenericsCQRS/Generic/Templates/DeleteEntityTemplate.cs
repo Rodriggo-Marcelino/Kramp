@@ -7,7 +7,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
     public abstract class DeleteEntityTemplate<TEntity, TCommand, TRepository> : IRequestHandler<TCommand, Unit>
         where TEntity : EntityGeneric
-        where TCommand : DeleteEntityCommandBase<TEntity>
+        where TCommand : DeleteEntityCommand<TEntity>
         where TRepository : GenericRepository<TEntity>
     {
         private readonly TRepository _repository;
@@ -25,7 +25,12 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
         public async Task<Unit> DeleteByIdAsync(Guid id)
         {
             TEntity entity = await _repository.GetByIdAsync(id);
-            await _repository.DeleteAsync(entity);
+
+            if (entity != null)
+            {
+                await _repository.DeleteAsync(entity);
+            }
+
             return Unit.Value;
         }
     }

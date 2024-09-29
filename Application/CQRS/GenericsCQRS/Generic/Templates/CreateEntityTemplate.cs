@@ -8,7 +8,7 @@ using Services.Repositories;
 
 public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
     where TEntity : EntityGeneric
-    where TCommand : CreateEntityCommandBase<TEntity, TDTO, TViewModel>
+    where TCommand : CreateEntityCommand<TEntity, TDTO, TViewModel>
     where TViewModel : GenericViewModelBase
     where TRepository : GenericRepository<TEntity>
     where TDTO : class

@@ -8,11 +8,13 @@ using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class UpdateEntityTemplate<TEntity, TCommand, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
+    public abstract class UpdateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>
+        : IRequestHandler<TCommand, ResponseBase<TViewModel>>
         where TEntity : EntityGeneric
-        where TCommand : UpdateEntityCommandBase<TEntity, TViewModel>
+        where TCommand : UpdateEntityCommand<TEntity, TDTO, TViewModel>
         where TViewModel : GenericViewModelBase
         where TRepository : GenericRepository<TEntity>
+        where TDTO : class
     {
         private readonly TRepository _repository;
         private readonly IMapper _mapper;
@@ -30,44 +32,28 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 
         public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)
         {
-            ManipulateRequest(request);
-
             TEntity? entity = await GetEntityAsync(request.Id);
 
-            if (entity == null)
-            {
-                throw new Exception("Entity not found.");
-            }
+            if (entity == null) throw new Exception("Entity not found.");
 
-            TEntity newEntity = MapCommandToEntity(request, entity);
+            TEntity updatedEntity = MapCommandToEntity(request.Data, entity);
 
-            ManipulateEntityBeforeUpdate(newEntity);
+            ManipulateEntityBeforeUpdate(updatedEntity);
 
-            await UpdateEntityAsync(newEntity);
+            await UpdateEntityAsync(updatedEntity);
 
-            ManipulateEntityAfterUpdate(newEntity);
+            ManipulateEntityAfterUpdate(updatedEntity);
 
-            return CreateResponse(newEntity);
+            return CreateResponse(updatedEntity);
         }
 
-        protected virtual void ManipulateRequest(TCommand request) { }
+        protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await _repository.GetByIdAsync(id);
 
-        protected virtual async Task<TEntity?> GetEntityAsync(Guid id)
-        {
-            return await _repository.GetByIdAsync(id);
-        }
-
-        protected virtual TEntity MapCommandToEntity(TCommand request, TEntity entity)
-        {
-            return _mapper.Map(request, entity);
-        }
+        protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => _mapper.Map(data, entity);
 
         protected virtual void ManipulateEntityBeforeUpdate(TEntity entity) { }
 
-        protected virtual async Task UpdateEntityAsync(TEntity entity)
-        {
-            await _repository.UpdateAsync(entity);
-        }
+        protected virtual async Task UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
 
         protected virtual void ManipulateEntityAfterUpdate(TEntity entity) { }
 
