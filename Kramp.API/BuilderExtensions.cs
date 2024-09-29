@@ -1,5 +1,6 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
@@ -107,40 +108,60 @@ namespace Kramp.API
         {
             var services = builder.Services;
 
-            void RegisterCQRS<TTemplate, TCommand, TResponse, THandler>()
-                where TTemplate : class
-                where TCommand : IRequest<TResponse>
-                where THandler : class, IRequestHandler<TCommand, TResponse>
-            {
-                services.AddScoped<TTemplate>();
-                services.AddScoped<IRequestHandler<TCommand, TResponse>, THandler>();
-            }
+            // Register CreateManagerTemplate with its dependencies
+            RegisterCQRS<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
+                CreateManagerTemplate,
+                CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                UserViewModel>(services);
 
-            RegisterCQRS<CreateManagerTemplate,
-                         CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
-                         ResponseBase<UserViewModel>,
-                         CreateManagerTemplate>();
+            // Register UpdateManagerTemplate for update operations
+            RegisterCQRS<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
+                UpdateManagerTemplate,
+                UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
+                UserViewModel>(services);
 
+            // Register DeleteManagerTemplate for deletion
+            RegisterVoidCQRS<DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
+                DeleteManagerTemplate,
+                DeleteEntityCommand<Manager>>(services);
 
-            RegisterCQRS<GetAllManagersTemplate,
-                         GetAllEntitiesQuery<UserViewModel>,
-                         ResponseBase<IEnumerable<UserViewModel>>,
-                         GetAllManagersTemplate>();
+            // Register GetManagerByIdTemplate for retrieving a single manager by id
+            RegisterCQRS<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+                GetManagerByIdTemplate,
+                GetEntityByIdQuery<UserViewModel>,
+                UserViewModel>(services);
 
-            RegisterCQRS<GetManagerByIdTemplate,
-                         GetEntityByIdQuery<UserViewModel>,
-                         ResponseBase<UserViewModel>,
-                         GetManagerByIdTemplate>();
+            // Register GetAllManagersTemplate for retrieving all managers
+            RegisterIEnumerableCQRS<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+                GetAllManagersTemplate,
+                GetAllEntitiesQuery<UserViewModel>,
+                UserViewModel>(services);
+        }
 
-            RegisterCQRS<UpdateManagerTemplate,
-                         UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
-                         ResponseBase<UserViewModel>,
-                         UpdateManagerTemplate>();
+        private static void RegisterCQRS<FromTemplate, ToTemplate, TCommand, TViewModel>(IServiceCollection? services)
+            where FromTemplate : IRequestHandler<TCommand, ResponseBase<TViewModel>>
+            where ToTemplate : FromTemplate
+            where TCommand : IRequest<ResponseBase<TViewModel>>
+            where TViewModel : class
+        {
+            services.AddScoped(typeof(FromTemplate), typeof(ToTemplate));
+        }
 
-            RegisterCQRS<DeleteManagerTemplate,
-                         DeleteEntityCommand<Manager>,
-                         Unit,
-                         DeleteManagerTemplate>();
+        private static void RegisterIEnumerableCQRS<FromTemplate, ToTemplate, TCommand, TViewModel>(IServiceCollection? services)
+            where FromTemplate : IRequestHandler<TCommand, ResponseBase<IEnumerable<TViewModel>>>
+            where ToTemplate : FromTemplate
+            where TCommand : IRequest<ResponseBase<IEnumerable<TViewModel>>>
+            where TViewModel : class
+        {
+            services.AddScoped(typeof(FromTemplate), typeof(ToTemplate));
+        }
+
+        private static void RegisterVoidCQRS<FromTemplate, ToTemplate, TCommand>(IServiceCollection? services)
+            where FromTemplate : IRequestHandler<TCommand, Unit>
+            where ToTemplate : FromTemplate
+            where TCommand : IRequest<Unit>
+        {
+            services.AddScoped(typeof(FromTemplate), typeof(ToTemplate));
         }
 
         public static void AddInjections(this WebApplicationBuilder builder)
