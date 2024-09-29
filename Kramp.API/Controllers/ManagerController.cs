@@ -2,17 +2,15 @@
 using Application.CQRS.GenericsCQRS.Generic.Queries;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
-using AutoMapper;
 using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
     [Route("api/managers")]
     [ApiController]
-    public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
+    public class ManagerController(IMediator _mediator) : ControllerBase
     {
         [HttpPost]
         public async Task<ActionResult<UserViewModel>> Create([FromBody] CreateUserCommand<Manager, UserViewModel> command)
