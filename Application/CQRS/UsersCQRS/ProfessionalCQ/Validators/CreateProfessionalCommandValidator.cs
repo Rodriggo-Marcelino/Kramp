@@ -8,7 +8,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Validators
 {
     public class CreateProfessionalCommandValidator : CreateUserGenericCommandValidator<Professional, CreateProfessionalCommand, ProfessionalInfoViewModel>
     {
-        public CreateProfessionalCommandValidator()
+        public CreateProfessionalCommandValidator(ValidatorHelper helper) : base(helper)
         {
             RuleFor(x => x.Job)
                 .NotEmpty().WithMessage("Emprego é obrigatório")
