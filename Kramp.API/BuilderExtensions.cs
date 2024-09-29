@@ -97,12 +97,6 @@ namespace Kramp.API
             builder.Services.AddDbContext<KrampDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         }
 
-        public static void AddValidations(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>();
-            builder.Services.AddFluentValidationAutoValidation();
-        }
-
         public static void AddAutoMapper(this WebApplicationBuilder builder)
         {
             builder.Services.AddAutoMapper(typeof(ProfileMappings).Assembly);
@@ -166,6 +160,16 @@ namespace Kramp.API
             builder.Services.AddTransient<ExerciseRepository>();
 
             builder.Services.AddSingleton<ExceptionHandlingHelper>();
+
+            builder.Services.AddTransient<ValidatorHelper>();
+            builder.Services.AddSingleton<ValidatorHelper>();
+        }
+
+        public static void AddValidations(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserGenericCommandValidator<Manager, CreateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserGenericCommandValidator<Manager, UpdateUserGenericCommand<Manager, UserGenericViewModel>, UserGenericViewModel>>();
+            builder.Services.AddFluentValidationAutoValidation();
         }
 
         public static void AddExceptionHandlers(this WebApplicationBuilder builder)
