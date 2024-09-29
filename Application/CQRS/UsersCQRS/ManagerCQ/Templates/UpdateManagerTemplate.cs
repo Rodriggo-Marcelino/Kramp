@@ -1,5 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
-using Application.CQRS.GenericsCQRS.Generic.Templates;
+﻿using Application.CQRS.GenericsCQRS.Generic.Templates;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using AutoMapper;
 using Domain.Entity.User;
@@ -9,7 +9,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class UpdateManagerTemplate : UpdateEntityTemplate<
         Manager,
-        UpdateEntityCommand<Manager, UserGenericViewModel>,
+        UpdateUserGenericCommand<Manager, UserGenericViewModel>,
         UserGenericViewModel,
         ManagerRepository>
     {
