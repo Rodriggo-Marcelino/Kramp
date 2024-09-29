@@ -4,11 +4,13 @@ using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
+using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
 using Application.ExceptionHandler;
 using Application.Mapping;
 using Application.Response;
 using Domain.Abstractions;
 using Domain.Entity.User;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using MediatR;
@@ -162,6 +164,7 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateManagerCommandValidator>();
             builder.Services.AddFluentValidationAutoValidation();
         }
 
