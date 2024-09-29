@@ -13,8 +13,9 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator _mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<UserViewModel>> Create([FromBody] CreateUserCommand<Manager, UserViewModel> command)
+        public async Task<ActionResult<UserViewModel>> Create([FromBody] CreateUserDTO data)
         {
+            var command = new CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>(data);
             return Created("", await _mediator.Send(command));
         }
 
@@ -37,8 +38,8 @@ namespace Kramp.API.Controllers
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<UserViewModel>> Update(Guid id, [FromBody] UpdateUserCommand<Manager, UserViewModel> command)
         {
-            command.Id = id;
-            return Ok(await _mediator.Send(command));
+            var commandId = new UpdateUserCommand<Manager, UserViewModel>(id);
+            return Ok(await _mediator.Send(commandId));
         }
 
         [HttpDelete("{id:guid}")]
