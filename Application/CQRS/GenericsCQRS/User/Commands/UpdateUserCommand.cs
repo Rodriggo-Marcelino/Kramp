@@ -12,4 +12,8 @@ public record UpdateUserCommand<TEntity, TViewModel> : UpdateEntityCommandBase<T
     public DateTime BirthDate { get; set; }
     public string? Username { get; set; }
     public string? DocumentNumber { get; set; }
+
+    public UpdateUserCommand(Guid id) : base(id)
+    {
+    }
 };

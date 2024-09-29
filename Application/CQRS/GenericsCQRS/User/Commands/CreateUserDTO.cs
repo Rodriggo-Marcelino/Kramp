@@ -1,10 +1,6 @@
-using Application.CQRS.GenericsCQRS.Generic.Commands;
-using Domain.Entity.Generics;
-
 namespace Application.CQRS.GenericsCQRS.User.Commands;
 
-public record CreateUserCommand<TEntity, TViewModel> : CreateEntityCommandBase<TEntity, TViewModel>
-    where TEntity : UserGeneric
+public record CreateUserDTO
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }

@@ -8,5 +8,10 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
     {
         [JsonIgnore]
         public Guid Id { get; set; }
+
+        public UpdateEntityCommandBase(Guid id)
+        {
+            Id = id;
+        }
     }
 }

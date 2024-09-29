@@ -6,11 +6,12 @@ using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
-public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
+public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
     where TEntity : EntityGeneric
-    where TCommand : CreateEntityCommandBase<TEntity, TViewModel>
+    where TCommand : CreateEntityCommandBase<TEntity, TDTO, TViewModel>
     where TViewModel : GenericViewModelBase
     where TRepository : GenericRepository<TEntity>
+    where TDTO : class
 {
     private readonly TRepository _repository;
     private readonly IMapper _mapper;
@@ -30,9 +31,9 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
     {
         ManipulateRequest(request);
 
-        TEntity entity = MapCommandToEntity(request);
+        TEntity entity = MapCommandToEntity(request.Data);
 
-        ManipulateEntityBeforeSave(request, entity);
+        ManipulateEntityBeforeSave(request.Data, entity);
 
         await SaveEntityAsync(entity);
 
@@ -43,12 +44,12 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
 
     protected virtual void ManipulateRequest(TCommand request) { }
 
-    protected virtual TEntity MapCommandToEntity(TCommand request)
+    protected virtual TEntity MapCommandToEntity(TDTO request)
     {
         return _mapper.Map<TEntity>(request);
     }
 
-    protected virtual void ManipulateEntityBeforeSave(TCommand request, TEntity entity) { }
+    protected virtual void ManipulateEntityBeforeSave(TDTO request, TEntity entity) { }
 
     protected virtual Task SaveEntityAsync(TEntity entity)
     {
