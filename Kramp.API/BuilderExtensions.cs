@@ -87,7 +87,7 @@ namespace Kramp.API
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(
-                typeof(CreateEntityTemplate<Manager, CreateUserCommand<Manager, UserViewModel>, UserViewModel, ManagerRepository>).Assembly));
+                typeof(CreateEntityTemplate<Manager, CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>).Assembly));
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(
                 typeof(UpdateEntityTemplate<Manager, UpdateUserCommand<Manager, UserViewModel>, UserViewModel, ManagerRepository>).Assembly));
         }
@@ -105,10 +105,10 @@ namespace Kramp.API
         public static void AddCQRS(this WebApplicationBuilder builder)
         {
             #region Create
-            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateUserCommand<Manager, UserViewModel>, UserViewModel, ManagerRepository>),
+            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>),
                                        typeof(CreateManagerTemplate));
 
-            builder.Services.AddScoped(typeof(IRequestHandler<CreateUserCommand<Manager, UserViewModel>, ResponseBase<UserViewModel>>),
+            builder.Services.AddScoped(typeof(IRequestHandler<CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>, ResponseBase<UserViewModel>>),
                                        typeof(CreateManagerTemplate));
             #endregion
 
@@ -166,8 +166,12 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserCommandValidator<Manager, CreateUserCommand<Manager, UserViewModel>, UserViewModel>>();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserCommandValidator<Manager, UpdateUserCommand<Manager, UserViewModel>, UserViewModel>>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserCommandValidator<
+                Manager, CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel>>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserCommandValidator<
+                Manager, UpdateUserCommand<Manager, UserViewModel>, UserViewModel>>();
+
             builder.Services.AddFluentValidationAutoValidation();
         }
 
