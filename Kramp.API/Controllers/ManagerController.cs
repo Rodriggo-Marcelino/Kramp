@@ -22,7 +22,7 @@ namespace Kramp.API.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAllManagers()
         {
-            var query = new GetAllEntitiesQueryBase<UserViewModel>();
+            var query = new GetAllEntitiesQuery<UserViewModel>();
             var managers = await _mediator.Send(query);
             return Ok(managers);
         }
@@ -30,7 +30,7 @@ namespace Kramp.API.Controllers
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<UserViewModel>> GetManagerById(Guid id)
         {
-            var query = new GetEntityByIdQueryBase<UserViewModel>(id);
+            var query = new GetEntityByIdQuery<UserViewModel>(id);
             var manager = await _mediator.Send(query);
             return Ok(manager);
         }

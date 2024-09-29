@@ -123,12 +123,12 @@ namespace Kramp.API
 
 
             RegisterCQRS<GetAllManagersTemplate,
-                         GetAllEntitiesQueryBase<UserViewModel>,
+                         GetAllEntitiesQuery<UserViewModel>,
                          ResponseBase<IEnumerable<UserViewModel>>,
                          GetAllManagersTemplate>();
 
             RegisterCQRS<GetManagerByIdTemplate,
-                         GetEntityByIdQueryBase<UserViewModel>,
+                         GetEntityByIdQuery<UserViewModel>,
                          ResponseBase<UserViewModel>,
                          GetManagerByIdTemplate>();
 
