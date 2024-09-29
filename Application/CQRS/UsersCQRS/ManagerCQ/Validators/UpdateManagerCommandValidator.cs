@@ -1,4 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.User.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Validator;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.Validators;
 using Domain.Entity.User;
 

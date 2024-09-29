@@ -1,3 +1,4 @@
+using Application.CQRS.GenericsCQRS.Generic.Validator;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Domain.Entity.Generics;
 using FluentValidation;

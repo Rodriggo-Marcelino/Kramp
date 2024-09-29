@@ -1,4 +1,4 @@
-﻿namespace Application.CQRS.GenericsCQRS.User.Validators
+﻿namespace Application.CQRS.GenericsCQRS.Generic.Validator
 {
     public class ValidatorHelper
     {
