@@ -14,13 +14,13 @@ namespace Kramp.API.Controllers
     [ApiController]
     public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
-        [HttpPost("Create")]
+        [HttpPost]
         public async Task<ActionResult<UserGenericViewModel>> Create([FromBody] CreateUserGenericCommand<Manager, UserGenericViewModel> command)
         {
             return Created("", await _mediator.Send(command));
         }
 
-        [HttpGet("All")]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserGenericViewModel>>> GetAllManagers()
         {
             var query = new GetAllEntitiesQuery<UserGenericViewModel>();
@@ -28,22 +28,22 @@ namespace Kramp.API.Controllers
             return Ok(managers);
         }
 
-        [HttpGet("{Id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid Id)
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid id)
         {
-            var query = new GetEntityByIdQuery<UserGenericViewModel>(Id);
+            var query = new GetEntityByIdQuery<UserGenericViewModel>(id);
             var manager = await _mediator.Send(query);
             return Ok(manager);
         }
 
-        [HttpPut("Update/{Id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> Update(Guid Id, [FromBody] UpdateEntityCommand<Manager, UserGenericViewModel> command)
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<UserGenericViewModel>> Update(Guid id, [FromBody] UpdateUserGenericCommand<Manager, UserGenericViewModel> command)
         {
-            command.Id = Id;
+            command.Id = id;
             return Ok(await _mediator.Send(command));
         }
 
-        [HttpDelete("Delete/{Id:guid}")]
+        [HttpDelete("{id:guid}")]
         public async Task<ActionResult> DeleteById(Guid Id)
         {
             var command = new DeleteEntityCommand<Manager>(Id);
