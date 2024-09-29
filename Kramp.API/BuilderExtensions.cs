@@ -161,7 +161,6 @@ namespace Kramp.API
 
             builder.Services.AddSingleton<ExceptionHandlingHelper>();
 
-            builder.Services.AddTransient<ValidatorHelper>();
             builder.Services.AddSingleton<ValidatorHelper>();
         }
 
