@@ -5,7 +5,7 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
-    public class DeleteManagerTemplate : DeleteEntityTemplate<Manager, DeleteEntityCommandBase<Manager>, ManagerRepository>
+    public class DeleteManagerTemplate : DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>
     {
         public DeleteManagerTemplate(ManagerRepository repository) : base(repository)
         {

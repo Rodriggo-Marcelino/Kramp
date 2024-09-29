@@ -11,7 +11,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class CreateManagerTemplate : CreateEntityTemplate<
         Manager,
-        CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>,
+        CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
         CreateUserDTO,
         UserViewModel,
         ManagerRepository>
