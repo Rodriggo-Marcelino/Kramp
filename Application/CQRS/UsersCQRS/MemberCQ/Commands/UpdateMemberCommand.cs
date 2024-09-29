@@ -1,3 +1,4 @@
+using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using Application.Response;
@@ -6,9 +7,9 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Commands;
 
-public record UpdateMemberCommand : UpdateUserCommand<Member, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
+public record UpdateMemberCommand : UpdateEntityCommand<Member, UpdateUserDTO, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
 {
-    public UpdateMemberCommand(Guid id) : base(id)
+    public UpdateMemberCommand(Guid id, UpdateUserDTO data) : base(id, data)
     {
     }
 }

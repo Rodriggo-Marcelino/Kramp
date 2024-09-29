@@ -1,4 +1,5 @@
-using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.DTOs;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using Application.Response;
 using Domain.Entity.User;
@@ -6,9 +7,9 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
 
-public record UpdateProfessionalCommand : UpdateUserCommand<Professional, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
+public record UpdateProfessionalCommand : UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
 {
-    public UpdateProfessionalCommand(Guid id) : base(id)
+    public UpdateProfessionalCommand(Guid id, UpdateProfessionalDTO data) : base(id, data)
     {
     }
 }
