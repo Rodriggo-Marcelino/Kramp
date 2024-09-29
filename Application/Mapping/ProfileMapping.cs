@@ -21,7 +21,7 @@ namespace Application.Mapping
         public ProfileMappings()
         {
             #region Manager Mappings
-            CreateMap<CreateUserCommand<Manager, UserViewModel>, Manager>()
+            CreateMap<CreateUserDTO, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
