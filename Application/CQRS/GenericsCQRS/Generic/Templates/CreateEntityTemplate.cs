@@ -1,13 +1,14 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.ViewModel;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.ViewModel;
 using Application.Response;
 using AutoMapper;
 using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
-public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepository>
+public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
     where TEntity : EntityGeneric
-    where TCommand : IRequest<ResponseBase<TViewModel>>
+    where TCommand : CreateEntityCommand<TEntity, TViewModel>
     where TViewModel : GenericViewModel
     where TRepository : GenericRepository<TEntity>
 {
@@ -18,6 +19,11 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepos
     {
         _repository = repository;
         _mapper = mapper;
+    }
+
+    public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteAsync(request);
     }
 
     public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)

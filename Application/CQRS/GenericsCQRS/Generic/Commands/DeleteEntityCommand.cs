@@ -10,10 +10,5 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
         {
             Id = id;
         }
-
-        public DeleteEntityCommand()
-        {
-
-        }
     }
 }

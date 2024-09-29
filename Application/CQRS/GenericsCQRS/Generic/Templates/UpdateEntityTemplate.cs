@@ -3,11 +3,12 @@ using Application.CQRS.GenericsCQRS.Generic.ViewModel;
 using Application.Response;
 using AutoMapper;
 using Domain.Entity.Generics;
+using MediatR;
 using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class UpdateEntityTemplate<TEntity, TCommand, TViewModel, TRepository>
+    public abstract class UpdateEntityTemplate<TEntity, TCommand, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
         where TEntity : EntityGeneric
         where TCommand : UpdateEntityCommand<TEntity, TViewModel>
         where TViewModel : GenericViewModel
@@ -20,6 +21,11 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
         {
             _repository = repository;
             _mapper = mapper;
+        }
+
+        public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request, CancellationToken cancellationToken)
+        {
+            return await this.ExecuteAsync(request);
         }
 
         public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)
@@ -35,13 +41,13 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 
             TEntity newEntity = MapCommandToEntity(request, entity);
 
-            ManipulateEntityBeforeUpdate(entity);
+            ManipulateEntityBeforeUpdate(newEntity);
 
-            await UpdateEntityAsync(entity);
+            await UpdateEntityAsync(newEntity);
 
-            ManipulateEntityAfterUpdate(entity);
+            ManipulateEntityAfterUpdate(newEntity);
 
-            return CreateResponse(entity);
+            return CreateResponse(newEntity);
         }
 
         protected virtual void ManipulateRequest(TCommand request) { }

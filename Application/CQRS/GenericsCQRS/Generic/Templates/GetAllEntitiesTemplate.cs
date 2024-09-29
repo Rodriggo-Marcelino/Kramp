@@ -1,4 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.ViewModel;
+﻿using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.GenericsCQRS.Generic.ViewModel;
 using Application.Response;
 using AutoMapper;
 using Domain.Entity.Generics;
@@ -7,9 +8,9 @@ using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class GetAllEntitiesTemplate<TEntity, TQuery, TViewModel, TRepository>
+    public abstract class GetAllEntitiesTemplate<TEntity, TQuery, TViewModel, TRepository> : IRequestHandler<TQuery, ResponseBase<IEnumerable<TViewModel>>>
         where TEntity : EntityGeneric
-        where TQuery : IRequest<ResponseBase<IEnumerable<TViewModel>>>
+        where TQuery : GetAllEntitiesQuery<TViewModel>
         where TViewModel : GenericViewModel
         where TRepository : GenericRepository<TEntity>
     {
@@ -20,6 +21,11 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
         {
             _repository = repository;
             _mapper = mapper;
+        }
+
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TQuery request, CancellationToken cancellationToken)
+        {
+            return await this.GetAllAsync();
         }
 
         public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> GetAllAsync()
