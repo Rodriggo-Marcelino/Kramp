@@ -5,7 +5,8 @@ using FluentValidation;
 
 namespace Application.CQRS.GenericsCQRS.User.Validators;
 
-public class UpdateUserCommandValidator<TEntity, TCommand, TDTO, TViewModel> : AbstractValidator<TCommand>
+public class UpdateUserCommandValidator<TEntity, TCommand, TDTO, TViewModel>
+    : AbstractValidator<TCommand>
     where TEntity : UserGeneric
     where TCommand : UpdateEntityCommand<TEntity, TDTO, TViewModel>
     where TDTO : UpdateUserDTO

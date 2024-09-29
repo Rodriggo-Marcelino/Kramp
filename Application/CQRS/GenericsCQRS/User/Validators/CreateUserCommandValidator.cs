@@ -1,6 +1,5 @@
 using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Application.CQRS.GenericsCQRS.User.Commands;
-using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Domain.Entity.Generics;
 using FluentValidation;
 
@@ -11,7 +10,7 @@ public class CreateUserCommandValidator<TEntity, TCommand, TDTO, TViewModel>
     where TEntity : UserGeneric
     where TCommand : CreateEntityCommand<TEntity, TDTO, TViewModel>
     where TDTO : CreateUserDTO
-    where TViewModel : UserViewModel
+    where TViewModel : class
 {
     private readonly ValidatorHelper _helper;
 

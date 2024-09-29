@@ -1,6 +1,5 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Application.CQRS.GenericsCQRS.Generic.Queries;
-using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
@@ -10,7 +9,6 @@ using Application.Mapping;
 using Application.Response;
 using Domain.Abstractions;
 using Domain.Entity.User;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using MediatR;
@@ -83,13 +81,14 @@ namespace Kramp.API
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
                 options.JsonSerializerOptions.WriteIndented = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+
             });
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(
-                typeof(CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>).Assembly));
-            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(
-                typeof(UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>).Assembly));
+            builder.Services.AddMediatR(config =>
+            config.RegisterServicesFromAssemblyContaining<
+                CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>>()
+                );
         }
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
@@ -104,74 +103,65 @@ namespace Kramp.API
 
         public static void AddCQRS(this WebApplicationBuilder builder)
         {
-            #region Create
-            builder.Services.AddScoped(typeof(CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>),
-                                       typeof(CreateManagerTemplate));
+            var services = builder.Services;
 
-            builder.Services.AddScoped(typeof(IRequestHandler<CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, ResponseBase<UserViewModel>>),
-                                       typeof(CreateManagerTemplate));
-            #endregion
+            void RegisterCQRS<TTemplate, TCommand, TResponse, THandler>()
+                where TTemplate : class
+                where TCommand : IRequest<TResponse>
+                where THandler : class, IRequestHandler<TCommand, TResponse>
+            {
+                services.AddScoped<TTemplate>();
+                services.AddScoped<IRequestHandler<TCommand, TResponse>, THandler>();
+            }
 
-            #region GET ALL
-            builder.Services.AddScoped<GetAllEntitiesTemplate<Manager, GetAllEntitiesQueryBase<UserViewModel>, UserViewModel, ManagerRepository>,
-                                       GetAllManagersTemplate>();
+            RegisterCQRS<CreateManagerTemplate,
+                         CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                         ResponseBase<UserViewModel>,
+                         CreateManagerTemplate>();
 
-            builder.Services.AddScoped<IRequestHandler<GetAllEntitiesQueryBase<UserViewModel>, ResponseBase<IEnumerable<UserViewModel>>>,
-                                       GetAllManagersTemplate>();
-            #endregion
 
-            #region GET BY ID
-            builder.Services.AddScoped<GetEntityByIdTemplate<Manager, GetEntityByIdQueryBase<UserViewModel>, UserViewModel, ManagerRepository>,
-                                       GetManagerByIdTemplate>();
+            RegisterCQRS<GetAllManagersTemplate,
+                         GetAllEntitiesQueryBase<UserViewModel>,
+                         ResponseBase<IEnumerable<UserViewModel>>,
+                         GetAllManagersTemplate>();
 
-            builder.Services.AddScoped<IRequestHandler<GetEntityByIdQueryBase<UserViewModel>, ResponseBase<UserViewModel>>,
-                                       GetManagerByIdTemplate>();
-            #endregion
+            RegisterCQRS<GetManagerByIdTemplate,
+                         GetEntityByIdQueryBase<UserViewModel>,
+                         ResponseBase<UserViewModel>,
+                         GetManagerByIdTemplate>();
 
-            #region UPDATE
-            builder.Services.AddScoped(typeof(UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>),
-                                       typeof(UpdateManagerTemplate));
+            RegisterCQRS<UpdateManagerTemplate,
+                         UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
+                         ResponseBase<UserViewModel>,
+                         UpdateManagerTemplate>();
 
-            builder.Services.AddScoped(typeof(IRequestHandler<UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, ResponseBase<UserViewModel>>),
-                                       typeof(UpdateManagerTemplate));
-            #endregion
-
-            #region DELETE
-            builder.Services.AddScoped(typeof(DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>),
-                                       typeof(DeleteManagerTemplate));
-
-            builder.Services.AddScoped(typeof(IRequestHandler<DeleteEntityCommand<Manager>, Unit>),
-                                       typeof(DeleteManagerTemplate));
-            #endregion
+            RegisterCQRS<DeleteManagerTemplate,
+                         DeleteEntityCommand<Manager>,
+                         Unit,
+                         DeleteManagerTemplate>();
         }
+
         public static void AddInjections(this WebApplicationBuilder builder)
         {
+            builder.Services.AddScoped<ManagerRepository>();
+            builder.Services.AddScoped<GymRepository>();
+            builder.Services.AddScoped<MemberRepository>();
+            builder.Services.AddScoped<ProfessionalRepository>();
+
+            builder.Services.AddScoped<PlanRepository>();
+            builder.Services.AddScoped<PlanWorkoutRepository>();
+            builder.Services.AddScoped<WorkoutRepository>();
+            builder.Services.AddScoped<WorkoutExerciseRepository>();
+            builder.Services.AddScoped<ExerciseRepository>();
+
             builder.Services.AddScoped<IAuthService, AuthService>();
 
-            builder.Services.AddTransient<ManagerRepository>();
-            builder.Services.AddTransient<GymRepository>();
-            builder.Services.AddTransient<MemberRepository>();
-            builder.Services.AddTransient<ProfessionalRepository>();
-
-            builder.Services.AddTransient<PlanRepository>();
-            builder.Services.AddTransient<PlanWorkoutRepository>();
-            builder.Services.AddTransient<WorkoutRepository>();
-            builder.Services.AddTransient<WorkoutExerciseRepository>();
-            builder.Services.AddTransient<ExerciseRepository>();
-
             builder.Services.AddSingleton<ExceptionHandlingHelper>();
-
             builder.Services.AddSingleton<ValidatorHelper>();
         }
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateUserCommandValidator<
-                Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel>>();
-
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserCommandValidator<
-                Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UserViewModel>>();
-
             builder.Services.AddFluentValidationAutoValidation();
         }
 
