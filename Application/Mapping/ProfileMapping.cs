@@ -21,17 +21,17 @@ namespace Application.Mapping
         public ProfileMappings()
         {
             #region Manager Mappings
-            CreateMap<CreateUserCommand<Manager, UserGenericViewModel>, Manager>()
+            CreateMap<CreateUserCommand<Manager, UserViewModel>, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-            CreateMap<UpdateUserCommand<Manager, UserGenericViewModel>, Manager>()
+            CreateMap<UpdateUserCommand<Manager, UserViewModel>, Manager>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Manager, UserGenericViewModel>()
+            CreateMap<Manager, UserViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
             #endregion
 

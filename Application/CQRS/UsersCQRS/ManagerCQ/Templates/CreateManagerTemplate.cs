@@ -10,8 +10,8 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class CreateManagerTemplate : CreateEntityTemplate<
         Manager,
-        CreateUserCommand<Manager, UserGenericViewModel>,
-        UserGenericViewModel,
+        CreateUserCommand<Manager, UserViewModel>,
+        UserViewModel,
         ManagerRepository>
     {
         private readonly IAuthService _authService;
@@ -26,7 +26,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             _authService = authService;
         }
 
-        protected override void ManipulateEntityBeforeSave(CreateUserCommand<Manager, UserGenericViewModel> request,
+        protected override void ManipulateEntityBeforeSave(CreateUserCommand<Manager, UserViewModel> request,
             Manager entity)
         {
             entity.PasswordHash = request.Password;
@@ -35,11 +35,11 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
         }
 
-        protected override ResponseBase<UserGenericViewModel> CreateResponse(Manager entity)
+        protected override ResponseBase<UserViewModel> CreateResponse(Manager entity)
         {
-            var viewModel = _mapper.Map<UserGenericViewModel>(entity);
+            var viewModel = _mapper.Map<UserViewModel>(entity);
             viewModel.TokenJWT = _authService.GenerateJWT(entity.DocumentNumber!, entity.Username!);
-            return new ResponseBase<UserGenericViewModel>(new ResponseInfo(), viewModel);
+            return new ResponseBase<UserViewModel>(new ResponseInfo(), viewModel);
         }
     }
 }

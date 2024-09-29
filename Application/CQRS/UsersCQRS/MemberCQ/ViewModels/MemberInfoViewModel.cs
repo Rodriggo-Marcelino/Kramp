@@ -2,7 +2,7 @@
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.ViewModels
 {
-    public record MemberInfoViewModel : UserGenericViewModel
+    public record MemberInfoViewModel : UserViewModel
     {
     }
 }

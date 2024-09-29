@@ -5,7 +5,7 @@ using Domain.Entity.User;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Validators
 {
-    public class UpdateManagerCommandValidator : UpdateUserCommandValidator<Manager, UpdateUserCommand<Manager, UserGenericViewModel>, UserGenericViewModel>
+    public class UpdateManagerCommandValidator : UpdateUserCommandValidator<Manager, UpdateUserCommand<Manager, UserViewModel>, UserViewModel>
     {
         public UpdateManagerCommandValidator(ValidatorHelper helper) : base(helper)
         {

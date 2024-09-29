@@ -15,29 +15,29 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<UserGenericViewModel>> Create([FromBody] CreateUserCommand<Manager, UserGenericViewModel> command)
+        public async Task<ActionResult<UserViewModel>> Create([FromBody] CreateUserCommand<Manager, UserViewModel> command)
         {
             return Created("", await _mediator.Send(command));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<UserGenericViewModel>>> GetAllManagers()
+        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAllManagers()
         {
-            var query = new GetAllEntitiesQueryBase<UserGenericViewModel>();
+            var query = new GetAllEntitiesQueryBase<UserViewModel>();
             var managers = await _mediator.Send(query);
             return Ok(managers);
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid id)
+        public async Task<ActionResult<UserViewModel>> GetManagerById(Guid id)
         {
-            var query = new GetEntityByIdQueryBase<UserGenericViewModel>(id);
+            var query = new GetEntityByIdQueryBase<UserViewModel>(id);
             var manager = await _mediator.Send(query);
             return Ok(manager);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> Update(Guid id, [FromBody] UpdateUserCommand<Manager, UserGenericViewModel> command)
+        public async Task<ActionResult<UserViewModel>> Update(Guid id, [FromBody] UpdateUserCommand<Manager, UserViewModel> command)
         {
             command.Id = id;
             return Ok(await _mediator.Send(command));

@@ -3,7 +3,7 @@ using Domain.Entity.Enum;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels
 {
-    public record ProfessionalInfoViewModel : UserGenericViewModel
+    public record ProfessionalInfoViewModel : UserViewModel
     {
         public Job Job { get; set; }
     }

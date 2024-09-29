@@ -1,6 +1,6 @@
 namespace Application.CQRS.GenericsCQRS.User.ViewModel;
 
-public record UserGenericViewModel : TokenViewModel
+public record UserViewModel : TokenViewModel
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }

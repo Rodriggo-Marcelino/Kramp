@@ -9,8 +9,8 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class UpdateManagerTemplate : UpdateEntityTemplate<
         Manager,
-        UpdateUserCommand<Manager, UserGenericViewModel>,
-        UserGenericViewModel,
+        UpdateUserCommand<Manager, UserViewModel>,
+        UserViewModel,
         ManagerRepository>
     {
         public UpdateManagerTemplate(ManagerRepository repository, IMapper mapper) : base(repository, mapper) { }
