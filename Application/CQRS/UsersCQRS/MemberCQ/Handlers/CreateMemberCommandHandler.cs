@@ -26,7 +26,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Handlers
                                                       CancellationToken cancellationToken)
         {
             Member member = _mapper.Map<Member>(request);
-            member.PasswordHash = request.Password;
+            member.PasswordHash = request.Data.Password;
             member.CreatedAt = DateTime.UtcNow;
             member.RefreshToken = Guid.NewGuid().ToString();
             member.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);

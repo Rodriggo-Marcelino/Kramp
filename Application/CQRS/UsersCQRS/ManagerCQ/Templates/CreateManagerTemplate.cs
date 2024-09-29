@@ -1,4 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.User.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.Response;
 using AutoMapper;
@@ -10,7 +11,8 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class CreateManagerTemplate : CreateEntityTemplate<
         Manager,
-        CreateUserCommand<Manager, UserViewModel>,
+        CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>,
+        CreateUserDTO,
         UserViewModel,
         ManagerRepository>
     {
@@ -26,10 +28,10 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             _authService = authService;
         }
 
-        protected override void ManipulateEntityBeforeSave(CreateUserCommand<Manager, UserViewModel> request,
+        protected override void ManipulateEntityBeforeSave(CreateUserDTO data,
             Manager entity)
         {
-            entity.PasswordHash = request.Password;
+            entity.PasswordHash = data.Password;
             entity.CreatedAt = DateTime.UtcNow;
             entity.RefreshToken = Guid.NewGuid().ToString();
             entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);

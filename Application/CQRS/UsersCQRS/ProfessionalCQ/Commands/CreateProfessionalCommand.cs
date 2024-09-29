@@ -1,14 +1,16 @@
-﻿using Application.CQRS.GenericsCQRS.User.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using Application.Response;
-using Domain.Entity.Enum;
 using Domain.Entity.User;
 using MediatR;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Commands
 {
-    public record CreateProfessionalCommand : CreateUserCommand<Professional, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
+    public record CreateProfessionalCommand : CreateEntityCommandBase<Professional, CreateUserDTO, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
     {
-        public Job Job { get; set; }
+        public CreateProfessionalCommand(CreateUserDTO data) : base(data)
+        {
+        }
     }
 }

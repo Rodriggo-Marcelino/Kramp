@@ -27,7 +27,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Handlers
                                                       CancellationToken cancellationToken)
         {
             Professional? professional = _mapper.Map<Professional>(request);
-            professional.PasswordHash = request.Password;
+            professional.PasswordHash = request.Data.Password;
             professional.RefreshToken = Guid.NewGuid().ToString();
             professional.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
             professional.SetTypeDocument();
