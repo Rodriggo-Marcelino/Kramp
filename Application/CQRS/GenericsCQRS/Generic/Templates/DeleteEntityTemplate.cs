@@ -7,7 +7,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
     public abstract class DeleteEntityTemplate<TEntity, TCommand, TRepository> : IRequestHandler<TCommand, Unit>
         where TEntity : EntityGeneric
-        where TCommand : DeleteEntityCommand<TEntity>
+        where TCommand : DeleteEntityCommandBase<TEntity>
         where TRepository : GenericRepository<TEntity>
     {
         private readonly TRepository _repository;

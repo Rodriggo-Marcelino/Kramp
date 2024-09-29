@@ -5,7 +5,7 @@ using Domain.Entity.User;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Validators
 {
-    public class CreateMemberCommandValidator : CreateUserGenericCommandValidator<Member, CreateMemberCommand, MemberInfoViewModel>
+    public class CreateMemberCommandValidator : CreateUserCommandValidator<Member, CreateMemberCommand, MemberInfoViewModel>
     {
         public CreateMemberCommandValidator(ValidatorHelper helper) : base(helper)
         {

@@ -10,7 +10,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class CreateManagerTemplate : CreateEntityTemplate<
         Manager,
-        CreateUserGenericCommand<Manager, UserGenericViewModel>,
+        CreateUserCommand<Manager, UserGenericViewModel>,
         UserGenericViewModel,
         ManagerRepository>
     {
@@ -26,7 +26,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
             _authService = authService;
         }
 
-        protected override void ManipulateEntityBeforeSave(CreateUserGenericCommand<Manager, UserGenericViewModel> request,
+        protected override void ManipulateEntityBeforeSave(CreateUserCommand<Manager, UserGenericViewModel> request,
             Manager entity)
         {
             entity.PasswordHash = request.Password;

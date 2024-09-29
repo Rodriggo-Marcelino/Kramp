@@ -4,13 +4,13 @@ using FluentValidation;
 
 namespace Application.CQRS.GenericsCQRS.User.Validators;
 
-public class CreateUserGenericCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand>
+public class CreateUserCommandValidator<TEntity, TCommand, TViewModel> : AbstractValidator<TCommand>
     where TEntity : UserGeneric
-    where TCommand : CreateUserGenericCommand<TEntity, TViewModel>
+    where TCommand : CreateUserCommand<TEntity, TViewModel>
 {
     private readonly ValidatorHelper _helper;
 
-    public CreateUserGenericCommandValidator(ValidatorHelper helper)
+    public CreateUserCommandValidator(ValidatorHelper helper)
     {
         _helper = helper;
 

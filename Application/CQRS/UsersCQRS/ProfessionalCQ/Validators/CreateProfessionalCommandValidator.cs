@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Validators
 {
-    public class CreateProfessionalCommandValidator : CreateUserGenericCommandValidator<Professional, CreateProfessionalCommand, ProfessionalInfoViewModel>
+    public class CreateProfessionalCommandValidator : CreateUserCommandValidator<Professional, CreateProfessionalCommand, ProfessionalInfoViewModel>
     {
         public CreateProfessionalCommandValidator(ValidatorHelper helper) : base(helper)
         {

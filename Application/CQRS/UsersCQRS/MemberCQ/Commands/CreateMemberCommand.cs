@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Commands
 {
-    public record CreateMemberCommand : CreateUserGenericCommand<Member, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
+    public record CreateMemberCommand : CreateUserCommand<Member, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
     {
     }
 }

@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Queries
 {
-    public record GetEntityByIdQuery<TViewModel> : IRequest<ResponseBase<TViewModel>>
+    public record GetEntityByIdQueryBase<TViewModel> : IRequest<ResponseBase<TViewModel>>
     {
         public Guid? Id { get; }
 
-        public GetEntityByIdQuery(Guid id)
+        public GetEntityByIdQueryBase(Guid id)
         {
             Id = id;
         }

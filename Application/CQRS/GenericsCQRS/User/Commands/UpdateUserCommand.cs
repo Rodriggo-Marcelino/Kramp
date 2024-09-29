@@ -1,8 +1,10 @@
 using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Domain.Entity.Generics;
 
 namespace Application.CQRS.GenericsCQRS.User.Commands;
 
-public record UpdateUserGenericCommand<TEntity, TViewModel> : UpdateEntityCommand<TEntity, TViewModel>
+public record UpdateUserCommand<TEntity, TViewModel> : UpdateEntityCommandBase<TEntity, TViewModel>
+    where TEntity : UserGeneric
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }

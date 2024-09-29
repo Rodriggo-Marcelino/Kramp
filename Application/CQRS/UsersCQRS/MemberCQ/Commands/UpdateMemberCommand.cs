@@ -6,6 +6,6 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Commands;
 
-public record UpdateMemberCommand : UpdateUserGenericCommand<Member, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
+public record UpdateMemberCommand : UpdateUserCommand<Member, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
 {
 }

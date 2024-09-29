@@ -10,8 +10,8 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
     public abstract class UpdateEntityTemplate<TEntity, TCommand, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
         where TEntity : EntityGeneric
-        where TCommand : UpdateEntityCommand<TEntity, TViewModel>
-        where TViewModel : GenericViewModel
+        where TCommand : UpdateEntityCommandBase<TEntity, TViewModel>
+        where TViewModel : GenericViewModelBase
         where TRepository : GenericRepository<TEntity>
     {
         private readonly TRepository _repository;

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Commands
 {
-    public record CreateProfessionalCommand : CreateUserGenericCommand<Professional, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
+    public record CreateProfessionalCommand : CreateUserCommand<Professional, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
     {
         public Job Job { get; set; }
     }

@@ -15,7 +15,7 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<UserGenericViewModel>> Create([FromBody] CreateUserGenericCommand<Manager, UserGenericViewModel> command)
+        public async Task<ActionResult<UserGenericViewModel>> Create([FromBody] CreateUserCommand<Manager, UserGenericViewModel> command)
         {
             return Created("", await _mediator.Send(command));
         }
@@ -23,7 +23,7 @@ namespace Kramp.API.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserGenericViewModel>>> GetAllManagers()
         {
-            var query = new GetAllEntitiesQuery<UserGenericViewModel>();
+            var query = new GetAllEntitiesQueryBase<UserGenericViewModel>();
             var managers = await _mediator.Send(query);
             return Ok(managers);
         }
@@ -31,13 +31,13 @@ namespace Kramp.API.Controllers
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<UserGenericViewModel>> GetManagerById(Guid id)
         {
-            var query = new GetEntityByIdQuery<UserGenericViewModel>(id);
+            var query = new GetEntityByIdQueryBase<UserGenericViewModel>(id);
             var manager = await _mediator.Send(query);
             return Ok(manager);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<UserGenericViewModel>> Update(Guid id, [FromBody] UpdateUserGenericCommand<Manager, UserGenericViewModel> command)
+        public async Task<ActionResult<UserGenericViewModel>> Update(Guid id, [FromBody] UpdateUserCommand<Manager, UserGenericViewModel> command)
         {
             command.Id = id;
             return Ok(await _mediator.Send(command));
@@ -46,7 +46,7 @@ namespace Kramp.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult> DeleteById(Guid Id)
         {
-            var command = new DeleteEntityCommand<Manager>(Id);
+            var command = new DeleteEntityCommandBase<Manager>(Id);
             await _mediator.Send(command);
             return NoContent();
         }

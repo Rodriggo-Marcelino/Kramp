@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Commands
 {
-    public record CreateEntityCommand<TEntity, TViewModel> : IRequest<ResponseBase<TViewModel>>
+    public record CreateEntityCommandBase<TEntity, TViewModel> : IRequest<ResponseBase<TViewModel>>
     {
     }
 }

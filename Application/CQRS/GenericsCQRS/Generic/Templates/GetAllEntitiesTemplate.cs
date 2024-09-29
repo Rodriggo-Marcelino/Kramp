@@ -10,8 +10,8 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
     public abstract class GetAllEntitiesTemplate<TEntity, TQuery, TViewModel, TRepository> : IRequestHandler<TQuery, ResponseBase<IEnumerable<TViewModel>>>
         where TEntity : EntityGeneric
-        where TQuery : GetAllEntitiesQuery<TViewModel>
-        where TViewModel : GenericViewModel
+        where TQuery : GetAllEntitiesQueryBase<TViewModel>
+        where TViewModel : GenericViewModelBase
         where TRepository : GenericRepository<TEntity>
     {
         private readonly TRepository _repository;

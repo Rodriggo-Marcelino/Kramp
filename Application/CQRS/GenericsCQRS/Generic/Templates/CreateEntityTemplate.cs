@@ -8,8 +8,8 @@ using Services.Repositories;
 
 public abstract class CreateEntityTemplate<TEntity, TCommand, TViewModel, TRepository> : IRequestHandler<TCommand, ResponseBase<TViewModel>>
     where TEntity : EntityGeneric
-    where TCommand : CreateEntityCommand<TEntity, TViewModel>
-    where TViewModel : GenericViewModel
+    where TCommand : CreateEntityCommandBase<TEntity, TViewModel>
+    where TViewModel : GenericViewModelBase
     where TRepository : GenericRepository<TEntity>
 {
     private readonly TRepository _repository;

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
 
-public record UpdateProfessionalCommand : UpdateUserGenericCommand<Professional, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
+public record UpdateProfessionalCommand : UpdateUserCommand<Professional, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
 {
     // Deve-se criar outra requisição para Job e Document Number??
     public Job Job { get; set; }
