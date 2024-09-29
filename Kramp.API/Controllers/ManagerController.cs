@@ -13,9 +13,9 @@ namespace Kramp.API.Controllers
     public class ManagerController(IMediator _mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<UserViewModel>> Create([FromBody] CreateUserDTO data)
+        public async Task<ActionResult<UserViewModel>> CreateManager([FromBody] CreateUserDTO data)
         {
-            var command = new CreateEntityCommandBase<Manager, CreateUserDTO, UserViewModel>(data);
+            var command = new CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>(data);
             return Created("", await _mediator.Send(command));
         }
 
@@ -36,16 +36,17 @@ namespace Kramp.API.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<UserViewModel>> Update(Guid id, [FromBody] UpdateUserCommand<Manager, UserViewModel> command)
+        public async Task<ActionResult<UserViewModel>> UpdateManager(Guid id, [FromBody] UpdateUserDTO dto)
         {
-            var commandId = new UpdateUserCommand<Manager, UserViewModel>(id);
-            return Ok(await _mediator.Send(commandId));
+            var command = new UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>(id, dto);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult> DeleteById(Guid Id)
+        public async Task<ActionResult> DeleteManager(Guid Id)
         {
-            var command = new DeleteEntityCommandBase<Manager>(Id);
+            var command = new DeleteEntityCommand<Manager>(Id);
             await _mediator.Send(command);
             return NoContent();
         }
