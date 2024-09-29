@@ -10,7 +10,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Validators
     public class CreateProfessionalCommandValidator :
         CreateUserCommandValidator<
             Professional,
-            CreateEntityCommandBase<Professional, CreateProfessionalDTO, ProfessionalInfoViewModel>,
+            CreateEntityCommand<Professional, CreateProfessionalDTO, ProfessionalInfoViewModel>,
             CreateProfessionalDTO,
             ProfessionalInfoViewModel>
     {

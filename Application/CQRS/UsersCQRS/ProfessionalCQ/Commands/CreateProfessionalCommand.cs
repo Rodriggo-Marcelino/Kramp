@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Commands
 {
-    public record CreateProfessionalCommand : CreateEntityCommandBase<Professional, CreateUserDTO, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
+    public record CreateProfessionalCommand : CreateEntityCommand<Professional, CreateUserDTO, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
     {
         public CreateProfessionalCommand(CreateUserDTO data) : base(data)
         {
