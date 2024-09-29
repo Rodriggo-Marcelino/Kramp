@@ -1,8 +1,8 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Application.CQRS.GenericsCQRS.Generic.Queries;
 using Application.CQRS.GenericsCQRS.Generic.Templates;
+using Application.CQRS.GenericsCQRS.Generic.Validator;
 using Application.CQRS.GenericsCQRS.User.Commands;
-using Application.CQRS.GenericsCQRS.User.Validators;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
 using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
