@@ -10,7 +10,7 @@ using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/managers")]
     [ApiController]
     public class ManagerController(IMediator _mediator, ManagerRepository _repository, IMapper _mapper) : ControllerBase
     {
