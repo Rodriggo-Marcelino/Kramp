@@ -1,55 +1,54 @@
-﻿using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.DTOs;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
-using AutoMapper;
 using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/professional")]
     [ApiController]
-    public class ProfessionalController(IMediator _mediator, ProfessionalRepository _repository, IMapper _mapper)
-        : ControllerBase
+    public class ProfessionalController(IMediator _mediator) : ControllerBase
     {
-        [HttpPost("Create")]
-        public async Task<ActionResult<ProfessionalInfoViewModel>> Create(CreateProfessionalCommand command)
+        [HttpPost]
+        public async Task<ActionResult<ProfessionalViewModel>> CreateProfessional([FromBody] CreateProfessionalDTO data)
         {
-            return Created("", await _mediator.Send(command));
+            var command = new CreateEntityCommand<Professional, CreateProfessionalDTO, ProfessionalViewModel>(data);
+            var professional = await _mediator.Send(command);
+            return Created("api/professional", professional);
         }
 
-        [HttpGet("All")]
-        public async Task<ActionResult<ProfessionalInfoViewModel>> GetAllProfessionals()
+        [HttpGet("all")]
+        public async Task<ActionResult<ProfessionalViewModel>> GetAllProfessionals()
         {
-            var professionals = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<ProfessionalInfoViewModel>>(professionals));
+            var query = new GetAllEntitiesQuery<ProfessionalViewModel>();
+            var professionals = await _mediator.Send(query);
+            return Ok(professionals);
         }
 
-        [HttpGet("{Id:guid}")]
-        public async Task<ActionResult<ProfessionalInfoViewModel>> GetProfessionalById(Guid Id)
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<ProfessionalViewModel>> GetProfessionalById(Guid id)
         {
-            Professional? professional = await _repository.GetByIdAsync(Id);
-
-            if (professional == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<ProfessionalInfoViewModel>(professional));
+            var query = new GetEntityByIdQuery<ProfessionalViewModel>(id);
+            var professional = await _mediator.Send(query);
+            return Ok(professional);
         }
 
-        [HttpPut("Update/{Id:guid}")]
-        public async Task<ActionResult<ProfessionalInfoViewModel>> Update(Guid Id, UpdateProfessionalCommand command)
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<ProfessionalViewModel>> UpdateProfessional(Guid id, UpdateProfessionalDTO data)
         {
-            command.Id = Id;
-            return Ok(await _mediator.Send(command));
+            var command = new UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalViewModel>(id, data);
+            var professional = await _mediator.Send(command);
+            return Ok(professional);
         }
 
-        [HttpDelete("Delete/{Id:guid}")]
-        public async Task<ActionResult<ProfessionalInfoViewModel>> DeleteById(Guid Id)
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<ProfessionalViewModel>> DeleteProfessional(Guid id)
         {
-            await _repository.DeleteByIdAsync(Id);
+            var command = new DeleteEntityCommand<Professional>(id);
+            await _mediator.Send(command);
             return NoContent();
         }
     }

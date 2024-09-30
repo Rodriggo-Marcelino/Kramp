@@ -1,4 +1,5 @@
 ﻿using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.User.DTOs;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
@@ -6,7 +7,7 @@ using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.CQRS.UsersCQRS.GymCQ.DTOs;
 using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
-using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
+using Application.CQRS.UsersCQRS.ProfessionalCQ.DTOs;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using AutoMapper;
 using Domain.Entity.Training;
@@ -71,17 +72,17 @@ namespace Application.Mapping
 
             #region Professional Mappings
 
-            CreateMap<CreateProfessionalCommand, Professional>()
+            CreateMap<CreateProfessionalDTO, Professional>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-            CreateMap<UpdateProfessionalCommand, Professional>()
+            CreateMap<UpdateProfessionalDTO, Professional>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Professional, ProfessionalInfoViewModel>()
+            CreateMap<Professional, ProfessionalViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
 
             #endregion

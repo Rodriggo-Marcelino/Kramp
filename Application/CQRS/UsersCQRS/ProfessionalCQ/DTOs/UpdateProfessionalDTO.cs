@@ -1,9 +1,10 @@
-﻿using Application.CQRS.GenericsCQRS.User.Commands;
+﻿using Application.CQRS.GenericsCQRS.User.DTOs;
+using Domain.Entity.Enum;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.DTOs
 {
     public record UpdateProfessionalDTO : UpdateUserDTO
     {
-        public string? Job { get; set; }
+        public Job Job { get; set; }
     }
 }
