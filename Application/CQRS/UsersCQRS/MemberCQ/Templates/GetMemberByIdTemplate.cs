@@ -8,7 +8,7 @@ using Services.Repositories;
 namespace Application.CQRS.UsersCQRS.MemberCQ.Templates
 {
     public class GetMemberByIdTemplate(MemberRepository repository, IMapper mapper)
-    : GetEntityByIdTemplate<
+    : GetEntityByIdHandler<
         Member,
         GetEntityByIdQuery<UserViewModel>,
         UserViewModel,

@@ -14,7 +14,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Templates
         ProfessionalRepository repository,
         IMapper mapper,
         IAuthService authService
-        ) : CreateEntityTemplate<
+        ) : CreateEntityHandler<
                 Professional,
                 CreateEntityCommand<Professional, CreateProfessionalDTO, ProfessionalViewModel>,
                 CreateProfessionalDTO,

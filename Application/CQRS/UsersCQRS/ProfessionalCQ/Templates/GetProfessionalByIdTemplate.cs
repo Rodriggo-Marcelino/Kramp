@@ -9,7 +9,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Templates
 {
     public class GetProfessionalByIdTemplate
         (ProfessionalRepository repository, IMapper mapper)
-        : GetEntityByIdTemplate<
+        : GetEntityByIdHandler<
             Professional,
             GetEntityByIdQuery<ProfessionalViewModel>,
             ProfessionalViewModel,

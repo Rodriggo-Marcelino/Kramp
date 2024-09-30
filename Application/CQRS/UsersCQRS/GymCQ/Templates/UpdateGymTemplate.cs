@@ -10,7 +10,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Templates
 {
     public class UpdateGymTemplate
         (GymRepository repository, IMapper mapper)
-        : UpdateEntityTemplate<
+        : UpdateEntityHandler<
         Gym,
         UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>,
         UpdateGymDTO,

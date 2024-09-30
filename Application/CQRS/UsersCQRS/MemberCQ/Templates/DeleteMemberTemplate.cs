@@ -7,7 +7,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Templates
 {
     public class DeleteMemberTemplate
         (MemberRepository repository)
-        : DeleteEntityTemplate<
+        : DeleteEntityHandler<
             Member,
             DeleteEntityCommand<Member>,
             MemberRepository>(repository);

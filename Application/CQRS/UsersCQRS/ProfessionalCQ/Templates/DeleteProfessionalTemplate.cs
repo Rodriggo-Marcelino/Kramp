@@ -6,7 +6,7 @@ using Services.Repositories;
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Templates
 {
     public class DeleteProfessionalTemplate(ProfessionalRepository repository)
-        : DeleteEntityTemplate<
+        : DeleteEntityHandler<
             Professional,
             DeleteEntityCommand<Professional>,
             ProfessionalRepository>(repository);

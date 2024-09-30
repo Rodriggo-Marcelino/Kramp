@@ -9,7 +9,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Templates
 {
     public class GetAllGymsTemplate
         (GymRepository repository, IMapper mapper)
-        : GetAllEntitiesTemplate<
+        : GetAllEntitiesHandler<
             Gym,
             GetAllEntitiesQuery<GymViewModel>,
             GymViewModel,

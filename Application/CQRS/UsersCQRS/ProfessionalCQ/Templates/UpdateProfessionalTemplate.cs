@@ -9,7 +9,7 @@ using Services.Repositories;
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Templates
 {
     public class UpdateProfessionalTemplate(ProfessionalRepository repository, IMapper mapper)
-        : UpdateEntityTemplate<
+        : UpdateEntityHandler<
             Professional,
             UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalViewModel>,
             UpdateProfessionalDTO,

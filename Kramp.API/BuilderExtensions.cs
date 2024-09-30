@@ -88,7 +88,7 @@ namespace Kramp.API
 
             builder.Services.AddMediatR(config =>
                 config.RegisterServicesFromAssemblyContaining<
-                    CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                    CreateEntityHandler<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                         CreateUserDTO, UserViewModel, ManagerRepository>>()
             );
         }
@@ -111,30 +111,30 @@ namespace Kramp.API
 
             #region RegisterCQRS for all
             RegisterCqrs<
-                CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
+                CreateEntityHandler<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
             RegisterCqrs<
-                UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
+                UpdateEntityHandler<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerTemplate,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
             RegisterVoidCqrs<
-                DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
+                DeleteEntityHandler<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
                 DeleteManagerTemplate,
                 DeleteEntityCommand<Manager>>(services);
 
             RegisterCqrs<
-                GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+                GetEntityByIdHandler<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetManagerByIdTemplate,
                 GetEntityByIdQuery<UserViewModel>,
                 UserViewModel>(services);
 
             RegisterIEnumerableCqrs<
-                GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+                GetAllEntitiesHandler<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetAllManagersTemplate,
                 GetAllEntitiesQuery<UserViewModel>,
                 UserViewModel>(services);

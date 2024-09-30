@@ -14,7 +14,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Templates
         GymRepository repository,
         IMapper mapper,
         IAuthService authService
-        ) : CreateEntityTemplate<
+        ) : CreateEntityHandler<
                 Gym,
                 CreateEntityCommand<Gym, CreateGymDTO, GymViewModel>,
                 CreateGymDTO,

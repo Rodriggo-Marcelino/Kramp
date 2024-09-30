@@ -12,7 +12,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Templates
 {
     public class CreateMemberTemplate
     (MemberRepository repository, IMapper mapper, IAuthService authService)
-        : CreateEntityTemplate<
+        : CreateEntityHandler<
             Member,
             CreateEntityCommand<Member, CreateUserDTO, UserViewModel>,
             CreateUserDTO,

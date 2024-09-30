@@ -9,7 +9,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
     public class GetAllManagersTemplate
         (ManagerRepository repository, IMapper mapper)
-        : GetAllEntitiesTemplate<
+        : GetAllEntitiesHandler<
             Manager,
             GetAllEntitiesQuery<UserViewModel>,
             UserViewModel,

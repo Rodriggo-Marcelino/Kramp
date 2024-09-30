@@ -8,7 +8,7 @@ using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class GetAllEntitiesTemplate<TEntity, TQuery, TViewModel, TRepository>(
+    public abstract class GetAllEntitiesHandler<TEntity, TQuery, TViewModel, TRepository>(
         TRepository repository,
         IMapper mapper)
         : IRequestHandler<TQuery, ResponseBase<IEnumerable<TViewModel>>>

@@ -7,7 +7,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Templates
 {
     public class DeleteGymTemplate
         (GymRepository repository)
-        : DeleteEntityTemplate<
+        : DeleteEntityHandler<
             Gym,
             DeleteEntityCommand<Gym>,
             GymRepository>(repository);

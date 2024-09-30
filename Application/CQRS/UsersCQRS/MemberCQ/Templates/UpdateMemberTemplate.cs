@@ -10,7 +10,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Templates
 {
     public class UpdateMemberTemplate
         (MemberRepository repository, IMapper mapper)
-        : UpdateEntityTemplate<
+        : UpdateEntityHandler<
         Member,
         UpdateEntityCommand<Member, UpdateUserDTO, UserViewModel>,
         UpdateUserDTO,

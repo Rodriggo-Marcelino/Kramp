@@ -8,7 +8,7 @@ using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class UpdateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>(
+    public abstract class UpdateEntityHandler<TEntity, TCommand, TDTO, TViewModel, TRepository>(
         TRepository repository,
         IMapper mapper)
         : IRequestHandler<TCommand, ResponseBase<TViewModel>>

@@ -5,7 +5,7 @@ using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class DeleteEntityTemplate<TEntity, TCommand, TRepository>
+    public abstract class DeleteEntityHandler<TEntity, TCommand, TRepository>
         (TRepository repository)
         : IRequestHandler<TCommand, Unit>
         where TEntity : EntityGeneric

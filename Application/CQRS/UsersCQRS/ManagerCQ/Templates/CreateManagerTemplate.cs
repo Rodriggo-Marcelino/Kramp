@@ -14,7 +14,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
         ManagerRepository repository,
         IMapper mapper,
         IAuthService authService
-        ) : CreateEntityTemplate<
+        ) : CreateEntityHandler<
                 Manager,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 CreateUserDTO,
