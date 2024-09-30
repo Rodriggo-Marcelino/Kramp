@@ -4,6 +4,10 @@ using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.Generic.Validator;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
+using Application.CQRS.UsersCQRS.GymCQ.DTOs;
+using Application.CQRS.UsersCQRS.GymCQ.Templates;
+using Application.CQRS.UsersCQRS.GymCQ.Validators;
+using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
 using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
 using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
 using Application.ExceptionHandler;
@@ -107,33 +111,68 @@ namespace Kramp.API
         {
             var services = builder.Services;
 
-            RegisterCqrs<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
-                    CreateUserDTO, UserViewModel, ManagerRepository>,
+            #region Manager
+            RegisterCqrs<
+                CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterCqrs<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
-                    UpdateUserDTO, UserViewModel, ManagerRepository>,
+            RegisterCqrs<
+                UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerTemplate,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterVoidCqrs<DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
+            RegisterVoidCqrs<
+                DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
                 DeleteManagerTemplate,
                 DeleteEntityCommand<Manager>>(services);
 
-            RegisterCqrs<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel,
-                    ManagerRepository>,
+            RegisterCqrs<
+                GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetManagerByIdTemplate,
                 GetEntityByIdQuery<UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterIEnumerableCqrs<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel,
-                    ManagerRepository>,
+            RegisterIEnumerableCqrs<
+                GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetAllManagersTemplate,
                 GetAllEntitiesQuery<UserViewModel>,
                 UserViewModel>(services);
+            #endregion
+
+            #region Gym
+            RegisterCqrs<
+                CreateEntityTemplate<Gym, CreateEntityCommand<Gym, CreateGymDTO, GymViewModel>, CreateGymDTO, GymViewModel, GymRepository>,
+                CreateGymTemplate,
+                CreateEntityCommand<Gym, CreateGymDTO, GymViewModel>,
+                GymViewModel>(services);
+
+            RegisterCqrs<
+                UpdateEntityTemplate<Gym, UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>, UpdateGymDTO, GymViewModel, GymRepository>,
+                UpdateGymTemplate,
+                UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>,
+                GymViewModel>(services);
+
+            RegisterVoidCqrs<
+                DeleteEntityTemplate<Gym, DeleteEntityCommand<Gym>, GymRepository>,
+                DeleteGymTemplate,
+                DeleteEntityCommand<Gym>>(services);
+
+            RegisterCqrs<
+                GetEntityByIdTemplate<Gym, GetEntityByIdQuery<GymViewModel>, GymViewModel, GymRepository>,
+                GetGymByIdTemplate,
+                GetEntityByIdQuery<GymViewModel>,
+                GymViewModel>(services);
+
+            RegisterIEnumerableCqrs<
+                GetAllEntitiesTemplate<Gym, GetAllEntitiesQuery<GymViewModel>, GymViewModel, GymRepository>,
+                GetAllGymsTemplate,
+                GetAllEntitiesQuery<GymViewModel>,
+                GymViewModel>(services);
+            #endregion
+
         }
 
         private static void RegisterCqrs<TFromTemplate, TTemplate, TCommand, TViewModel>(IServiceCollection? services)
@@ -184,6 +223,8 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateGymCommandValidator<Gym, CreateGymDTO>>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateGymCommandValidator<Gym, UpdateGymDTO>>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateManagerCommandValidator>();
             builder.Services.AddFluentValidationAutoValidation();
         }

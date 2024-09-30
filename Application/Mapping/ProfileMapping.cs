@@ -4,7 +4,7 @@ using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
-using Application.CQRS.UsersCQRS.GymCQ.Commands;
+using Application.CQRS.UsersCQRS.GymCQ.DTOs;
 using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
 using Application.CQRS.UsersCQRS.MemberCQ.Commands;
 using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
@@ -39,17 +39,17 @@ namespace Application.Mapping
 
             #region Gym Mappings
 
-            CreateMap<CreateGymCommand, Gym>()
+            CreateMap<CreateGymDTO, Gym>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-            CreateMap<UpdateGymCommand, Gym>()
+            CreateMap<UpdateGymDTO, Gym>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Gym, GymInfoViewModel>()
+            CreateMap<Gym, GymViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
 
             #endregion

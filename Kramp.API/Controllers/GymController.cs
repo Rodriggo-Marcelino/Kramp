@@ -1,55 +1,53 @@
-﻿using Application.CQRS.UsersCQRS.GymCQ.Commands;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.UsersCQRS.GymCQ.DTOs;
 using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
-using AutoMapper;
 using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/gyms")]
     [ApiController]
-    public class GymController(IMediator _mediator, GymRepository _repository, IMapper _mapper) : ControllerBase
+    public class GymController(IMediator _mediator) : ControllerBase
     {
-        [HttpPost("Create")]
-        public async Task<ActionResult<GymInfoViewModel>> Create(CreateGymCommand command)
+        [HttpPost]
+        public async Task<ActionResult<GymViewModel>> CreateGym([FromBody] CreateGymDTO data)
         {
+            var command = new CreateEntityCommand<Gym, CreateGymDTO, GymViewModel>(data);
             return Created("", await _mediator.Send(command));
         }
 
-        [HttpGet("All")]
-        public async Task<ActionResult<GymInfoViewModel>> GetAllGyms()
+        [HttpGet("all")]
+        public async Task<ActionResult<GymViewModel>> GetAllGyms()
         {
-            var gyms = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<GymInfoViewModel>>(gyms));
+            var query = new GetAllEntitiesQuery<GymViewModel>();
+            var gyms = await _mediator.Send(query);
+            return Ok(gyms);
         }
 
-        [HttpGet("{Id:guid}")]
-        public async Task<ActionResult<GymInfoViewModel>> GetGymById(Guid Id)
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<GymViewModel>> GetGymById(Guid id)
         {
-            Gym? gym = await _repository.GetByIdAsync(Id);
-
-            if (gym == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<GymInfoViewModel>(gym));
+            var query = new GetEntityByIdQuery<GymViewModel>(id);
+            var gym = await _mediator.Send(query);
+            return Ok(gym);
         }
 
-        [HttpPut("Update/{Id:guid}")]
-        public async Task<ActionResult<GymInfoViewModel>> Update(Guid Id, UpdateGymCommand command)
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<GymViewModel>> UpdateGym(Guid id, UpdateGymDTO data)
         {
-            command.Id = Id;
-            return Ok(await _mediator.Send(command));
+            var command = new UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>(id, data);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
-        [HttpDelete("Delete/{Id:guid}")]
-        public async Task<ActionResult<GymInfoViewModel>> DeleteById(Guid Id)
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<GymViewModel>> DeleteGym(Guid id)
         {
-            //TODO: Retirar o método de delete do controller (má prática)
-            await _repository.DeleteByIdAsync(Id);
+            var command = new DeleteEntityCommand<Gym>(id);
+            await _mediator.Send(command);
             return NoContent();
         }
     }
