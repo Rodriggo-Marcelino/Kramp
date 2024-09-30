@@ -25,7 +25,12 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 
         public async Task<Unit> DeleteByIdAsync(Guid id)
         {
-            TEntity entity = await _repository.GetByIdAsync(id);
+            TEntity? entity = await _repository.GetByIdAsync(id);
+
+            if (entity == null)
+            {
+                throw new Exception($"Entity with id {id} not found");
+            }
 
             if (entity != null)
             {

@@ -44,9 +44,9 @@ namespace Kramp.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult> DeleteManager(Guid Id)
+        public async Task<ActionResult> DeleteManager(Guid id)
         {
-            var command = new DeleteEntityCommand<Manager>(Id);
+            var command = new DeleteEntityCommand<Manager>(id);
             await _mediator.Send(command);
             return NoContent();
         }

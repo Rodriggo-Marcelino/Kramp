@@ -104,59 +104,59 @@ namespace Kramp.API
             builder.Services.AddAutoMapper(typeof(ProfileMappings).Assembly);
         }
 
-        public static void AddCQRS(this WebApplicationBuilder builder)
+        public static void AddCqrs(this WebApplicationBuilder builder)
         {
             var services = builder.Services;
 
-            RegisterCQRS<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
+            RegisterCqrs<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterCQRS<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
+            RegisterCqrs<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerTemplate,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterVoidCQRS<DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
+            RegisterVoidCqrs<DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
                 DeleteManagerTemplate,
                 DeleteEntityCommand<Manager>>(services);
 
-            RegisterCQRS<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+            RegisterCqrs<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetManagerByIdTemplate,
                 GetEntityByIdQuery<UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterIEnumerableCQRS<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+            RegisterIEnumerableCqrs<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
                 GetAllManagersTemplate,
                 GetAllEntitiesQuery<UserViewModel>,
                 UserViewModel>(services);
         }
 
-        private static void RegisterCQRS<FromTemplate, ToTemplate, TCommand, TViewModel>(IServiceCollection? services)
-            where FromTemplate : IRequestHandler<TCommand, ResponseBase<TViewModel>>
-            where ToTemplate : FromTemplate
+        private static void RegisterCqrs<TFromTemplate, TTemplate, TCommand, TViewModel>(IServiceCollection? services)
+            where TFromTemplate : IRequestHandler<TCommand, ResponseBase<TViewModel>>
+            where TTemplate : TFromTemplate
             where TCommand : IRequest<ResponseBase<TViewModel>>
             where TViewModel : class
         {
-            services.AddScoped(typeof(FromTemplate), typeof(ToTemplate));
+            services.AddScoped(typeof(TFromTemplate), typeof(TTemplate));
         }
 
-        private static void RegisterIEnumerableCQRS<FromTemplate, ToTemplate, TCommand, TViewModel>(IServiceCollection? services)
-            where FromTemplate : IRequestHandler<TCommand, ResponseBase<IEnumerable<TViewModel>>>
-            where ToTemplate : FromTemplate
+        private static void RegisterIEnumerableCqrs<TFromTemplate, TTemplate, TCommand, TViewModel>(IServiceCollection? services)
+            where TFromTemplate : IRequestHandler<TCommand, ResponseBase<IEnumerable<TViewModel>>>
+            where TTemplate : TFromTemplate
             where TCommand : IRequest<ResponseBase<IEnumerable<TViewModel>>>
             where TViewModel : class
         {
-            services.AddScoped(typeof(FromTemplate), typeof(ToTemplate));
+            services.AddScoped(typeof(TFromTemplate), typeof(TTemplate));
         }
 
-        private static void RegisterVoidCQRS<FromTemplate, ToTemplate, TCommand>(IServiceCollection? services)
-            where FromTemplate : IRequestHandler<TCommand, Unit>
-            where ToTemplate : FromTemplate
+        private static void RegisterVoidCqrs<TFromTemplate, TTemplate, TCommand>(IServiceCollection? services)
+            where TFromTemplate : IRequestHandler<TCommand, Unit>
+            where TTemplate : TFromTemplate
             where TCommand : IRequest<Unit>
         {
-            services.AddScoped(typeof(FromTemplate), typeof(ToTemplate));
+            services.AddScoped(typeof(TFromTemplate), typeof(TTemplate));
         }
 
         public static void AddInjections(this WebApplicationBuilder builder)
