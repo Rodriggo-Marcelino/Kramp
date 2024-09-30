@@ -1,3 +1,4 @@
+using Domain.Entity.Enum;
 using Domain.Entity.Generics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,5 +22,10 @@ namespace Domain.Entity.User
         [DataType(DataType.Date)]
         [Column("birth_date")]
         public DateTime BirthDate { get; set; }
+
+        public void SetTypeDocument()
+        {
+            TypeDocument = Document.CPF;
+        }
     }
 }

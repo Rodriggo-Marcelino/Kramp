@@ -1,4 +1,5 @@
-﻿using Domain.Entity.Generics;
+﻿using Domain.Entity.Enum;
+using Domain.Entity.Generics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,11 @@ namespace Domain.Entity.User
 
         //TODO: Owned Types
         public Address? Address { get; set; }
+
+        public void SetTypeDocument()
+        {
+            TypeDocument = Document.CNPJ;
+        }
 
     }
 }

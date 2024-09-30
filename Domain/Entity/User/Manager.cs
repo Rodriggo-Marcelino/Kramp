@@ -24,5 +24,10 @@ namespace Domain.Entity.User
         public DateTime BirthDate { get; set; }
 
         public List<Permission> Permission { get; set; } = new List<Permission>();
+
+        public void SetTypeDocument()
+        {
+            TypeDocument = Document.CPF;
+        }
     }
 }
