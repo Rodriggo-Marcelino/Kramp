@@ -4,10 +4,7 @@ using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.Generic.Validator;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
-using Application.CQRS.UsersCQRS.GymCQ.DTOs;
-using Application.CQRS.UsersCQRS.GymCQ.Templates;
 using Application.CQRS.UsersCQRS.GymCQ.Validators;
-using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
 using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
 using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
 using Application.ExceptionHandler;
@@ -111,7 +108,7 @@ namespace Kramp.API
         {
             var services = builder.Services;
 
-            #region Manager
+            #region RegisterCQRS for all
             RegisterCqrs<
                 CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
@@ -141,38 +138,6 @@ namespace Kramp.API
                 GetAllEntitiesQuery<UserViewModel>,
                 UserViewModel>(services);
             #endregion
-
-            #region Gym
-            RegisterCqrs<
-                CreateEntityTemplate<Gym, CreateEntityCommand<Gym, CreateGymDTO, GymViewModel>, CreateGymDTO, GymViewModel, GymRepository>,
-                CreateGymTemplate,
-                CreateEntityCommand<Gym, CreateGymDTO, GymViewModel>,
-                GymViewModel>(services);
-
-            RegisterCqrs<
-                UpdateEntityTemplate<Gym, UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>, UpdateGymDTO, GymViewModel, GymRepository>,
-                UpdateGymTemplate,
-                UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>,
-                GymViewModel>(services);
-
-            RegisterVoidCqrs<
-                DeleteEntityTemplate<Gym, DeleteEntityCommand<Gym>, GymRepository>,
-                DeleteGymTemplate,
-                DeleteEntityCommand<Gym>>(services);
-
-            RegisterCqrs<
-                GetEntityByIdTemplate<Gym, GetEntityByIdQuery<GymViewModel>, GymViewModel, GymRepository>,
-                GetGymByIdTemplate,
-                GetEntityByIdQuery<GymViewModel>,
-                GymViewModel>(services);
-
-            RegisterIEnumerableCqrs<
-                GetAllEntitiesTemplate<Gym, GetAllEntitiesQuery<GymViewModel>, GymViewModel, GymRepository>,
-                GetAllGymsTemplate,
-                GetAllEntitiesQuery<GymViewModel>,
-                GymViewModel>(services);
-            #endregion
-
         }
 
         private static void RegisterCqrs<TFromTemplate, TTemplate, TCommand, TViewModel>(IServiceCollection? services)
