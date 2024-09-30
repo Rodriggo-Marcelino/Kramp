@@ -5,12 +5,12 @@ using FluentValidation;
 
 namespace Application.CQRS.UsersCQRS.GymCQ.Validators
 {
-    public class CreateGymCommandValidator<TEntity, TDTO> : AbstractValidator<TDTO>
+    public class UpdateGymCommandValidator<TEntity, TDTO> : AbstractValidator<TDTO>
     where TEntity : Gym
-    where TDTO : CreateGymDTO
+    where TDTO : UpdateGymDTO
     {
         private readonly ValidatorHelper _helper;
-        public CreateGymCommandValidator(ValidatorHelper helper)
+        public UpdateGymCommandValidator(ValidatorHelper helper)
         {
             _helper = helper;
 
@@ -28,13 +28,6 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Validators
             RuleFor(x => x.Username)
                 .NotEmpty()
                 .WithMessage(_helper.USERNAME_IS_REQUIRED_MSG);
-
-            RuleFor(x => x.Password)
-                .NotEmpty()
-                .WithMessage(_helper.PASSWORD_IS_REQUIRED_MSG)
-
-                .MinimumLength(_helper.PASSWORD_MIN_LENGTH_VALUE)
-                .WithMessage(_helper.PASSWORD_MIN_LENGTH_MSG);
 
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty()

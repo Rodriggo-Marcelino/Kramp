@@ -2,7 +2,7 @@
 
 namespace Application.CQRS.UsersCQRS.GymCQ.ViewModels
 {
-    public record GymInfoViewModel : TokenViewModel
+    public record GymViewModel : TokenViewModel
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
