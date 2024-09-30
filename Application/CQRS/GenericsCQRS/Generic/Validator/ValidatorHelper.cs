@@ -15,6 +15,7 @@
         public string DOCUMENT_NUMBER_IS_REQUIRED_MSG = "O número do documento é obrigatório.";
         public string DOCUMENT_NUMBER_MIN_LENGTH_MSG = "O número do documento deve ter no mínimo 5 caracteres.";
         public string DESCRIPTION_MAX_LENGTH_MSG = "A descrição deve ter no máximo 244 caracteres.";
+        public string JOB_IS_REQUIRED_MSG = "A profissão é obrigatória.";
 
         public int NAME_MIN_LENGTH_VALUE = 2;
         public int SURNAME_MIN_LENGTH_VALUE = 2;

@@ -6,6 +6,8 @@ using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
+namespace Application.CQRS.GenericsCQRS.Generic.Templates;
+
 public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>(
     TRepository repository,
     IMapper mapper)
