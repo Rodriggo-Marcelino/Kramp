@@ -3,13 +3,8 @@ using MediatR;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Commands
 {
-    public record CreateEntityCommand<TEntity, TDTO, TViewModel> : IRequest<ResponseBase<TViewModel>>
+    public record CreateEntityCommand<TEntity, TDTO, TViewModel>(TDTO Data) : IRequest<ResponseBase<TViewModel>>
     {
-        public TDTO Data { get; set; }
-
-        public CreateEntityCommand(TDTO data)
-        {
-            Data = data;
-        }
+        public TDTO Data { get; set; } = Data;
     }
 }
