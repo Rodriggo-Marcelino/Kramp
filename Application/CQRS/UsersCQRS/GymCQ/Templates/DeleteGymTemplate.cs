@@ -5,7 +5,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.GymCQ.Templates
 {
-    public class DeleteGymTemplate(GymRepository repository)
+    public class DeleteGymTemplate
+        (GymRepository repository)
         : DeleteEntityTemplate<
             Gym,
             DeleteEntityCommand<Gym>,

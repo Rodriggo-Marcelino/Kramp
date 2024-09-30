@@ -8,7 +8,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.GymCQ.Templates
 {
-    public class UpdateGymTemplate(GymRepository repository, IMapper mapper)
+    public class UpdateGymTemplate
+        (GymRepository repository, IMapper mapper)
         : UpdateEntityTemplate<
         Gym,
         UpdateEntityCommand<Gym, UpdateGymDTO, GymViewModel>,

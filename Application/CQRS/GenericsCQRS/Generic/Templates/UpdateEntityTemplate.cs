@@ -8,7 +8,9 @@ using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Templates
 {
-    public abstract class UpdateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>
+    public abstract class UpdateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>(
+        TRepository repository,
+        IMapper mapper)
         : IRequestHandler<TCommand, ResponseBase<TViewModel>>
         where TEntity : EntityGeneric
         where TCommand : UpdateEntityCommand<TEntity, TDTO, TViewModel>
@@ -16,15 +18,6 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
         where TRepository : GenericRepository<TEntity>
         where TDTO : class
     {
-        private readonly TRepository _repository;
-        private readonly IMapper _mapper;
-
-        public UpdateEntityTemplate(TRepository repository, IMapper mapper)
-        {
-            _repository = repository;
-            _mapper = mapper;
-        }
-
         public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request,
             CancellationToken cancellationToken)
         {
@@ -48,15 +41,15 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
             return CreateResponse(updatedEntity);
         }
 
-        protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await _repository.GetByIdAsync(id);
+        protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await repository.GetByIdAsync(id);
 
-        protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => _mapper.Map(data, entity);
+        protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => mapper.Map(data, entity);
 
         protected virtual void ManipulateEntityBeforeUpdate(TEntity entity)
         {
         }
 
-        protected virtual async Task UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
+        protected virtual async Task UpdateEntityAsync(TEntity entity) => await repository.UpdateAsync(entity);
 
         protected virtual void ManipulateEntityAfterUpdate(TEntity entity)
         {
@@ -64,7 +57,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 
         protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
         {
-            var viewModel = _mapper.Map<TViewModel>(entity);
+            var viewModel = mapper.Map<TViewModel>(entity);
             return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
         }
     }

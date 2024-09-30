@@ -7,7 +7,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.GymCQ.Templates
 {
-    public class GetAllGymsTemplate(GymRepository repository, IMapper mapper)
+    public class GetAllGymsTemplate
+        (GymRepository repository, IMapper mapper)
         : GetAllEntitiesTemplate<
             Gym,
             GetAllEntitiesQuery<GymViewModel>,

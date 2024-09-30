@@ -6,7 +6,9 @@ using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
-public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>
+public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>(
+    TRepository repository,
+    IMapper mapper)
     : IRequestHandler<TCommand, ResponseBase<TViewModel>>
     where TEntity : EntityGeneric
     where TCommand : CreateEntityCommand<TEntity, TDTO, TViewModel>
@@ -14,15 +16,6 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, 
     where TRepository : GenericRepository<TEntity>
     where TDTO : class
 {
-    private readonly TRepository _repository;
-    private readonly IMapper _mapper;
-
-    public CreateEntityTemplate(TRepository repository, IMapper mapper)
-    {
-        _repository = repository;
-        _mapper = mapper;
-    }
-
     public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request, CancellationToken cancellationToken)
     {
         return await this.ExecuteAsync(request);
@@ -49,7 +42,7 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, 
 
     protected virtual TEntity MapCommandToEntity(TDTO request)
     {
-        return _mapper.Map<TEntity>(request);
+        return mapper.Map<TEntity>(request);
     }
 
     protected virtual void ManipulateEntityBeforeSave(TDTO request, TEntity entity)
@@ -58,7 +51,7 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, 
 
     protected virtual Task SaveEntityAsync(TEntity entity)
     {
-        return _repository.AddAsync(entity);
+        return repository.AddAsync(entity);
     }
 
     protected virtual void ManipulateEntityAfterSave(TEntity entity)
@@ -67,7 +60,7 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, 
 
     protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
     {
-        var viewModel = _mapper.Map<TViewModel>(entity);
+        var viewModel = mapper.Map<TViewModel>(entity);
         return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
     }
 }

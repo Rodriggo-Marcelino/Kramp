@@ -20,9 +20,6 @@
     <Folder Include="CQRS\TrainingCQRS\PlanCQ\Templates\" />
     <Folder Include="CQRS\TrainingCQRS\WorkoutCQ\DTOs\" />
     <Folder Include="CQRS\TrainingCQRS\WorkoutCQ\Templates\" />
-    <Folder Include="CQRS\UsersCQRS\MemberCQ\DTOs\" />
-    <Folder Include="CQRS\UsersCQRS\MemberCQ\Templates\" />
-    <Folder Include="CQRS\UsersCQRS\MemberCQ\Validators\" />
     <Folder Include="CQRS\UsersCQRS\ProfessionalCQ\Templates\" />
     <Folder Include="CQRS\UsersCQRS\ProfessionalCQ\Validators\" />
   </ItemGroup>

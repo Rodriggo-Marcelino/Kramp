@@ -8,13 +8,14 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
-    public class UpdateManagerTemplate(ManagerRepository repository, IMapper mapper)
+    public class UpdateManagerTemplate
+        (ManagerRepository repository, IMapper mapper)
         : UpdateEntityTemplate<
-        Manager,
-        UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
-        UpdateUserDTO,
-        UserViewModel,
-        ManagerRepository>(repository, mapper)
+                Manager,
+                UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
+                UpdateUserDTO,
+                UserViewModel,
+                ManagerRepository>(repository, mapper)
     {
         protected override void ManipulateEntityBeforeUpdate(Manager entity)
         {

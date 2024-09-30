@@ -9,24 +9,18 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
-    public class CreateManagerTemplate : CreateEntityTemplate<
-        Manager,
-        CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
-        CreateUserDTO,
-        UserViewModel,
-        ManagerRepository>
+    public class CreateManagerTemplate(
+        ManagerRepository repository,
+        IMapper mapper,
+        IAuthService authService
+        ) : CreateEntityTemplate<
+                Manager,
+                CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                CreateUserDTO,
+                UserViewModel,
+                ManagerRepository>(repository, mapper)
     {
-        private readonly IAuthService _authService;
-        private readonly IMapper _mapper;
-
-        public CreateManagerTemplate(
-            ManagerRepository repository,
-            IMapper mapper,
-            IAuthService authService) : base(repository, mapper)
-        {
-            _mapper = mapper;
-            _authService = authService;
-        }
+        private readonly IMapper _mapper = mapper;
 
         protected override void ManipulateEntityBeforeSave(CreateUserDTO data,
             Manager entity)
@@ -40,7 +34,7 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
         protected override ResponseBase<UserViewModel> CreateResponse(Manager entity)
         {
             var viewModel = _mapper.Map<UserViewModel>(entity);
-            viewModel.TokenJWT = _authService.GenerateJWT(entity.DocumentNumber!, entity.Username!);
+            viewModel.TokenJWT = authService.GenerateJWT(entity.DocumentNumber!, entity.Username!);
             return new ResponseBase<UserViewModel>(new ResponseInfo(), viewModel);
         }
     }
