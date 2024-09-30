@@ -1,4 +1,5 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Templates;
 using Application.CQRS.GenericsCQRS.User.Commands;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.Response;
@@ -27,6 +28,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Templates
             entity.CreatedAt = DateTime.UtcNow;
             entity.RefreshToken = Guid.NewGuid().ToString();
             entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            entity.SetTypeDocument();
         }
 
         protected override ResponseBase<UserViewModel> CreateResponse(Member entity)
