@@ -1,4 +1,4 @@
-namespace Application.CQRS.GenericsCQRS.User.Commands;
+namespace Application.CQRS.GenericsCQRS.User.DTOs;
 
 public record UpdateUserDTO
 {

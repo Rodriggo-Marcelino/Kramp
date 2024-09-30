@@ -1,6 +1,7 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Application.CQRS.GenericsCQRS.Generic.Queries;
 using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.User.DTOs;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Domain.Entity.User;
 using MediatR;

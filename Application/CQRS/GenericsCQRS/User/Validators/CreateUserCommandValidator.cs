@@ -37,10 +37,10 @@ public class CreateUserCommandValidator<TEntity, TDTO>
 
         RuleFor(x => x.BirthDate)
             .NotEmpty()
-            .WithMessage(_helper.PASSWORD_IS_REQUIRED_MSG)
+            .WithMessage(_helper.BIRTHDATE_IS_REQUIRED_MSG)
 
             .Must(_helper.BeAtLeast18YearsOld)
-            .WithMessage(_helper.PASSWORD_MIN_LENGTH_MSG);
+            .WithMessage(_helper.BIRTHDATE_MIN_AGE_MSG);
 
         RuleFor(x => x.Username)
             .NotEmpty()
