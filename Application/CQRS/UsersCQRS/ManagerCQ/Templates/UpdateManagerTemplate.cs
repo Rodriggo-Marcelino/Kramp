@@ -8,19 +8,14 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
 {
-    public class UpdateManagerTemplate
+    public class UpdateManagerTemplate(ManagerRepository repository, IMapper mapper)
         : UpdateEntityTemplate<
-            Manager,
-            UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
-            UpdateUserDTO,
-            UserViewModel,
-            ManagerRepository>
+        Manager,
+        UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
+        UpdateUserDTO,
+        UserViewModel,
+        ManagerRepository>(repository, mapper)
     {
-        public UpdateManagerTemplate(ManagerRepository repository, IMapper mapper)
-            : base(repository, mapper)
-        {
-        }
-
         protected override void ManipulateEntityBeforeUpdate(Manager entity)
         {
             entity.RefreshToken = Guid.NewGuid().ToString();
