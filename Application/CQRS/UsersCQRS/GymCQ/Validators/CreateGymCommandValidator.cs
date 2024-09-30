@@ -1,13 +1,10 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Validator;
 using Application.CQRS.UsersCQRS.GymCQ.DTOs;
-using Domain.Entity.User;
 using FluentValidation;
 
 namespace Application.CQRS.UsersCQRS.GymCQ.Validators
 {
-    public class CreateGymCommandValidator<TEntity, TDTO> : AbstractValidator<TDTO>
-    where TEntity : Gym
-    where TDTO : CreateGymDTO
+    public class CreateGymCommandValidator : AbstractValidator<CreateGymDTO>
     {
         private readonly ValidatorHelper _helper;
         public CreateGymCommandValidator(ValidatorHelper helper)

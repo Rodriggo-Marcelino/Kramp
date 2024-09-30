@@ -223,8 +223,8 @@ namespace Kramp.API
 
         public static void AddValidations(this WebApplicationBuilder builder)
         {
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateGymCommandValidator<Gym, CreateGymDTO>>();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateGymCommandValidator<Gym, UpdateGymDTO>>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateGymCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateGymCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateManagerCommandValidator>();
             builder.Services.AddFluentValidationAutoValidation();
         }
