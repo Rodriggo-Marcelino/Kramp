@@ -6,10 +6,10 @@ using FluentValidation;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Validators
 {
-    public class CreateProfessionalCommandValidator
-        : CreateUserCommandValidator<Professional, CreateProfessionalDTO>
+    public class UpdateProfessionalCommandValidator
+    : UpdateUserCommandValidator<Professional, UpdateProfessionalDTO>
     {
-        public CreateProfessionalCommandValidator(ValidatorHelper helper) : base(helper)
+        public UpdateProfessionalCommandValidator(ValidatorHelper helper) : base(helper)
         {
             RuleFor(x => x.Job)
                 .NotEmpty()
