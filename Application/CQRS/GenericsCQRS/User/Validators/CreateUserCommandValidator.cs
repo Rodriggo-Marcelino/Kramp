@@ -17,30 +17,47 @@ public class CreateUserCommandValidator<TEntity, TDTO>
         _helper = helper;
 
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage(_helper.NAME_IS_REQUIRED)
-            .MinimumLength(2).WithMessage(_helper.NAME_MIN_LENGTH);
+            .NotEmpty()
+            .WithMessage(_helper.NAME_IS_REQUIRED_MSG)
+
+            .MinimumLength(_helper.NAME_MIN_LENGTH_VALUE)
+            .WithMessage(_helper.NAME_MIN_LENGTH_MSG);
 
         RuleFor(x => x.Surname)
-            .NotEmpty().WithMessage(_helper.SURNAME_IS_REQUIRED)
-            .MinimumLength(2).WithMessage(_helper.SURNAME_MIN_LENGTH);
+            .NotEmpty()
+            .WithMessage(_helper.SURNAME_IS_REQUIRED_MSG)
+
+            .MinimumLength(_helper.SURNAME_MIN_LENGTH_VALUE)
+            .WithMessage(_helper.SURNAME_MIN_LENGTH_MSG);
 
         RuleFor(x => x.UserBio)
-            .MinimumLength(10).WithMessage(_helper.BIO_MIN_LENGTH)
+            .MinimumLength(_helper.BIO_MIN_LENGTH_VALUE)
+            .WithMessage(_helper.BIO_MIN_LENGTH_MSG)
             .When(x => !string.IsNullOrEmpty(x.UserBio));
 
         RuleFor(x => x.BirthDate)
-            .NotEmpty().WithMessage(_helper.PASSWORD_IS_REQUIRED)
-            .Must(_helper.BeAtLeast18YearsOld).WithMessage(_helper.PASSWORD_MIN_LENGTH);
+            .NotEmpty()
+            .WithMessage(_helper.PASSWORD_IS_REQUIRED_MSG)
+
+            .Must(_helper.BeAtLeast18YearsOld)
+            .WithMessage(_helper.PASSWORD_MIN_LENGTH_MSG);
 
         RuleFor(x => x.Username)
-            .NotEmpty().WithMessage(_helper.USERNAME_IS_REQUIRED);
+            .NotEmpty()
+            .WithMessage(_helper.USERNAME_IS_REQUIRED_MSG);
 
         RuleFor(x => x.Password)
-            .NotEmpty().WithMessage(_helper.PASSWORD_IS_REQUIRED)
-            .MinimumLength(6).WithMessage(_helper.PASSWORD_MIN_LENGTH);
+            .NotEmpty()
+            .WithMessage(_helper.PASSWORD_IS_REQUIRED_MSG)
+
+            .MinimumLength(_helper.PASSWORD_MIN_LENGTH_VALUE)
+            .WithMessage(_helper.PASSWORD_MIN_LENGTH_MSG);
 
         RuleFor(x => x.DocumentNumber)
-            .NotEmpty().WithMessage(_helper.DOCUMENT_NUMBER_IS_REQUIRED)
-            .MinimumLength(5).WithMessage(_helper.DOCUMENT_NUMBER_MIN_LENGTH);
+            .NotEmpty()
+            .WithMessage(_helper.DOCUMENT_NUMBER_IS_REQUIRED_MSG)
+
+            .MinimumLength(_helper.DOCUMENT_NUMBER_MIN_LENGTH_VALUE)
+            .WithMessage(_helper.DOCUMENT_NUMBER_MIN_LENGTH_MSG);
     }
 }
