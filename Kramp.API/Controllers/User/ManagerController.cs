@@ -7,7 +7,7 @@ using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kramp.API.Controllers
+namespace Kramp.API.Controllers.User
 {
     [Route("api/managers")]
     [ApiController]

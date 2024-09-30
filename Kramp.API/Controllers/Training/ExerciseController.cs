@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;
 
-namespace Kramp.API.Controllers
+namespace Kramp.API.Controllers.Training
 {
     [Route("api/[controller]")]
     [ApiController]
