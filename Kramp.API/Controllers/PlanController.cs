@@ -13,6 +13,7 @@ namespace Kramp.API.Controllers;
 public class PlanController(IMediator _mediator, PlanRepository _repository, IMapper _mapper) : ControllerBase
 {
     #region POST
+
     [HttpPost("Create/Simple")]
     public async Task<ActionResult<SimplePlanViewModel>> CreateSimple(CreateSimplePlanCommand command)
     {
@@ -36,9 +37,11 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     {
         throw new NotImplementedException();
     }
+
     #endregion
 
     #region GET
+
     [HttpGet("All/Simple")]
     public async Task<ActionResult<IEnumerable<SimplePlanViewModel>>> GetAllPlans()
     {
@@ -80,13 +83,15 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     }
 
     [HttpGet("All/Simple/Page")]
-    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans([FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
     [HttpGet("All/Details/Page")]
-    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail([FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
@@ -96,9 +101,11 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     {
         throw new NotImplementedException();
     }
+
     #endregion
 
-    #region PUT 
+    #region PUT
+
     [HttpPut("Update/{Id:guid}")]
     public async Task<ActionResult<SimplePlanViewModel>> Update(Guid Id, UpdateSimplePlanCommand command)
     {
@@ -111,9 +118,11 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     {
         throw new NotImplementedException();
     }
+
     #endregion
 
     #region DELETE
+
     [HttpDelete("Delete/{Id:guid}")]
     public async Task<ActionResult> DeleteById(Guid Id)
     {
@@ -133,5 +142,6 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
     {
         throw new NotImplementedException();
     }
+
     #endregion
 }

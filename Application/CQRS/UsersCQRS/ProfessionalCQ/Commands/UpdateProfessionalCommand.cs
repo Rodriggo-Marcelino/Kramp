@@ -7,7 +7,9 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
 
-public record UpdateProfessionalCommand : UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalInfoViewModel>, IRequest<ResponseBase<ProfessionalInfoViewModel>>
+public record UpdateProfessionalCommand :
+    UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalInfoViewModel>,
+    IRequest<ResponseBase<ProfessionalInfoViewModel>>
 {
     public UpdateProfessionalCommand(Guid id, UpdateProfessionalDTO data) : base(id, data)
     {

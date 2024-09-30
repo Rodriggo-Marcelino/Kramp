@@ -19,7 +19,8 @@ public class UpdateGymCommandHandler : IRequestHandler<UpdateGymCommand, Respons
         _mapper = mapper;
     }
 
-    public async Task<ResponseBase<GymInfoViewModel>> Handle(UpdateGymCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseBase<GymInfoViewModel>> Handle(UpdateGymCommand request,
+        CancellationToken cancellationToken)
     {
         Gym? oldGym = await _repository.GetByIdAsync(request.Id);
 

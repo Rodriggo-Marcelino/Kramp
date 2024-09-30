@@ -13,6 +13,7 @@ namespace Kramp.API.Controllers;
 public class WorkoutController(IMediator _mediator, WorkoutRepository _repository, IMapper _mapper) : ControllerBase
 {
     #region POST
+
     [HttpPost("Create/Simple")]
     public async Task<ActionResult<SimpleWorkoutViewModel>> CreateSimple(CreateSimpleWorkoutCommand command)
     {
@@ -36,9 +37,11 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     {
         throw new NotImplementedException();
     }
+
     #endregion
 
     #region GET
+
     [HttpGet("All/Simple")]
     public async Task<ActionResult<IEnumerable<SimpleWorkoutViewModel>>> GetAllSimpleWorkouts()
     {
@@ -54,13 +57,15 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     }
 
     [HttpGet("All/Simple/Page")]
-    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable(
+        [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
     [HttpGet("All/Details/Page")]
-    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(
+        [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
@@ -96,9 +101,11 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     {
         throw new NotImplementedException();
     }
+
     #endregion
 
     #region PUT
+
     [HttpPut("Update/{Id:guid}")]
     public async Task<ActionResult<SimpleWorkoutViewModel>> Update(Guid Id, UpdateSimpleWorkoutCommand command)
     {
@@ -111,9 +118,11 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
     {
         throw new NotImplementedException();
     }
+
     #endregion
 
     #region DELETE
+
     [HttpDelete("Delete/{Id:guid}")]
     public async Task<ActionResult> DeleteById(Guid Id)
     {

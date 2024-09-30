@@ -8,8 +8,8 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Validators
         public CreateGymCommandValidator()
         {
             RuleFor(x => x.Name)
-               .NotEmpty().WithMessage("O nome é obrigatório.")
-               .MinimumLength(2).WithMessage("O nome deve ter no mínimo 2 caracteres.");
+                .NotEmpty().WithMessage("O nome é obrigatório.")
+                .MinimumLength(2).WithMessage("O nome deve ter no mínimo 2 caracteres.");
 
             RuleFor(x => x.Description)
                 .MaximumLength(244).WithMessage("Descrição deve ter no máximo 244 caracteres.");
@@ -25,6 +25,5 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Validators
                 .NotEmpty().WithMessage("O número do documento é obrigatório.")
                 .MinimumLength(5).WithMessage("O número do documento deve ter no mínimo 5 caracteres.");
         }
-
     }
 }

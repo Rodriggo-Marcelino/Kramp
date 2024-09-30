@@ -9,14 +9,16 @@ using Services.Repositories;
 
 namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Handlers
 {
-    public class CreateProfessionalCommandHandler : IRequestHandler<CreateProfessionalCommand, ResponseBase<ProfessionalInfoViewModel?>>
+    public class
+        CreateProfessionalCommandHandler : IRequestHandler<CreateProfessionalCommand,
+        ResponseBase<ProfessionalInfoViewModel?>>
     {
-
         private readonly IAuthService _authService;
         private readonly ProfessionalRepository _repository;
         private readonly IMapper _mapper;
 
-        public CreateProfessionalCommandHandler(IAuthService authService, ProfessionalRepository repository, IMapper mapper)
+        public CreateProfessionalCommandHandler(IAuthService authService, ProfessionalRepository repository,
+            IMapper mapper)
         {
             _authService = authService;
             _repository = repository;
@@ -24,7 +26,7 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Handlers
         }
 
         public async Task<ResponseBase<ProfessionalInfoViewModel?>> Handle(CreateProfessionalCommand request,
-                                                      CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             Professional? professional = _mapper.Map<Professional>(request);
             professional.PasswordHash = request.Data.Password;
@@ -35,7 +37,8 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Handlers
             await _repository.AddAsync(professional);
 
             ProfessionalInfoViewModel professionalInfoVm = _mapper.Map<ProfessionalInfoViewModel>(professional);
-            professionalInfoVm.TokenJWT = _authService.GenerateJWT(professional.DocumentNumber!, professional.Username!);
+            professionalInfoVm.TokenJWT =
+                _authService.GenerateJWT(professional.DocumentNumber!, professional.Username!);
 
             return new ResponseBase<ProfessionalInfoViewModel?>
             {
@@ -43,7 +46,5 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Handlers
                 Value = professionalInfoVm
             };
         }
-
-
     }
 }

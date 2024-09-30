@@ -23,7 +23,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Handlers
         }
 
         public async Task<ResponseBase<GymInfoViewModel?>> Handle(CreateGymCommand request,
-                                                   CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             Gym gym = _mapper.Map<Gym>(request);
             gym.PasswordHash = request.Password;

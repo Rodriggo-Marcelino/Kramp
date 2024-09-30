@@ -23,7 +23,7 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Handlers
         }
 
         public async Task<ResponseBase<MemberInfoViewModel>> Handle(CreateMemberCommand request,
-                                                      CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             Member member = _mapper.Map<Member>(request);
             member.PasswordHash = request.Data.Password;

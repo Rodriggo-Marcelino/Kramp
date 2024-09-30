@@ -21,6 +21,7 @@ namespace Application.Mapping
         public ProfileMappings()
         {
             #region Manager Mappings
+
             CreateMap<CreateUserDTO, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -33,9 +34,11 @@ namespace Application.Mapping
 
             CreateMap<Manager, UserViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
+
             #endregion
 
             #region Gym Mappings
+
             CreateMap<CreateGymCommand, Gym>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -48,9 +51,11 @@ namespace Application.Mapping
 
             CreateMap<Gym, GymInfoViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
+
             #endregion
 
             #region Member Mappings
+
             CreateMap<CreateMemberCommand, Member>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -63,9 +68,11 @@ namespace Application.Mapping
 
             CreateMap<Member, MemberInfoViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
+
             #endregion
 
             #region Professional Mappings
+
             CreateMap<CreateProfessionalCommand, Professional>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -78,9 +85,11 @@ namespace Application.Mapping
 
             CreateMap<Professional, ProfessionalInfoViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
+
             #endregion
 
             #region Workout Mappings
+
             CreateMap<CreateSimpleWorkoutCommand, Workout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Exercises, opt => opt.Ignore())
@@ -102,9 +111,11 @@ namespace Application.Mapping
                 .ReverseMap();
 
             CreateMap<Workout, CompleteWorkoutViewModel>().ReverseMap();
+
             #endregion
 
             #region Plan Mappings
+
             CreateMap<CreateSimplePlanCommand, Plan>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
@@ -121,8 +132,8 @@ namespace Application.Mapping
                 .ReverseMap();
 
             CreateMap<Plan, CompletePlanViewModel>().ReverseMap();
+
             #endregion
         }
-
     }
 }

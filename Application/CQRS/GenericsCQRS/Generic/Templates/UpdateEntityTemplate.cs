@@ -25,7 +25,8 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
             _mapper = mapper;
         }
 
-        public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request, CancellationToken cancellationToken)
+        public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request,
+            CancellationToken cancellationToken)
         {
             return await this.ExecuteAsync(request);
         }
@@ -51,11 +52,15 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
 
         protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => _mapper.Map(data, entity);
 
-        protected virtual void ManipulateEntityBeforeUpdate(TEntity entity) { }
+        protected virtual void ManipulateEntityBeforeUpdate(TEntity entity)
+        {
+        }
 
         protected virtual async Task UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
 
-        protected virtual void ManipulateEntityAfterUpdate(TEntity entity) { }
+        protected virtual void ManipulateEntityAfterUpdate(TEntity entity)
+        {
+        }
 
         protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
         {

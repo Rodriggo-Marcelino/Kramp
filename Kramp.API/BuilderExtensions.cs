@@ -53,7 +53,6 @@ namespace Kramp.API
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-
         }
 
         public static void AddJwtAuth(this WebApplicationBuilder builder)
@@ -70,10 +69,8 @@ namespace Kramp.API
                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
                         ValidAudience = builder.Configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
-
                     };
                 });
-
         }
 
         public static void AddServices(this WebApplicationBuilder builder)
@@ -84,19 +81,21 @@ namespace Kramp.API
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
                 options.JsonSerializerOptions.WriteIndented = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-
             });
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddMediatR(config =>
-            config.RegisterServicesFromAssemblyContaining<
-                CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>>()
-                );
+                config.RegisterServicesFromAssemblyContaining<
+                    CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                        CreateUserDTO, UserViewModel, ManagerRepository>>()
+            );
         }
+
         public static void AddDatabase(this WebApplicationBuilder builder)
         {
             var configuration = builder.Configuration;
-            builder.Services.AddDbContext<KrampDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<KrampDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         }
 
         public static void AddAutoMapper(this WebApplicationBuilder builder)
@@ -108,12 +107,14 @@ namespace Kramp.API
         {
             var services = builder.Services;
 
-            RegisterCqrs<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
+            RegisterCqrs<CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                    CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterCqrs<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
+            RegisterCqrs<UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
+                    UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerTemplate,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
                 UserViewModel>(services);
@@ -122,12 +123,14 @@ namespace Kramp.API
                 DeleteManagerTemplate,
                 DeleteEntityCommand<Manager>>(services);
 
-            RegisterCqrs<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+            RegisterCqrs<GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel,
+                    ManagerRepository>,
                 GetManagerByIdTemplate,
                 GetEntityByIdQuery<UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterIEnumerableCqrs<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+            RegisterIEnumerableCqrs<GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel,
+                    ManagerRepository>,
                 GetAllManagersTemplate,
                 GetAllEntitiesQuery<UserViewModel>,
                 UserViewModel>(services);
@@ -142,7 +145,8 @@ namespace Kramp.API
             services.AddScoped(typeof(TFromTemplate), typeof(TTemplate));
         }
 
-        private static void RegisterIEnumerableCqrs<TFromTemplate, TTemplate, TCommand, TViewModel>(IServiceCollection? services)
+        private static void RegisterIEnumerableCqrs<TFromTemplate, TTemplate, TCommand, TViewModel>(
+            IServiceCollection? services)
             where TFromTemplate : IRequestHandler<TCommand, ResponseBase<IEnumerable<TViewModel>>>
             where TTemplate : TFromTemplate
             where TCommand : IRequest<ResponseBase<IEnumerable<TViewModel>>>

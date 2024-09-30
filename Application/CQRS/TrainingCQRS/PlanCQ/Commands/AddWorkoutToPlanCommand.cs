@@ -7,8 +7,7 @@ namespace Application.CQRS.TrainingCQRS.PlanCQ.Commands
 {
     public record AddWorkoutToPlanCommand : IRequest<ResponseBase<PlanWorkoutViewModel>>
     {
-        [JsonIgnore]
-        public Guid PlanId { get; set; }
+        [JsonIgnore] public Guid PlanId { get; set; }
         public Guid WorkoutId { get; set; }
     }
 }

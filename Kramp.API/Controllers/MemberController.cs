@@ -12,7 +12,6 @@ namespace Kramp.API.Controllers
     [ApiController]
     public class MemberController(IMediator _mediator, MemberRepository _repository, IMapper _mapper) : ControllerBase
     {
-
         [HttpPost("Create")]
         public async Task<ActionResult<MemberInfoViewModel>> Create(CreateMemberCommand command)
         {

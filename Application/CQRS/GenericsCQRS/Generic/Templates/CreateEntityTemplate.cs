@@ -43,21 +43,27 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, 
         return CreateResponse(entity);
     }
 
-    protected virtual void ManipulateRequest(TCommand request) { }
+    protected virtual void ManipulateRequest(TCommand request)
+    {
+    }
 
     protected virtual TEntity MapCommandToEntity(TDTO request)
     {
         return _mapper.Map<TEntity>(request);
     }
 
-    protected virtual void ManipulateEntityBeforeSave(TDTO request, TEntity entity) { }
+    protected virtual void ManipulateEntityBeforeSave(TDTO request, TEntity entity)
+    {
+    }
 
     protected virtual Task SaveEntityAsync(TEntity entity)
     {
         return _repository.AddAsync(entity);
     }
 
-    protected virtual void ManipulateEntityAfterSave(TEntity entity) { }
+    protected virtual void ManipulateEntityAfterSave(TEntity entity)
+    {
+    }
 
     protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
     {

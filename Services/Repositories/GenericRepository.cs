@@ -18,6 +18,7 @@ namespace Services.Repositories
         }
 
         #region Repository READ
+
         public async Task<IEnumerable<T?>> GetAllAsync()
         {
             return await _dbSet.Where(entity => !entity.Deleted).ToListAsync();
@@ -30,7 +31,8 @@ namespace Services.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, int page, int pageSize)
+        public async Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, int page,
+            int pageSize)
         {
             return await orderBy(_dbSet)
                 .Where(entity => !entity.Deleted)
@@ -75,9 +77,11 @@ namespace Services.Repositories
         {
             return await _dbSet.Where(entity => !entity.Deleted).CountAsync();
         }
+
         #endregion
 
         #region Repository CREATE
+
         public async Task<T?> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -93,11 +97,14 @@ namespace Services.Repositories
                 await _context.SaveChangesAsync();
                 return entities;
             }
+
             return null;
         }
+
         #endregion
 
         #region Repository UPDATE
+
         public async Task<T?> UpdateAsync(T entity)
         {
             entity.MarkAsUpdated();
@@ -114,15 +121,19 @@ namespace Services.Repositories
                 {
                     entity.MarkAsUpdated();
                 }
+
                 _dbSet.UpdateRange(entities);
                 await _context.SaveChangesAsync();
                 return entities;
             }
+
             return null;
         }
+
         #endregion
 
         #region Repository DELETE (Logic)
+
         public async Task DeleteAsync(T entity)
         {
             entity.MarkAsDeleted();
@@ -135,6 +146,7 @@ namespace Services.Repositories
             {
                 entity?.MarkAsDeleted();
             }
+
             await UpdateAsync(entities);
         }
 
@@ -152,6 +164,7 @@ namespace Services.Repositories
             var entities = await FindAllByIdAsync(ids);
             await DeleteAsync(entities);
         }
+
         #endregion
     }
 }

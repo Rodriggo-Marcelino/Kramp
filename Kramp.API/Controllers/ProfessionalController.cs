@@ -10,9 +10,9 @@ namespace Kramp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProfessionalController(IMediator _mediator, ProfessionalRepository _repository, IMapper _mapper) : ControllerBase
+    public class ProfessionalController(IMediator _mediator, ProfessionalRepository _repository, IMapper _mapper)
+        : ControllerBase
     {
-
         [HttpPost("Create")]
         public async Task<ActionResult<ProfessionalInfoViewModel>> Create(CreateProfessionalCommand command)
         {

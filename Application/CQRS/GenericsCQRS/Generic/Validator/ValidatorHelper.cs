@@ -15,7 +15,9 @@
         public string DOCUMENT_NUMBER_IS_REQUIRED = "O número do documento é obrigatório.";
         public string DOCUMENT_NUMBER_MIN_LENGTH = "O número do documento deve ter no mínimo 5 caracteres.";
 
-        public ValidatorHelper() { }
+        public ValidatorHelper()
+        {
+        }
 
         public bool BeAtLeast18YearsOld(DateTime birthDate)
         {

@@ -7,7 +7,8 @@ using MediatR;
 
 namespace Application.CQRS.UsersCQRS.MemberCQ.Commands
 {
-    public record CreateMemberCommand : CreateEntityCommand<Member, CreateUserDTO, MemberInfoViewModel>, IRequest<ResponseBase<MemberInfoViewModel>>
+    public record CreateMemberCommand : CreateEntityCommand<Member, CreateUserDTO, MemberInfoViewModel>,
+        IRequest<ResponseBase<MemberInfoViewModel>>
     {
         public CreateMemberCommand(CreateUserDTO data) : base(data)
         {

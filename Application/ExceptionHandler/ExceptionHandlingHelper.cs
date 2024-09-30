@@ -39,11 +39,11 @@ namespace Application.ExceptionHandler
                 Title = reasonPhrase,
                 Detail = exception.ToString(),
                 Extensions =
-            {
-                [nameof(errorCode)] = errorCode,
-                ["traceId"] = httpContext.TraceIdentifier,
-                ["data"] = exception.Data
-            }
+                {
+                    [nameof(errorCode)] = errorCode,
+                    ["traceId"] = httpContext.TraceIdentifier,
+                    ["data"] = exception.Data
+                }
             };
 
             return problemDetails;
@@ -63,6 +63,5 @@ namespace Application.ExceptionHandler
 
             return string.Empty;
         }
-
     }
 }

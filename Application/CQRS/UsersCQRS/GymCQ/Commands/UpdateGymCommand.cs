@@ -7,8 +7,7 @@ namespace Application.CQRS.UsersCQRS.GymCQ.Commands;
 
 public class UpdateGymCommand : IRequest<ResponseBase<GymInfoViewModel>>
 {
-    [JsonIgnore]
-    public Guid Id { get; set; }
+    [JsonIgnore] public Guid Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
     public string? Username { get; set; }

@@ -9,7 +9,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Handlers
 {
-    public class CreateCompleteWorkoutCommandHandler : IRequestHandler<CreateCompleteWorkoutCommand, ResponseBase<CompleteWorkoutViewModel?>>
+    public class CreateCompleteWorkoutCommandHandler : IRequestHandler<CreateCompleteWorkoutCommand,
+        ResponseBase<CompleteWorkoutViewModel?>>
     {
         private readonly IAuthService _authService;
         private readonly WorkoutRepository _repository;
@@ -18,13 +19,13 @@ namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Handlers
         private readonly IMapper _mapper;
 
         public CreateCompleteWorkoutCommandHandler
-            (
+        (
             IAuthService authService,
             WorkoutRepository repository,
             IMapper mapper,
             WorkoutExerciseRepository workoutExerciseRepository,
             ExerciseRepository exerciseRepository
-            )
+        )
         {
             _authService = authService;
             _repository = repository;
@@ -33,7 +34,8 @@ namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Handlers
             _exerciseRepository = exerciseRepository;
         }
 
-        public async Task<ResponseBase<CompleteWorkoutViewModel?>> Handle(CreateCompleteWorkoutCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseBase<CompleteWorkoutViewModel?>> Handle(CreateCompleteWorkoutCommand request,
+            CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

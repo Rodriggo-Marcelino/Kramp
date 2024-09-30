@@ -9,7 +9,9 @@ using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Handlers;
 
-public class CreateSimpleWorkoutCommandHandler : IRequestHandler<CreateSimpleWorkoutCommand, ResponseBase<SimpleWorkoutViewModel?>>
+public class
+    CreateSimpleWorkoutCommandHandler : IRequestHandler<CreateSimpleWorkoutCommand,
+    ResponseBase<SimpleWorkoutViewModel?>>
 {
     private readonly IAuthService _authService;
     private readonly WorkoutRepository _repository;
@@ -18,13 +20,13 @@ public class CreateSimpleWorkoutCommandHandler : IRequestHandler<CreateSimpleWor
     private readonly IMapper _mapper;
 
     public CreateSimpleWorkoutCommandHandler
-        (
+    (
         IAuthService authService,
         WorkoutRepository repository,
         IMapper mapper,
         WorkoutExerciseRepository workoutExerciseRepository,
         ExerciseRepository exerciseRepository
-        )
+    )
     {
         _authService = authService;
         _repository = repository;
@@ -33,7 +35,8 @@ public class CreateSimpleWorkoutCommandHandler : IRequestHandler<CreateSimpleWor
         _exerciseRepository = exerciseRepository;
     }
 
-    public async Task<ResponseBase<SimpleWorkoutViewModel?>> Handle(CreateSimpleWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseBase<SimpleWorkoutViewModel?>> Handle(CreateSimpleWorkoutCommand request,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

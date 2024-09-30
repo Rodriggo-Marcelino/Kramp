@@ -9,7 +9,9 @@ using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Handlers;
 
-public class UpdateSimpleWorkoutCommandHandler : IRequestHandler<UpdateSimpleWorkoutCommand, ResponseBase<SimpleWorkoutViewModel>>
+public class
+    UpdateSimpleWorkoutCommandHandler : IRequestHandler<UpdateSimpleWorkoutCommand,
+    ResponseBase<SimpleWorkoutViewModel>>
 {
     private readonly WorkoutRepository _repository;
     private readonly ExerciseRepository _exerciseRepository;
@@ -28,12 +30,14 @@ public class UpdateSimpleWorkoutCommandHandler : IRequestHandler<UpdateSimpleWor
         _workoutExerciseRepository = workoutExerciseRepository;
     }
 
-    public async Task<ResponseBase<SimpleWorkoutViewModel>> Handle(UpdateSimpleWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseBase<SimpleWorkoutViewModel>> Handle(UpdateSimpleWorkoutCommand request,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
-    private async Task<List<WorkoutExercise>> SaveAllWorkoutExercises(IEnumerable<Exercise> exercises, Workout newWorkout)
+    private async Task<List<WorkoutExercise>> SaveAllWorkoutExercises(IEnumerable<Exercise> exercises,
+        Workout newWorkout)
     {
         List<WorkoutExercise> workoutExercises = new List<WorkoutExercise>();
         foreach (Exercise exercise in exercises)
@@ -52,6 +56,7 @@ public class UpdateSimpleWorkoutCommandHandler : IRequestHandler<UpdateSimpleWor
 
             await _workoutExerciseRepository.AddAsync(workoutExercises.Last());
         }
+
         return workoutExercises;
     }
 

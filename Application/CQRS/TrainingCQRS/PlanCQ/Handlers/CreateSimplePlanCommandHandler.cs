@@ -8,7 +8,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.PlanCQ.Handlers;
 
-public class CreateSimplePlanCommandHandler : IRequestHandler<CreateSimplePlanCommand, ResponseBase<SimplePlanViewModel?>>
+public class
+    CreateSimplePlanCommandHandler : IRequestHandler<CreateSimplePlanCommand, ResponseBase<SimplePlanViewModel?>>
 {
     private readonly IAuthService _authService;
     private readonly PlanRepository _repository;

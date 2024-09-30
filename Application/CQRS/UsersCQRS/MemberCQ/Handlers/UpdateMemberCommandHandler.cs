@@ -19,7 +19,8 @@ public class UpdateMemberCommandHandler : IRequestHandler<UpdateMemberCommand, R
         _mapper = mapper;
     }
 
-    public async Task<ResponseBase<MemberInfoViewModel>> Handle(UpdateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseBase<MemberInfoViewModel>> Handle(UpdateMemberCommand request,
+        CancellationToken cancellationToken)
     {
         Member? oldMember = await _repository.GetByIdAsync(request.Id);
 

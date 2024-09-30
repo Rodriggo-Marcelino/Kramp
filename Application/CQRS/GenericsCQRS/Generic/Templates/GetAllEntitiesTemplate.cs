@@ -24,7 +24,8 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
             _mapper = mapper;
         }
 
-        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TQuery request, CancellationToken cancellationToken)
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TQuery request,
+            CancellationToken cancellationToken)
         {
             return await this.GetAllAsync();
         }

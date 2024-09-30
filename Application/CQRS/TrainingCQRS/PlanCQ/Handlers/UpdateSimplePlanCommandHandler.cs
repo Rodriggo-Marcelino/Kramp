@@ -7,7 +7,8 @@ using Services.Repositories;
 
 namespace Application.CQRS.TrainingCQRS.PlanCQ.Handlers;
 
-public class UpdateSimplePlanCommandHandler : IRequestHandler<UpdateSimplePlanCommand, ResponseBase<SimplePlanViewModel>>
+public class
+    UpdateSimplePlanCommandHandler : IRequestHandler<UpdateSimplePlanCommand, ResponseBase<SimplePlanViewModel>>
 {
     private readonly PlanRepository _repository;
     private readonly WorkoutRepository _workoutRepository;
@@ -26,7 +27,8 @@ public class UpdateSimplePlanCommandHandler : IRequestHandler<UpdateSimplePlanCo
         _planWorkoutRepository = planWorkoutRepository;
     }
 
-    public async Task<ResponseBase<SimplePlanViewModel>> Handle(UpdateSimplePlanCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseBase<SimplePlanViewModel>> Handle(UpdateSimplePlanCommand request,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
