@@ -6,8 +6,6 @@ using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.CQRS.UsersCQRS.GymCQ.DTOs;
 using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
-using Application.CQRS.UsersCQRS.MemberCQ.Commands;
-using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.Commands;
 using Application.CQRS.UsersCQRS.ProfessionalCQ.ViewModels;
 using AutoMapper;
@@ -56,17 +54,17 @@ namespace Application.Mapping
 
             #region Member Mappings
 
-            CreateMap<CreateMemberCommand, Member>()
+            CreateMap<CreateUserDTO, Member>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-            CreateMap<UpdateMemberCommand, Member>()
+            CreateMap<CreateUserDTO, Member>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<Member, MemberInfoViewModel>()
+            CreateMap<Member, UserViewModel>()
                 .ForMember(x => x.TokenJWT, x => x.AllowNull());
 
             #endregion

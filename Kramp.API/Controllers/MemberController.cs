@@ -1,54 +1,53 @@
-﻿using Application.CQRS.UsersCQRS.MemberCQ.Commands;
-using Application.CQRS.UsersCQRS.MemberCQ.ViewModels;
-using AutoMapper;
+﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.GenericsCQRS.User.Commands;
+using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
 
 namespace Kramp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/members")]
     [ApiController]
-    public class MemberController(IMediator _mediator, MemberRepository _repository, IMapper _mapper) : ControllerBase
+    public class MemberController(IMediator _mediator) : ControllerBase
     {
-        [HttpPost("Create")]
-        public async Task<ActionResult<MemberInfoViewModel>> Create(CreateMemberCommand command)
+        [HttpPost]
+        public async Task<ActionResult<UserViewModel>> CreateMember(CreateUserDTO data)
         {
+            var command = new CreateEntityCommand<Member, CreateUserDTO, UserViewModel>(data);
             return Created("", await _mediator.Send(command));
         }
 
-        [HttpGet("All")]
-        public async Task<ActionResult<MemberInfoViewModel>> GetAllMembers()
+        [HttpGet("all")]
+        public async Task<ActionResult<UserViewModel>> GetAllMembers()
         {
-            var members = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<MemberInfoViewModel>>(members));
+            var query = new GetAllEntitiesQuery<UserViewModel>();
+            var members = await _mediator.Send(query);
+            return Ok(members);
         }
 
-        [HttpGet("{Id:guid}")]
-        public async Task<ActionResult<MemberInfoViewModel>> GetMemberById(Guid Id)
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<UserViewModel>> GetMemberById(Guid id)
         {
-            Member? member = await _repository.GetByIdAsync(Id);
-
-            if (member == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<MemberInfoViewModel>(member));
+            var query = new GetEntityByIdQuery<UserViewModel>(id);
+            var member = await _mediator.Send(query);
+            return Ok(member);
         }
 
-        [HttpPut("Update")]
-        public async Task<ActionResult<MemberInfoViewModel>> Update(Guid Id, UpdateMemberCommand command)
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<UserViewModel>> UpdateMember(Guid id, UpdateUserDTO data)
         {
-            command.Id = Id;
-            return Ok(await _mediator.Send(command));
+            var command = new UpdateEntityCommand<Member, UpdateUserDTO, UserViewModel>(id, data);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
-        [HttpDelete("Delete/{Id:guid}")]
-        public async Task<ActionResult<MemberInfoViewModel>> DeleteById(Guid Id)
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> DeleteMember(Guid id)
         {
-            await _repository.DeleteByIdAsync(Id);
+            var command = new DeleteEntityCommand<Member>(id);
+            await _mediator.Send(command);
             return NoContent();
         }
     }
