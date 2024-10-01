@@ -48,6 +48,13 @@ namespace Services.Repositories
                 .Where(entity => !entity.Deleted)
                 .ToListAsync();
         }
+        
+        public async Task<IEnumerable<T?>> FindAllByIdAsync(IEnumerable<Guid> ids)
+        {
+            return await _dbSet
+                .Where(entity => ids.Contains(entity.Id) && !entity.Deleted)
+                .ToListAsync();
+        }
 
         public async Task<T?> GetByIdAsync(Guid id)
         {
@@ -58,13 +65,6 @@ namespace Services.Repositories
             }
 
             return entity;
-        }
-
-        public async Task<IEnumerable<T?>> FindAllByIdAsync(IEnumerable<Guid> ids)
-        {
-            return await _dbSet
-                .Where(entity => ids.Contains(entity.Id) && !entity.Deleted)
-                .ToListAsync();
         }
 
         public async Task<bool> ExistsById(Guid id)

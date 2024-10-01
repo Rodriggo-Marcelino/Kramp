@@ -6,7 +6,7 @@ using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
-namespace Application.CQRS.GenericsCQRS.Generic.Templates
+namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
     public abstract class GetEntityByIdHandler<TEntity, TQuery, TViewModel, TRepository>(
         TRepository repository,

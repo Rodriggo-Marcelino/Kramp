@@ -1,5 +1,6 @@
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Validators;
 
-public class CreateWorkoutCommandValidator
+public class AddExerciseToWorkoutValidator
 {
+    
 }
