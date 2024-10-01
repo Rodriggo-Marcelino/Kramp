@@ -1,6 +1,8 @@
-﻿namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels
+﻿using Application.CQRS.GenericsCQRS.Generic.ViewModel;
+
+namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels
 {
-    public record WorkoutExerciseViewModel
+    public record WorkoutExerciseViewModel : GenericViewModelBase
     {
         public Guid ExerciseId { get; set; }
         public ExerciseViewModel Exercise { get; set; }

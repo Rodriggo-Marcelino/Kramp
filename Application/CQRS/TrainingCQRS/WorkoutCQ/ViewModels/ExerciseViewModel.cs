@@ -1,8 +1,9 @@
-﻿using Domain.Entity.Enum;
+﻿using Application.CQRS.GenericsCQRS.Generic.ViewModel;
+using Domain.Entity.Enum;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels
 {
-    public record ExerciseViewModel
+    public record ExerciseViewModel : GenericViewModelBase
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
