@@ -1,13 +1,14 @@
-﻿using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+﻿using System.Text.Json.Serialization;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.Response;
 using MediatR;
-using System.Text.Json.Serialization;
 
-namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Commands
+namespace Application.CQRS.TrainingCQRS.WorkoutCQ.DTOs
 {
-    public record UpdateWorkoutExerciseCommand : IRequest<ResponseBase<WorkoutExerciseViewModel?>>
+    public record UpdateExerciseInWorkoutDTO
     {
-        [JsonIgnore] public Guid Id { get; set; }
+        [JsonIgnore] 
+        public Guid Id { get; set; }
         public Guid WorkoutId { get; set; }
         public Guid ExerciseId { get; set; }
         public int RestTimeInSeconds { get; set; }
