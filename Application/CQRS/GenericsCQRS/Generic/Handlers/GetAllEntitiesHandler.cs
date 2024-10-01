@@ -1,4 +1,5 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.Queries;
+﻿using System.Linq.Expressions;
+using Application.CQRS.GenericsCQRS.Generic.Queries;
 using Application.CQRS.GenericsCQRS.Generic.ViewModel;
 using Application.Response;
 using AutoMapper;
@@ -6,7 +7,7 @@ using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
-namespace Application.CQRS.GenericsCQRS.Generic.Templates
+namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
     public abstract class GetAllEntitiesHandler<TEntity, TQuery, TViewModel, TRepository>(
         TRepository repository,
@@ -26,6 +27,36 @@ namespace Application.CQRS.GenericsCQRS.Generic.Templates
         public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> GetAllAsync()
         {
             IEnumerable<TEntity> entities = await repository.GetAllAsync();
+            var viewModels = mapper.Map<IEnumerable<TViewModel>>(entities);
+            return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModels);
+        }
+        
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> GetAllAsync
+            (Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
+        {
+            IEnumerable<TEntity> entities = await repository.GetAllAsync(orderBy);
+            var viewModels = mapper.Map<IEnumerable<TViewModel>>(entities);
+            return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModels);
+        }
+        
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> GetAllAsync
+            (Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int page, int pageSize)
+        {
+            IEnumerable<TEntity> entities = await repository.GetAllAsync(orderBy, page, pageSize);
+            var viewModels = mapper.Map<IEnumerable<TViewModel>>(entities);
+            return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModels);
+        }
+        
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> FindAllAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            IEnumerable<TEntity> entities = await repository.FindAllAsync(predicate);
+            var viewModels = mapper.Map<IEnumerable<TViewModel>>(entities);
+            return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModels);
+        }
+        
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> FindAllByIdAsync(IEnumerable<Guid> ids)
+        {
+            IEnumerable<TEntity> entities = await repository.FindAllByIdAsync(ids);
             var viewModels = mapper.Map<IEnumerable<TViewModel>>(entities);
             return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModels);
         }
