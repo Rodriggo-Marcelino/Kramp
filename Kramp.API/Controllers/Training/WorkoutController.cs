@@ -1,39 +1,43 @@
-using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Commands;
+using Application.CQRS.GenericsCQRS.Generic.Queries;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.DTOs;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
-using AutoMapper;
 using Domain.Entity.Training;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
 
 namespace Kramp.API.Controllers.Training;
 
-[Route("api/[controller]")]
+[Route("api/workouts")]
 [ApiController]
-public class WorkoutController(IMediator _mediator, WorkoutRepository _repository, IMapper _mapper) : ControllerBase
+public class WorkoutController(IMediator _mediator) : ControllerBase
 {
     #region POST
 
-    [HttpPost("Create/Simple")]
-    public async Task<ActionResult<SimpleWorkoutViewModel>> CreateSimple(CreateSimpleWorkoutCommand command)
+    [HttpPost("simple")]
+    public async Task<ActionResult<SimpleWorkoutViewModel>> CreateSimpleWorkout(CreateSimpleWorkoutDTO data)
     {
-        return Created("", await _mediator.Send(command));
+        var command = new CreateEntityCommand<Workout, CreateSimpleWorkoutDTO, SimpleWorkoutViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("api/workouts/simple", result);
     }
 
-    [HttpPost("Create/Details")]
-    public async Task<ActionResult<CompleteWorkoutViewModel>> CreateComplete(CreateCompleteWorkoutCommand command)
+    [HttpPost("details")]
+    public async Task<ActionResult<CompleteWorkoutViewModel>> CreateCompleteWorkout(CreateCompleteWorkoutDTO data)
     {
-        return Created("", await _mediator.Send(command));
+        var command = new CreateEntityCommand<Workout, CreateCompleteWorkoutDTO, CompleteWorkoutViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("api/workouts/details", result);
     }
 
-    [HttpPost("{workoutId:guid}/Exercises")]
-    public async Task<IActionResult> AddExerciseToWorkout(Guid workoutId, AddExerciseToWorkoutCommand command)
+    [HttpPost("{workoutId:guid}/exercises")]
+    public async Task<IActionResult> AddExerciseToWorkout(Guid workoutId, AddExerciseToWorkoutDTO data)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("{workoutId:guid}/Exercises/List")]
-    public async Task<IActionResult> AddListExerciseToWorkout(Guid workoutId, List<AddExerciseToWorkoutCommand> command)
+    [HttpPost("{workoutId:guid}/exercises/list")]
+    public async Task<IActionResult> AddListOfExercisesToWorkout(Guid workoutId, List<AddExerciseToWorkoutDTO> data)
     {
         throw new NotImplementedException();
     }
@@ -42,62 +46,58 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
 
     #region GET
 
-    [HttpGet("All/Simple")]
+    [HttpGet("simple/all")]
     public async Task<ActionResult<IEnumerable<SimpleWorkoutViewModel>>> GetAllSimpleWorkouts()
     {
-        var workouts = await _repository.GetAllAsync();
-        return Ok(_mapper.Map<IEnumerable<SimpleWorkoutViewModel>>(workouts));
+        var query = new GetAllEntitiesQuery<SimpleWorkoutViewModel>();
+        var workouts = await _mediator.Send(query);
+        return Ok(workouts);
     }
 
-    [HttpGet("All/Details")]
+    [HttpGet("details/all")]
     public async Task<ActionResult<IEnumerable<CompleteWorkoutViewModel>>> GetAllCompleteWorkouts()
     {
-        var workouts = await _repository.GetAllAsync();
-        return Ok(_mapper.Map<IEnumerable<CompleteWorkoutViewModel>>(workouts));
+        var query = new GetAllEntitiesQuery<CompleteWorkoutViewModel>();
+        var workouts = await _mediator.Send(query);
+        return Ok(workouts);
     }
 
-    [HttpGet("All/Simple/Page")]
-    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable(
+    [HttpGet("simple/all/page")]
+    public async Task<ActionResult<IEnumerable<SimpleWorkoutViewModel>>> GetAllSimpleWorkoutsPageable(
         [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        throw new NotImplementedException();
+        var query = new GetAllEntitiesQuery<SimpleWorkoutViewModel>(pageNumber, pageSize);
+        var workouts = await _mediator.Send(query);
+        return Ok(workouts);
     }
 
-    [HttpGet("All/Details/Page")]
-    public async Task<ActionResult<List<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(
+    [HttpGet("details/all/page")]
+    public async Task<ActionResult<IEnumerable<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(
         [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        throw new NotImplementedException();
+        var query = new GetAllEntitiesQuery<CompleteWorkoutViewModel>(pageNumber, pageSize);
+        var workouts = await _mediator.Send(query);
+        return Ok(workouts);
     }
 
-    [HttpGet("{Id:guid}/Simple")]
-    public async Task<ActionResult<SimpleWorkoutViewModel>> GetSimpleWorkoutById(Guid Id)
+    [HttpGet("{id:guid}/simple")]
+    public async Task<ActionResult<SimpleWorkoutViewModel>> GetSimpleWorkoutById(Guid id)
     {
-        Workout? workout = await _repository.GetByIdAsync(Id);
-
-        if (workout == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(_mapper.Map<SimpleWorkoutViewModel>(workout));
+        var query = new GetEntityByIdQuery<SimpleWorkoutViewModel>(id);
+        var workout = await _mediator.Send(query);
+        return Ok(workout);
     }
 
-    [HttpGet("{Id:guid}/Details")]
-    public async Task<ActionResult<CompleteWorkoutViewModel>> GetCompleteWorkoutById(Guid Id)
+    [HttpGet("{id:guid}/details")]
+    public async Task<ActionResult<CompleteWorkoutViewModel>> GetCompleteWorkoutById(Guid id)
     {
-        Workout? workout = await _repository.GetByIdAsync(Id);
-
-        if (workout == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(_mapper.Map<CompleteWorkoutViewModel>(workout));
+        var query = new GetEntityByIdQuery<CompleteWorkoutViewModel>(id);
+        var workout = await _mediator.Send(query);
+        return Ok(workout);
     }
 
-    [HttpGet("{Id:guid}/Exercises")]
-    public async Task<ActionResult<WorkoutExerciseViewModel>> GetWorkoutExercisesById(Guid Id)
+    [HttpGet("{id:guid}/exercises")]
+    public async Task<ActionResult<WorkoutExerciseViewModel>> GetWorkoutExercisesById(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -106,15 +106,16 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
 
     #region PUT
 
-    [HttpPut("Update/{Id:guid}")]
-    public async Task<ActionResult<SimpleWorkoutViewModel>> Update(Guid Id, UpdateSimpleWorkoutCommand command)
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<SimpleWorkoutViewModel>> UpdateWorkout(Guid id, UpdateSimpleWorkoutDTO data)
     {
-        command.Id = Id;
-        return Ok(await _mediator.Send(command));
+        var command = new UpdateEntityCommand<Workout, UpdateSimpleWorkoutDTO, SimpleWorkoutViewModel>(id, data);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
-    [HttpPut("{workoutId:guid}/Exercises")]
-    public async Task<IActionResult> UpdateWorkoutExercise(Guid workoutId, UpdateWorkoutExerciseCommand command)
+    [HttpPut("{id:guid}/exercises")]
+    public async Task<IActionResult> UpdateWorkoutExercise(Guid id, UpdateExerciseInWorkoutDTO data)
     {
         throw new NotImplementedException();
     }
@@ -123,16 +124,16 @@ public class WorkoutController(IMediator _mediator, WorkoutRepository _repositor
 
     #region DELETE
 
-    [HttpDelete("Delete/{Id:guid}")]
-    public async Task<ActionResult> DeleteById(Guid Id)
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult> DeleteWorkout(Guid id)
     {
-        //TODO: Retirar o método de delete do controller (má prática)
-        await _repository.DeleteByIdAsync(Id);
+        var command = new DeleteEntityCommand<Workout>(id);
+        await _mediator.Send(command);
         return NoContent();
     }
 
-    [HttpDelete("{workoutId:guid}/Exercises/{exerciseId:guid}")]
-    public async Task<IActionResult> RemoveExerciseFromWorkout(Guid workoutId, Guid exerciseId)
+    [HttpDelete("{id:guid}/exercises/{exerciseId:guid}")]
+    public async Task<IActionResult> RemoveExerciseFromWorkout(Guid id, Guid exerciseId)
     {
         throw new NotImplementedException();
     }
