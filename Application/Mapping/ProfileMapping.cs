@@ -3,7 +3,7 @@ using Application.CQRS.GenericsCQRS.User.DTOs;
 using Application.CQRS.GenericsCQRS.User.ViewModel;
 using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
 using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
-using Application.CQRS.TrainingCQRS.WorkoutCQ.Commands;
+using Application.CQRS.TrainingCQRS.WorkoutCQ.DTOs;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using Application.CQRS.UsersCQRS.GymCQ.DTOs;
 using Application.CQRS.UsersCQRS.GymCQ.ViewModels;
@@ -89,13 +89,13 @@ namespace Application.Mapping
 
             #region Workout Mappings
 
-            CreateMap<CreateSimpleWorkoutCommand, Workout>()
+            CreateMap<CreateSimpleWorkoutDTO, Workout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Exercises, opt => opt.Ignore())
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<UpdateSimpleWorkoutCommand, Workout>()
+            CreateMap<UpdateSimpleWorkoutDTO, Workout>()
                 .ForMember(dest => dest.Exercises, opt => opt.Ignore())
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
@@ -104,7 +104,7 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<CreateCompleteWorkoutCommand, Workout>()
+            CreateMap<CreateCompleteWorkoutDTO, Workout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src => src.Exercises))
                 .ReverseMap();
