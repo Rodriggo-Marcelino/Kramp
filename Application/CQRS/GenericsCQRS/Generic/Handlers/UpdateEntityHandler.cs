@@ -3,6 +3,7 @@ using Application.CQRS.GenericsCQRS.Generic.ViewModel;
 using Application.Response;
 using AutoMapper;
 using Domain.Entity.Generics;
+using Domain.Repository;
 using MediatR;
 using Services.Repositories;
 
@@ -14,10 +15,12 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
         : IRequestHandler<TCommand, ResponseBase<TViewModel>>
         where TEntity : EntityGeneric
         where TCommand : UpdateEntityCommand<TEntity, TDTO, TViewModel>
-        where TViewModel : GenericViewModelBase
-        where TRepository : GenericRepository<TEntity>
+        where TViewModel : GenericViewModel
+        where TRepository : IRepository<TEntity>
         where TDTO : class
     {
+        private readonly TRepository _repository = repository;
+        private readonly IMapper _mapper = mapper;
         public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request,
             CancellationToken cancellationToken)
         {
@@ -41,15 +44,15 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
             return CreateResponse(updatedEntity);
         }
 
-        protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await repository.GetByIdAsync(id);
+        protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await _repository.GetByIdAsync(id);
 
-        protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => mapper.Map(data, entity);
+        protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => _mapper.Map(data, entity);
 
         protected virtual void ManipulateEntityBeforeUpdate(TEntity entity)
         {
         }
 
-        protected virtual async Task UpdateEntityAsync(TEntity entity) => await repository.UpdateAsync(entity);
+        protected virtual async Task UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
 
         protected virtual void ManipulateEntityAfterUpdate(TEntity entity)
         {
@@ -57,7 +60,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 
         protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
         {
-            var viewModel = mapper.Map<TViewModel>(entity);
+            var viewModel = _mapper.Map<TViewModel>(entity);
             return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
         }
     }

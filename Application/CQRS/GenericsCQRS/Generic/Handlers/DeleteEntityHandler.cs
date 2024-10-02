@@ -1,5 +1,6 @@
 ﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
 using Domain.Entity.Generics;
+using Domain.Repository;
 using MediatR;
 using Services.Repositories;
 
@@ -10,8 +11,9 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
         : IRequestHandler<TCommand, Unit>
         where TEntity : EntityGeneric
         where TCommand : DeleteEntityCommand<TEntity>
-        where TRepository : GenericRepository<TEntity>
+        where TRepository : IRepository<TEntity>
     {
+        private readonly TRepository _repository = repository;
         public virtual async Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
         {
             return await this.DeleteByIdAsync(request.Id);
@@ -19,7 +21,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 
         public async Task<Unit> DeleteByIdAsync(Guid id)
         {
-            TEntity? entity = await repository.GetByIdAsync(id);
+            TEntity? entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {
@@ -28,7 +30,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 
             if (entity != null)
             {
-                await repository.DeleteAsync(entity);
+                await _repository.DeleteAsync(entity);
             }
 
             return Unit.Value;
