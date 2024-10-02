@@ -3,7 +3,7 @@ using Domain.Entity.Enum;
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 
-public record CompleteWorkoutViewModel : GenericViewModelBase
+public record CompleteWorkoutViewModel : GenericViewModel
 {
     public string? Name { get; set; }
     public string? Description { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels
 {
-    public record WorkoutExerciseViewModel : GenericViewModelBase
+    public record WorkoutExerciseViewModel : GenericViewModel
     {
         public Guid ExerciseId { get; set; }
         public ExerciseViewModel Exercise { get; set; }

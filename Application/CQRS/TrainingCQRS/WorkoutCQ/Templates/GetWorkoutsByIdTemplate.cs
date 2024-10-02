@@ -14,7 +14,7 @@ public class GetWorkoutsByIdTemplate<TViewModel>
     Workout,
     GetEntityByIdQuery<TViewModel>,
     TViewModel,
-    WorkoutRepository>(repository, mapper) where TViewModel : GenericViewModelBase
+    WorkoutRepository>(repository, mapper) where TViewModel : GenericViewModel
 {
     
 }

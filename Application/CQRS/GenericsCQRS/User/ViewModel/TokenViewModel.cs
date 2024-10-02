@@ -2,7 +2,7 @@ using Application.CQRS.GenericsCQRS.Generic.ViewModel;
 
 namespace Application.CQRS.GenericsCQRS.User.ViewModel;
 
-public record TokenViewModel : GenericViewModelBase
+public record TokenViewModel : GenericViewModel
 {
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }

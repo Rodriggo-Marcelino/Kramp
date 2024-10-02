@@ -15,6 +15,6 @@ public class GetAllWorkoutsTemplate<TViewModel>
     GetAllEntitiesQuery<TViewModel>,
     TViewModel,
     WorkoutRepository>(repository, mapper)
-    where TViewModel : GenericViewModelBase
+    where TViewModel : GenericViewModel
 {
 }
