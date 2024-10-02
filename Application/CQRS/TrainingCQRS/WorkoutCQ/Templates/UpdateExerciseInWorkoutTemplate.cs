@@ -1,5 +1,5 @@
 using Application.CQRS.GenericsCQRS.Generic.Commands;
-using Application.CQRS.GenericsCQRS.Generic.Templates;
+using Application.CQRS.GenericsCQRS.Generic.Handlers;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.DTOs;
 using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
 using AutoMapper;

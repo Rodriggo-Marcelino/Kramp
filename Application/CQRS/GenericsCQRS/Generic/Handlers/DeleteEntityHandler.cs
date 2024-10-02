@@ -3,7 +3,7 @@ using Domain.Entity.Generics;
 using MediatR;
 using Services.Repositories;
 
-namespace Application.CQRS.GenericsCQRS.Generic.Templates
+namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
     public abstract class DeleteEntityHandler<TEntity, TCommand, TRepository>
         (TRepository repository)
