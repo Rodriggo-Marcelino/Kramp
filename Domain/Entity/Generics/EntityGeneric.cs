@@ -17,13 +17,16 @@ namespace Domain.Entity.Generics
 
         [Column("Deleted")]
         [Required(ErrorMessage = "Campo Deletado é obrigatório")]
-        public bool Deleted { get; set; } = false;
+        public bool Deleted { get; set; }
 
+        //Pode causar problemas em atualizações de entidades?
+        // talvez seja legal manter o controle em um handler(ou template)
         protected EntityGeneric()
         {
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
+            Deleted = false;
         }
 
         public void MarkAsDeleted()
