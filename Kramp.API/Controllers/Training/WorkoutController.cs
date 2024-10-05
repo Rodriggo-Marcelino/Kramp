@@ -30,16 +30,22 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
         return Created("api/workouts/details", result);
     }
 
-    [HttpPost("{workoutId:guid}/exercises")]
-    public async Task<IActionResult> AddExerciseToWorkout(Guid workoutId, AddExerciseToWorkoutDTO data)
+    [HttpPost("{id:guid}/exercises")]
+    public async Task<ActionResult<WorkoutExerciseViewModel>> AddExerciseToWorkout(Guid id, AddExerciseToWorkoutDTO data)
     {
-        throw new NotImplementedException();
+        data.WorkoutId = id;
+        var command = new CreateEntityCommand<WorkoutExercise, AddExerciseToWorkoutDTO, WorkoutExerciseViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("api/workouts/{id}/exercises", result);
     }
 
-    [HttpPost("{workoutId:guid}/exercises/list")]
-    public async Task<IActionResult> AddListOfExercisesToWorkout(Guid workoutId, List<AddExerciseToWorkoutDTO> data)
+    [HttpPost("{id:guid}/exercises/list")]
+    public async Task<IActionResult> AddListOfExercisesToWorkout(Guid id, List<AddExerciseToWorkoutDTO> data)
     {
-        throw new NotImplementedException();
+        data.ForEach(x => x.WorkoutId = id);
+        var command = new CreateEntityCommand<WorkoutExercise, AddExerciseToWorkoutDTO, WorkoutExerciseViewModel>(data);
+        await _mediator.Send(command);
+        return Created("api/workouts/{id}/exercises/list", data);
     }
 
     #endregion
@@ -99,7 +105,9 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     [HttpGet("{id:guid}/exercises")]
     public async Task<ActionResult<WorkoutExerciseViewModel>> GetWorkoutExercisesById(Guid id)
     {
-        throw new NotImplementedException();
+        var query = new GetEntityByIdQuery<WorkoutExerciseViewModel>(id);
+        var workout = await _mediator.Send(query);
+        return Ok(workout);
     }
 
     #endregion
@@ -117,7 +125,9 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     [HttpPut("{id:guid}/exercises")]
     public async Task<IActionResult> UpdateWorkoutExercise(Guid id, UpdateExerciseInWorkoutDTO data)
     {
-        throw new NotImplementedException();
+        var command = new UpdateEntityCommand<WorkoutExercise, UpdateExerciseInWorkoutDTO, WorkoutExerciseViewModel>(id, data);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     #endregion
@@ -135,7 +145,9 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     [HttpDelete("{id:guid}/exercises/{exerciseId:guid}")]
     public async Task<IActionResult> RemoveExerciseFromWorkout(Guid id, Guid exerciseId)
     {
-        throw new NotImplementedException();
+        var command = new DeleteEntityCommand<WorkoutExercise>(id);
+        await _mediator.Send(command);
+        return NoContent();
     }
 
     #endregion
