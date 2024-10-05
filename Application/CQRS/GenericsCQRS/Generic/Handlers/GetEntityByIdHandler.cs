@@ -5,7 +5,6 @@ using AutoMapper;
 using Domain.Entity.Generics;
 using Domain.Repository;
 using MediatR;
-using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
@@ -27,7 +26,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 
         public virtual async Task<ResponseBase<TViewModel>> GetByIdAsync(Guid id)
         {
-            TEntity entity = await _repository.GetByIdAsync(id);
+            TEntity? entity = await _repository.GetByIdAsync(id);
             var viewModel = _mapper.Map<TViewModel>(entity);
             return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
         }

@@ -2,7 +2,6 @@
 using Domain.Entity.Generics;
 using Domain.Repository;
 using MediatR;
-using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
@@ -28,10 +27,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
                 throw new Exception($"Entity with id {id} not found");
             }
 
-            if (entity != null)
-            {
-                await _repository.DeleteAsync(entity);
-            }
+            await _repository.DeleteAsync(entity);
 
             return Unit.Value;
         }

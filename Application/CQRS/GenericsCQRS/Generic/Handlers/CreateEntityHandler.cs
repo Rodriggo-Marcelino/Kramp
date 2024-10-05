@@ -5,7 +5,6 @@ using AutoMapper;
 using Domain.Entity.Generics;
 using Domain.Repository;
 using MediatR;
-using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Handlers;
 
@@ -21,7 +20,7 @@ public abstract class CreateEntityHandler<TEntity, TCommand, TDTO, TViewModel, T
 {
     private readonly TRepository _repository = repository;
     private readonly IMapper _mapper = mapper;
-    
+
     public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request, CancellationToken cancellationToken)
     {
         return await ExecuteAsync(request);

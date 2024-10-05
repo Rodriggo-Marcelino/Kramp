@@ -5,7 +5,6 @@ using AutoMapper;
 using Domain.Entity.Generics;
 using Domain.Repository;
 using MediatR;
-using Services.Repositories;
 
 namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 {
