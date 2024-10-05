@@ -6,7 +6,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
     public record UpdateEntityCommand<TEntity, TDTO, TViewModel>
         : IRequest<ResponseBase<TViewModel>>
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public TDTO? Data { get; set; }
         public List<TDTO>? DataList { get; set; }
 
