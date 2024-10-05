@@ -87,6 +87,31 @@ namespace Application.Mapping
 
             #endregion
 
+            #region Plan Mappings
+
+            CreateMap<CreateSimplePlanCommand, Plan>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdateSimplePlanCommand, Plan>()
+                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<Plan, SimplePlanViewModel>().ReverseMap();
+
+            CreateMap<CreateCompletePlanCommand, Plan>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Workouts, opt => opt.MapFrom(src => src.Workouts))
+                .ReverseMap();
+
+            CreateMap<Plan, CompletePlanViewModel>().ReverseMap();
+
+            #endregion
+
+            #region PlanWorkout Mappings
+            #endregion
+
             #region Workout Mappings
 
             CreateMap<CreateSimpleWorkoutDTO, Workout>()
@@ -113,26 +138,27 @@ namespace Application.Mapping
 
             #endregion
 
-            #region Plan Mappings
-
-            CreateMap<CreateSimplePlanCommand, Plan>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+            #region WorkoutExercise Mappings
+            CreateMap<AddExerciseToWorkoutDTO, WorkoutExercise>()
+                .ForMember(dest => dest.Workout, opt => opt.Ignore())
+                .ForMember(dest => dest.Exercise, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<UpdateSimplePlanCommand, Plan>()
-                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+            CreateMap<UpdateExerciseInWorkoutDTO, WorkoutExercise>()
+                .ForMember(dest => dest.Workout, opt => opt.Ignore())
+                .ForMember(dest => dest.Exercise, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<Plan, SimplePlanViewModel>().ReverseMap();
-            CreateMap<CreateCompletePlanCommand, Plan>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.Workouts, opt => opt.MapFrom(src => src.Workouts))
-                .ReverseMap();
+            CreateMap<WorkoutExercise, WorkoutExerciseViewModel>().ReverseMap();
+            #endregion
 
-            CreateMap<Plan, CompletePlanViewModel>().ReverseMap();
+            #region Exercise Mappings
+
+            CreateMap<Exercise, ExerciseViewModel>();
+            CreateMap<Exercise, ExerciseSmallViewModel>();
 
             #endregion
+
         }
     }
 }
