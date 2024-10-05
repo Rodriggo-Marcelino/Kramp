@@ -6,21 +6,19 @@ using AutoMapper;
 using Domain.Entity.Training;
 using Services.Repositories;
 
-namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates;
+namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates.WorkoutTemplates;
 
-public class CreateCompleteWorkoutTemplate
-    : CreateEntityHandler<
-        Workout,
-        CreateEntityCommand<Workout, CreateCompleteWorkoutDTO, CompleteWorkoutViewModel>,
-        CreateCompleteWorkoutDTO,
-        CompleteWorkoutViewModel,
-        WorkoutRepository>
+public class UpdateSimpleWorkoutTemplate : UpdateEntityHandler<
+    Workout,
+    UpdateEntityCommand<Workout, UpdateSimpleWorkoutDTO, SimpleWorkoutViewModel>,
+    UpdateSimpleWorkoutDTO,
+    SimpleWorkoutViewModel,
+    WorkoutRepository>
 {
-    public CreateCompleteWorkoutTemplate(
+    public UpdateSimpleWorkoutTemplate(
         WorkoutRepository repository,
         IMapper mapper
     ) : base(repository, mapper)
     {
     }
-    
 }

@@ -1,20 +1,19 @@
 using Application.CQRS.GenericsCQRS.Generic.Handlers;
 using Application.CQRS.GenericsCQRS.Generic.Queries;
 using Application.CQRS.GenericsCQRS.Generic.ViewModel;
-using Application.CQRS.GenericsCQRS.User.ViewModel;
 using AutoMapper;
 using Domain.Entity.Training;
 using Services.Repositories;
 
-namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates;
+namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates.WorkoutTemplates;
 
 public class GetWorkoutsByIdTemplate<TViewModel>
-    (WorkoutRepository repository, IMapper mapper) 
+    (WorkoutRepository repository, IMapper mapper)
     : GetEntityByIdHandler<
     Workout,
     GetEntityByIdQuery<TViewModel>,
     TViewModel,
     WorkoutRepository>(repository, mapper) where TViewModel : GenericViewModel
 {
-    
+
 }

@@ -6,9 +6,9 @@ using AutoMapper;
 using Domain.Entity.Training;
 using Services.Repositories;
 
-namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates;
+namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates.WorkoutTemplates;
 
-public class CreateSimpleWorkoutTemplate 
+public class CreateSimpleWorkoutTemplate
         : CreateEntityHandler<
                 Workout,
                 CreateEntityCommand<Workout, CreateSimpleWorkoutDTO, SimpleWorkoutViewModel>,

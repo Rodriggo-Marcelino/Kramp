@@ -6,7 +6,7 @@ using AutoMapper;
 using Domain.Entity.Training;
 using Services.Repositories;
 
-namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates;
+namespace Application.CQRS.TrainingCQRS.WorkoutCQ.Templates.WorkoutExerciseTemplates;
 
 public class UpdateExerciseInWorkoutTemplate : UpdateEntityHandler<
         WorkoutExercise,
@@ -15,7 +15,7 @@ public class UpdateExerciseInWorkoutTemplate : UpdateEntityHandler<
         WorkoutExerciseViewModel,
         WorkoutExerciseRepository>
 {
-    
+
     public UpdateExerciseInWorkoutTemplate(WorkoutExerciseRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
