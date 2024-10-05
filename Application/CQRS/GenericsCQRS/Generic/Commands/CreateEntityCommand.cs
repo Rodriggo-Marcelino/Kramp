@@ -6,14 +6,15 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
     public record CreateEntityCommand<TEntity, TDTO, TViewModel> : IRequest<ResponseBase<TViewModel>>
     {
         public TDTO? Data { get; set; }
-        public List<TDTO>? DataList { get; set; }
+        public IEnumerable<TDTO>? DataList { get; set; }
 
         public CreateEntityCommand(TDTO data)
         {
             Data = data;
+            DataList = new List<TDTO> { data };
         }
 
-        public CreateEntityCommand(List<TDTO> dataList)
+        public CreateEntityCommand(IEnumerable<TDTO> dataList)
         {
             DataList = dataList;
         }

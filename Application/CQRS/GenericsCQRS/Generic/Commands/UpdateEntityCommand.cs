@@ -8,12 +8,13 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
     {
         public Guid Id { get; set; }
         public TDTO? Data { get; set; }
-        public List<TDTO>? DataList { get; set; }
+        public IEnumerable<TDTO>? DataList { get; set; }
 
         public UpdateEntityCommand(Guid id, TDTO data)
         {
             Id = id;
             Data = data;
+            DataList = new List<TDTO> { data };
         }
 
         public UpdateEntityCommand(Guid id, List<TDTO> dataList)

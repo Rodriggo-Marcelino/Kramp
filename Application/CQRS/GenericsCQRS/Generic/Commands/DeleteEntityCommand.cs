@@ -6,11 +6,12 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
     {
         public Guid Id { get; set; }
 
-        public List<Guid>? Ids { get; set; }
+        public IEnumerable<Guid>? Ids { get; set; }
 
         public DeleteEntityCommand(Guid id)
         {
             Id = id;
+            Ids = new List<Guid> { id };
         }
 
         public DeleteEntityCommand(List<Guid> ids)
