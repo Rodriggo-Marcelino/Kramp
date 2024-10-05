@@ -34,11 +34,11 @@ public abstract class CreateEntityHandler<TEntity, TCommand, TDTO, TViewModel, T
 
         ManipulateEntityBeforeSave(request.Data, entity);
 
-        await SaveEntityAsync(entity);
+        TEntity? savedEntity = await SaveEntityAsync(entity);
 
-        ManipulateEntityAfterSave(entity);
+        ManipulateEntityAfterSave(request.Data, savedEntity);
 
-        return CreateResponse(entity);
+        return CreateResponse(savedEntity);
     }
 
     protected virtual void ManipulateRequest(TCommand request)
@@ -50,20 +50,20 @@ public abstract class CreateEntityHandler<TEntity, TCommand, TDTO, TViewModel, T
         return _mapper.Map<TEntity>(request);
     }
 
-    protected virtual void ManipulateEntityBeforeSave(TDTO request, TEntity entity)
+    protected virtual void ManipulateEntityBeforeSave(TDTO data, TEntity entity)
     {
     }
 
-    protected virtual Task SaveEntityAsync(TEntity entity)
+    protected virtual Task<TEntity?> SaveEntityAsync(TEntity entity)
     {
         return _repository.AddAsync(entity);
     }
 
-    protected virtual void ManipulateEntityAfterSave(TEntity entity)
+    protected virtual void ManipulateEntityAfterSave(TDTO data, TEntity? entity)
     {
     }
 
-    protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
+    protected virtual ResponseBase<TViewModel> CreateResponse(TEntity? entity)
     {
         var viewModel = _mapper.Map<TViewModel>(entity);
         return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);

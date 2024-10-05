@@ -36,11 +36,11 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
 
             ManipulateEntityBeforeUpdate(updatedEntity);
 
-            await UpdateEntityAsync(updatedEntity);
+            TEntity? savedUpdatedEntity = await UpdateEntityAsync(updatedEntity);
 
-            ManipulateEntityAfterUpdate(updatedEntity);
+            ManipulateEntityAfterUpdate(savedUpdatedEntity);
 
-            return CreateResponse(updatedEntity);
+            return CreateResponse(savedUpdatedEntity);
         }
 
         protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await _repository.GetByIdAsync(id);
@@ -51,13 +51,13 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers
         {
         }
 
-        protected virtual async Task UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
+        protected virtual async Task<TEntity?> UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
 
-        protected virtual void ManipulateEntityAfterUpdate(TEntity entity)
+        protected virtual void ManipulateEntityAfterUpdate(TEntity? entity)
         {
         }
 
-        protected virtual ResponseBase<TViewModel> CreateResponse(TEntity entity)
+        protected virtual ResponseBase<TViewModel> CreateResponse(TEntity? entity)
         {
             var viewModel = _mapper.Map<TViewModel>(entity);
             return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
