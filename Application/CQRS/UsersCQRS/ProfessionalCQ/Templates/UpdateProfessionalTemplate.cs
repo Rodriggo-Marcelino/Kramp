@@ -16,11 +16,14 @@ namespace Application.CQRS.UsersCQRS.ProfessionalCQ.Templates
             ProfessionalViewModel,
             ProfessionalRepository>(repository, mapper)
     {
-        protected override void ManipulateEntityBeforeUpdate(Professional entity)
+        protected override void ManipulateEntityBeforeUpdate(IEnumerable<Professional> entities)
         {
-            entity.RefreshToken = Guid.NewGuid().ToString();
-            entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
-            entity.SetTypeDocument();
+            foreach (var entity in entities)
+            {
+                entity.RefreshToken = Guid.NewGuid().ToString();
+                entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+                entity.SetTypeDocument();
+            }
         }
     }
 }

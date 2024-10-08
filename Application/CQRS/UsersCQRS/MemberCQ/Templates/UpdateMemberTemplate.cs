@@ -18,10 +18,13 @@ namespace Application.CQRS.UsersCQRS.MemberCQ.Templates
         MemberRepository>(repository, mapper)
     {
 
-        protected override void ManipulateEntityBeforeUpdate(Member entity)
+        protected override void ManipulateEntityBeforeUpdate(IEnumerable<Member> entities)
         {
-            entity.RefreshToken = Guid.NewGuid().ToString();
-            entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            foreach (var entity in entities)
+            {
+                entity.RefreshToken = Guid.NewGuid().ToString();
+                entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            }
         }
     }
 }

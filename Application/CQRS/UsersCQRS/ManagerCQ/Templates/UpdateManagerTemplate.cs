@@ -17,10 +17,13 @@ namespace Application.CQRS.UsersCQRS.ManagerCQ.Templates
                 UserViewModel,
                 ManagerRepository>(repository, mapper)
     {
-        protected override void ManipulateEntityBeforeUpdate(Manager entity)
+        protected override void ManipulateEntityBeforeUpdate(IEnumerable<Manager> entities)
         {
-            entity.RefreshToken = Guid.NewGuid().ToString();
-            entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            foreach (var entity in entities)
+            {
+                entity.RefreshToken = Guid.NewGuid().ToString();
+                entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            }
         }
     }
 }
