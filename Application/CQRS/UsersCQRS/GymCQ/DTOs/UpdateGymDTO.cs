@@ -1,6 +1,8 @@
-﻿namespace Application.CQRS.UsersCQRS.GymCQ.DTOs
+﻿using Application.CQRS.GenericsCQRS.Generic.DTOs;
+
+namespace Application.CQRS.UsersCQRS.GymCQ.DTOs
 {
-    public record UpdateGymDTO
+    public record UpdateGymDTO : UpdateGenericDTO
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

@@ -1,6 +1,9 @@
+using System.Text.Json.Serialization;
+using Application.CQRS.GenericsCQRS.Generic.DTOs;
+
 namespace Application.CQRS.GenericsCQRS.User.DTOs;
 
-public record UpdateUserDTO
+public record UpdateUserDTO : UpdateGenericDTO
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }
