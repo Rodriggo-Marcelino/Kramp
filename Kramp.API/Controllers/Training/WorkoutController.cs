@@ -117,7 +117,8 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<SimpleWorkoutViewModel>> UpdateWorkout(Guid id, UpdateSimpleWorkoutDTO data)
     {
-        var command = new UpdateEntityCommand<Workout, UpdateSimpleWorkoutDTO, SimpleWorkoutViewModel>(id, data);
+        data.Id = id;
+        var command = new UpdateEntityCommand<Workout, UpdateSimpleWorkoutDTO, SimpleWorkoutViewModel>(data);
         var result = await _mediator.Send(command);
         return Ok(result);
     }
@@ -125,7 +126,8 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     [HttpPut("{id:guid}/exercises")]
     public async Task<IActionResult> UpdateWorkoutExercise(Guid id, UpdateExerciseInWorkoutDTO data)
     {
-        var command = new UpdateEntityCommand<WorkoutExercise, UpdateExerciseInWorkoutDTO, WorkoutExerciseViewModel>(id, data);
+        data.Id = id;
+        var command = new UpdateEntityCommand<WorkoutExercise, UpdateExerciseInWorkoutDTO, WorkoutExerciseViewModel>(data);
         var result = await _mediator.Send(command);
         return Ok(result);
     }

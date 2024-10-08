@@ -39,7 +39,8 @@ namespace Kramp.API.Controllers.User
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<ProfessionalViewModel>> UpdateProfessional(Guid id, UpdateProfessionalDTO data)
         {
-            var command = new UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalViewModel>(id, data);
+            data.Id = id;
+            var command = new UpdateEntityCommand<Professional, UpdateProfessionalDTO, ProfessionalViewModel>(data);
             var professional = await _mediator.Send(command);
             return Ok(professional);
         }
