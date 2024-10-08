@@ -58,9 +58,20 @@ public class CreateCompleteWorkoutTemplate
 
     protected override void ManipulateEntityAfterSave(IEnumerable<CreateCompleteWorkoutDTO> request, IEnumerable<Workout> entities)
     {
-        foreach (var workout in request)
+        foreach (var workout in entities)
         {
-            if (workout.Exercises != null) SaveAllExercisesInWorkout(workout.Exercises);
+            foreach (var dto in request)
+            {
+                if (dto.Name == workout.Name)
+                {
+                    foreach (var exercise in dto.Exercises)
+                    {
+                        exercise.WorkoutId = workout.Id;
+                    }
+                    
+                    SaveAllExercisesInWorkout(dto.Exercises);
+                }
+            }
         }
     }
 
