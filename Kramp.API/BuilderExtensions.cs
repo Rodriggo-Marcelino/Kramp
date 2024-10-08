@@ -110,13 +110,13 @@ namespace Kramp.API
             var services = builder.Services;
 
             #region RegisterCQRS for all
-            RegisterCqrs<
+            RegisterIEnumerableCqrs<
                 CreateEntityHandler<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerTemplate,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterCqrs<
+            RegisterIEnumerableCqrs<
                 UpdateEntityHandler<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerTemplate,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
