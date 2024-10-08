@@ -11,7 +11,7 @@ namespace Application.CQRS.GenericsCQRS.Generic.Handlers;
 public abstract class CreateEntityHandler<TEntity, TCommand, TDTO, TViewModel, TRepository>(
     TRepository repository,
     IMapper mapper)
-    : IRequestHandler<TCommand, ResponseBase<TViewModel>>
+    : IRequestHandler<TCommand, ResponseBase<IEnumerable<TViewModel>>>
     where TEntity : EntityGeneric
     where TCommand : CreateEntityCommand<TEntity, TDTO, TViewModel>
     where TViewModel : GenericViewModel
@@ -21,51 +21,51 @@ public abstract class CreateEntityHandler<TEntity, TCommand, TDTO, TViewModel, T
     private readonly TRepository _repository = repository;
     private readonly IMapper _mapper = mapper;
 
-    public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request, CancellationToken cancellationToken)
+    public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TCommand request, CancellationToken cancellationToken)
     {
         return await ExecuteAsync(request);
     }
 
-    public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)
+    public async Task<ResponseBase<IEnumerable<TViewModel>>> ExecuteAsync(TCommand request)
     {
         ManipulateRequest(request);
 
-        TEntity entity = MapCommandToEntity(request.Data);
+        IEnumerable<TEntity> entityList = MapCommandToEntity(request.DataList);
 
-        ManipulateEntityBeforeSave(request.Data, entity);
+        ManipulateEntityBeforeSave(request.DataList, entityList);
 
-        TEntity? savedEntity = await SaveEntityAsync(entity);
+        IEnumerable<TEntity>? savedEntityList = await SaveEntityAsync(entityList);
 
-        ManipulateEntityAfterSave(request.Data, savedEntity);
+        ManipulateEntityAfterSave(request.DataList, savedEntityList);
 
-        return CreateResponse(savedEntity);
+        return CreateResponse(savedEntityList);
     }
 
     protected virtual void ManipulateRequest(TCommand request)
     {
     }
 
-    protected virtual TEntity MapCommandToEntity(TDTO request)
+    protected virtual IEnumerable<TEntity> MapCommandToEntity(IEnumerable<TDTO>? requestList)
     {
-        return _mapper.Map<TEntity>(request);
+        return _mapper.Map<IEnumerable<TEntity>>(requestList);
     }
 
-    protected virtual void ManipulateEntityBeforeSave(TDTO data, TEntity entity)
-    {
-    }
-
-    protected virtual Task<TEntity?> SaveEntityAsync(TEntity entity)
-    {
-        return _repository.AddAsync(entity);
-    }
-
-    protected virtual void ManipulateEntityAfterSave(TDTO data, TEntity? entity)
+    protected virtual void ManipulateEntityBeforeSave(IEnumerable<TDTO> request, IEnumerable<TEntity> entities)
     {
     }
 
-    protected virtual ResponseBase<TViewModel> CreateResponse(TEntity? entity)
+    protected virtual Task<IEnumerable<TEntity?>?> SaveEntityAsync(IEnumerable<TEntity> entityList)
     {
-        var viewModel = _mapper.Map<TViewModel>(entity);
-        return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
+        return _repository.AddAsync(entityList);
+    }
+
+    protected virtual void ManipulateEntityAfterSave(IEnumerable<TDTO> request, IEnumerable<TEntity> entities)
+    {
+    }
+
+    protected virtual ResponseBase<IEnumerable<TViewModel>> CreateResponse(IEnumerable<TEntity>? entityList)
+    {
+        var viewModelList = _mapper.Map<IEnumerable<TViewModel>>(entityList);
+        return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModelList);
     }
 }
