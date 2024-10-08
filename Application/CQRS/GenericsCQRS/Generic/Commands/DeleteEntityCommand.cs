@@ -4,17 +4,14 @@ namespace Application.CQRS.GenericsCQRS.Generic.Commands
 {
     public record DeleteEntityCommand<TEntity> : IRequest<Unit>
     {
-        public Guid Id { get; set; }
-
         public IEnumerable<Guid>? Ids { get; set; }
 
         public DeleteEntityCommand(Guid id)
         {
-            Id = id;
             Ids = new List<Guid> { id };
         }
 
-        public DeleteEntityCommand(List<Guid> ids)
+        public DeleteEntityCommand(IEnumerable<Guid> ids)
         {
             Ids = ids;
         }
