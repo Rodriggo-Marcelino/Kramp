@@ -1,8 +1,9 @@
 using Application.CQRS.Commands;
 using Application.CQRS.DTOs.Create;
-using Application.CQRS.DTOs.Update;
+using Application.CQRS.DTOs.Create.Training;
+using Application.CQRS.DTOs.Update.Training;
 using Application.CQRS.Queries;
-using Application.CQRS.ViewModels;
+using Application.CQRS.ViewModels.Training;
 using Domain.Entity.Training;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

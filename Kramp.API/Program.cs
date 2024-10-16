@@ -19,13 +19,12 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
-// Middleware para servir o arquivo JSON do Swagger
 /*
 app.Use(async (context, next) =>
 {
-    if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.3.4_openapi.json"))
+    if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.4.0_openapi.json"))
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "Swagger", "V1.3.4_openapi.json");
+        var filePath = Path.Combine(AppContext.BaseDirectory, "Swagger", "V1.4.0_openapi.json");
         var jsonContent = await File.ReadAllTextAsync(filePath);
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(jsonContent);
@@ -42,7 +41,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
-        //options.SwaggerEndpoint("/swagger/v1/V1.3.4_openapi.json", "Kramp API v1")
+        //options.SwaggerEndpoint("/swagger/v1/V1.4.0_openapi.json", "Kramp API v1")
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Kramp API v1")
     );
 }

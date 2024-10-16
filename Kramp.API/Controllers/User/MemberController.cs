@@ -1,8 +1,8 @@
 ﻿using Application.CQRS.Commands;
-using Application.CQRS.DTOs.Create;
-using Application.CQRS.DTOs.Update;
+using Application.CQRS.DTOs.Create.User;
+using Application.CQRS.DTOs.Update.User;
 using Application.CQRS.Queries;
-using Application.CQRS.ViewModels;
+using Application.CQRS.ViewModels.User;
 using Domain.Entity.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

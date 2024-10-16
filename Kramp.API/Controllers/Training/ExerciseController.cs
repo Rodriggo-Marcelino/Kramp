@@ -1,4 +1,4 @@
-﻿using Application.CQRS.ViewModels;
+﻿using Application.CQRS.ViewModels.Training;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;

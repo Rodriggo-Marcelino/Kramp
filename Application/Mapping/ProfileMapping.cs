@@ -1,6 +1,10 @@
 ﻿using Application.CQRS.DTOs.Create;
-using Application.CQRS.DTOs.Update;
-using Application.CQRS.ViewModels;
+using Application.CQRS.DTOs.Create.Training;
+using Application.CQRS.DTOs.Create.User;
+using Application.CQRS.DTOs.Update.Training;
+using Application.CQRS.DTOs.Update.User;
+using Application.CQRS.ViewModels.Training;
+using Application.CQRS.ViewModels.User;
 using AutoMapper;
 using Domain.Entity.Training;
 using Domain.Entity.User;
