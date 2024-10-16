@@ -8,17 +8,11 @@ using Services.Repositories;
 
 namespace Application.CQRS.Handlers.Update.Training;
 
-public class UpdateSimpleWorkoutHandler : UpdateEntityTemplate<
+public class UpdateSimpleWorkoutHandler(
+    WorkoutRepository repository,
+    IMapper mapper) : UpdateEntityTemplate<
     Workout,
     UpdateEntityCommand<Workout, UpdateSimpleWorkoutDTO, SimpleWorkoutViewModel>,
     UpdateSimpleWorkoutDTO,
     SimpleWorkoutViewModel,
-    WorkoutRepository>
-{
-    public UpdateSimpleWorkoutHandler(
-        WorkoutRepository repository,
-        IMapper mapper
-    ) : base(repository, mapper)
-    {
-    }
-}
+    WorkoutRepository>(repository, mapper);

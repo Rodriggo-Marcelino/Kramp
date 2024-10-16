@@ -47,6 +47,7 @@ namespace Application.CQRS.Templates
 
         protected virtual void ManipulateEntityBeforeUpdate(IEnumerable<TEntity> entities)
         {
+            entities.ToList();
             foreach (var entity in entities)
             {
                 entity.UpdatedAt = DateTime.UtcNow;
@@ -56,6 +57,7 @@ namespace Application.CQRS.Templates
         protected virtual async Task<IEnumerable<TEntity?>?> UpdateEntityAsync(IEnumerable<TEntity> entities)
         {
             List<TEntity> validEntities = new List<TEntity>();
+            entities.ToList();
 
             foreach (var entity in entities)
             {
@@ -74,9 +76,9 @@ namespace Application.CQRS.Templates
         {
         }
 
-        protected virtual ResponseBase<IEnumerable<TViewModel>> CreateResponse(IEnumerable<TEntity?>? entity)
+        protected virtual ResponseBase<IEnumerable<TViewModel>> CreateResponse(IEnumerable<TEntity?>? entities)
         {
-            var viewModel = _mapper.Map<IEnumerable<TViewModel>>(entity);
+            var viewModel = _mapper.Map<IEnumerable<TViewModel>>(entities);
             return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModel);
         }
     }
