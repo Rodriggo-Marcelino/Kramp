@@ -8,18 +8,12 @@ using Services.Repositories;
 
 namespace Application.CQRS.Handlers.Create;
 
-public class CreateSimpleWorkoutHandler
-        : CreateEntityTemplate<
-                Workout,
-                CreateEntityCommand<Workout, CreateSimpleWorkoutDTO, SimpleWorkoutViewModel>,
-                CreateSimpleWorkoutDTO,
-                SimpleWorkoutViewModel,
-                WorkoutRepository>
-{
-    public CreateSimpleWorkoutHandler(
-        WorkoutRepository repository,
-        IMapper mapper
-    ) : base(repository, mapper)
-    {
-    }
-}
+public class CreateSimpleWorkoutHandler(
+    WorkoutRepository repository,
+    IMapper mapper)
+    : CreateEntityTemplate<
+    Workout,
+    CreateEntityCommand<Workout, CreateSimpleWorkoutDTO, SimpleWorkoutViewModel>,
+    CreateSimpleWorkoutDTO,
+    SimpleWorkoutViewModel,
+    WorkoutRepository>(repository, mapper);

@@ -6,7 +6,6 @@ using Application.Response;
 using AutoMapper;
 using Domain.Entity.Enum;
 using Domain.Entity.Training;
-using MediatR;
 using Services.Repositories;
 
 namespace Application.CQRS.Handlers.Create;
@@ -19,25 +18,20 @@ public class CreateCompleteWorkoutHandler
         CompleteWorkoutViewModel,
         WorkoutRepository>
 {
-    private readonly WorkoutRepository _repository;
     private readonly WorkoutExerciseRepository _workoutExerciseRepository;
     private readonly ExerciseRepository _exerciseRepository;
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
 
     public CreateCompleteWorkoutHandler(
         WorkoutRepository repository,
         IMapper mapper,
         WorkoutExerciseRepository workoutExerciseRepository,
-        ExerciseRepository exerciseRepository,
-        IMediator mediator)
+        ExerciseRepository exerciseRepository)
         : base(repository, mapper)
     {
-        _repository = repository;
         _mapper = mapper;
         _workoutExerciseRepository = workoutExerciseRepository;
         _exerciseRepository = exerciseRepository;
-        _mediator = mediator;
     }
 
     protected override void ManipulateEntityBeforeSave(IEnumerable<CreateCompleteWorkoutDTO> request, IEnumerable<Workout> entities)
