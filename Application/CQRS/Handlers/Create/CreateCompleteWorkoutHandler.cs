@@ -42,14 +42,14 @@ public class CreateCompleteWorkoutHandler
 
     protected override void ManipulateEntityBeforeSave(IEnumerable<CreateCompleteWorkoutDTO> request, IEnumerable<Workout> entities)
     {
+        var requestList = request.ToList();
         foreach (var entity in entities)
         {
-            while (request.GetEnumerator().MoveNext())
+            foreach (var requestData in requestList)
             {
-                var currDto = request.GetEnumerator().Current;
-                if (currDto.Name == entity.Name)
+                if (requestData.Name == entity.Name)
                 {
-                    SetCompleteWorkoutProperties(currDto, entity);
+                    SetCompleteWorkoutProperties(requestData, entity);
                 }
             }
         }
@@ -67,8 +67,6 @@ public class CreateCompleteWorkoutHandler
                     {
                         exercise.WorkoutId = workout.Id;
                     }
-                    
-                    SaveAllExercisesInWorkout(dto.Exercises);
                 }
             }
         }
@@ -79,20 +77,20 @@ public class CreateCompleteWorkoutHandler
         var viewModels = _mapper.Map<IEnumerable<CompleteWorkoutViewModel>>(entityList);
 
         viewModels = InsertExercisesInViewModel(viewModels, entityList);
-        
+
         return new ResponseBase<IEnumerable<CompleteWorkoutViewModel>>(new ResponseInfo(), viewModels);
     }
-    
+
     private void SetCompleteWorkoutProperties(CreateCompleteWorkoutDTO dto, Workout entity)
     {
         var seriesCount = 0;
         var repetitionCount = 0;
         var targetedMuscles = new List<Muscle>();
-        
+
         foreach (var exercise in dto.Exercises)
         {
             seriesCount += exercise.Series;
-            repetitionCount += exercise.Repetitions;
+            repetitionCount += exercise.Repetitions * exercise.Series;
 
             var getExercise = _exerciseRepository.GetByIdAsync(exercise.ExerciseId);
 
@@ -100,29 +98,29 @@ public class CreateCompleteWorkoutHandler
 
             if (getExercise.Result != null)
             {
-                targetedMuscles.Add(getExercise.Result.TargetedMuscle);
-                targetedMuscles.Add(getExercise.Result.SynergistMuscle);
+                if (isNotInTheList(targetedMuscles, getExercise.Result.TargetedMuscle))
+                {
+                    targetedMuscles.Add(getExercise.Result.TargetedMuscle);
+                }
+
+                if (isNotInTheList(targetedMuscles, getExercise.Result.SynergistMuscle))
+                {
+                    targetedMuscles.Add(getExercise.Result.SynergistMuscle);
+                }
             }
         }
-        
+
         entity.RepetitionCount = repetitionCount;
         entity.SeriesCount = seriesCount;
         entity.TargetedMuscles = targetedMuscles;
         entity.CreatedAt = DateTime.UtcNow;
     }
 
-    private void SaveAllExercisesInWorkout(IEnumerable<AddExerciseToWorkoutDTO> dto)
-    {
-        var command = new
-            CreateEntityCommand<WorkoutExercise, AddExerciseToWorkoutDTO, WorkoutExerciseViewModel>(dto);
-        _mediator.Send(command);
-    }
-
     private IEnumerable<CompleteWorkoutViewModel> InsertExercisesInViewModel(
         IEnumerable<CompleteWorkoutViewModel> viewModels, IEnumerable<Workout>? entityList)
     {
         var updatedViewModels = new List<CompleteWorkoutViewModel>();
-        
+
         foreach (var workout in entityList)
         {
             var workoutExercises = _workoutExerciseRepository
@@ -140,7 +138,12 @@ public class CreateCompleteWorkoutHandler
                 }
             }
         }
-        
+
         return updatedViewModels;
+    }
+
+    private bool isNotInTheList(List<Muscle> list, Muscle muscle)
+    {
+        return !list.Contains(muscle);
     }
 }
