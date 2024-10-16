@@ -10,7 +10,7 @@ using Services.Repositories;
 
 namespace Application.CQRS.Handlers.Create
 {
-    public class CreateManagerhandler(
+    public class CreateManagerHandler(
         ManagerRepository repository,
         IMapper mapper,
         IAuthService authService
@@ -34,10 +34,10 @@ namespace Application.CQRS.Handlers.Create
         protected override ResponseBase<IEnumerable<UserViewModel>> CreateResponse(IEnumerable<Manager>? entityList)
         {
             var viewModelList = _mapper.Map<IEnumerable<UserViewModel>>(entityList);
-            
+
             var entityEnumerator = entityList?.GetEnumerator();
             var viewModelEnumerator = viewModelList.GetEnumerator();
-            
+
             var resultList = new List<UserViewModel>();
 
             while (entityEnumerator.MoveNext())
@@ -50,7 +50,7 @@ namespace Application.CQRS.Handlers.Create
                     }
                 }
             }
-            
+
             return new ResponseBase<IEnumerable<UserViewModel>>(new ResponseInfo(), resultList);
         }
 

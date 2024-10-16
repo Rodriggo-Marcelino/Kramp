@@ -117,7 +117,7 @@ namespace Kramp.API
             #region RegisterCQRS for all
             RegisterCqrs<
                 CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
-                CreateManagerhandler,
+                CreateManagerHandler,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
