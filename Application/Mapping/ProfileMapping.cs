@@ -90,7 +90,7 @@ namespace Application.Mapping
 
             CreateMap<CreateCompletePlanDTO, Plan>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.Workouts, opt => opt.MapFrom(src => src.Workouts))
+                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<Plan, CompletePlanViewModel>().ReverseMap();
@@ -98,6 +98,7 @@ namespace Application.Mapping
             #endregion
 
             #region PlanWorkout Mappings
+            CreateMap<PlanWorkoutViewModel, PlanWorkout>().ReverseMap();
             #endregion
 
             #region Workout Mappings
