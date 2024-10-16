@@ -23,6 +23,10 @@ namespace Application.CQRS.Templates
         public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TQuery request,
             CancellationToken cancellationToken)
         {
+            if (request.pageNumber.HasValue && request.pageSize.HasValue)
+            {
+                return await GetAllAsync(orderBy: query => query.OrderBy(e => e.Id), page: request.pageNumber, pageSize: request.pageSize);
+            }
             return await GetAllAsync();
         }
 
@@ -42,9 +46,9 @@ namespace Application.CQRS.Templates
         }
 
         public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> GetAllAsync
-            (Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int page, int pageSize)
+            (Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int? page, int? pageSize)
         {
-            IEnumerable<TEntity?> entities = await _repository.GetAllAsync(orderBy, page, pageSize);
+            IEnumerable<TEntity?> entities = await _repository.GetAllAsync(orderBy, (int)page!, (int)pageSize!);
             var viewModels = _mapper.Map<IEnumerable<TViewModel>>(entities);
             return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModels);
         }
