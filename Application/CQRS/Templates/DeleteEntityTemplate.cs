@@ -1,4 +1,4 @@
-﻿using Application.CQRS.Commands.Delete;
+﻿using Application.CQRS.Commands;
 using Domain.Entity.Generics;
 using Domain.Repository;
 using MediatR;

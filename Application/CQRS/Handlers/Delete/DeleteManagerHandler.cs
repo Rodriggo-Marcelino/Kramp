@@ -1,4 +1,4 @@
-﻿using Application.CQRS.Commands.Delete;
+﻿using Application.CQRS.Commands;
 using Application.CQRS.Templates;
 using Domain.Entity.User;
 using Services.Repositories;

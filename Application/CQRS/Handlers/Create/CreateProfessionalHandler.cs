@@ -1,4 +1,4 @@
-﻿using Application.CQRS.Commands.Create;
+﻿using Application.CQRS.Commands;
 using Application.CQRS.DTOs.Create;
 using Application.CQRS.Templates;
 using Application.CQRS.ViewModels;

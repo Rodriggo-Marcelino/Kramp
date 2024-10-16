@@ -1,4 +1,4 @@
-﻿using Application.CQRS.Commands.Create;
+﻿using Application.CQRS.Commands;
 using Application.CQRS.ViewModels;
 using Application.Response;
 using AutoMapper;

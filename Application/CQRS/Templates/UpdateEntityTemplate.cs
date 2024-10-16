@@ -1,4 +1,4 @@
-﻿using Application.CQRS.Commands.Update;
+﻿using Application.CQRS.Commands;
 using Application.CQRS.DTOs.Update;
 using Application.CQRS.ViewModels;
 using Application.Response;
