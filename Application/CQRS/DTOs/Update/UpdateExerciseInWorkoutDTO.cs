@@ -2,7 +2,7 @@
 
 namespace Application.CQRS.DTOs.Update
 {
-    public record UpdateExerciseInWorkoutDTO
+    public record UpdateExerciseInWorkoutDTO : UpdateGenericDTO
     {
         [JsonIgnore]
         public Guid Id { get; set; }

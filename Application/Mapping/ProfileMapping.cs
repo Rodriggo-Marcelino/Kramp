@@ -17,8 +17,7 @@ namespace Application.Mapping
 
             CreateMap<CreateUserDTO, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
 
             CreateMap<UpdateUserDTO, Manager>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -34,8 +33,7 @@ namespace Application.Mapping
 
             CreateMap<CreateGymDTO, Gym>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
 
             CreateMap<UpdateGymDTO, Gym>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -51,8 +49,7 @@ namespace Application.Mapping
 
             CreateMap<CreateUserDTO, Member>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
 
             CreateMap<CreateUserDTO, Member>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
@@ -68,8 +65,7 @@ namespace Application.Mapping
 
             CreateMap<CreateProfessionalDTO, Professional>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
 
             CreateMap<UpdateProfessionalDTO, Professional>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())

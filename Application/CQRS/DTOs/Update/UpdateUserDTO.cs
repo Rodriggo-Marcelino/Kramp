@@ -1,6 +1,6 @@
 namespace Application.CQRS.DTOs.Update;
 
-public record UpdateUserDTO
+public record UpdateUserDTO : UpdateGenericDTO
 {
     public string? Name { get; set; }
     public string? Surname { get; set; }

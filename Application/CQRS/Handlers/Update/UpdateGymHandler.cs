@@ -17,10 +17,13 @@ namespace Application.CQRS.Handlers.Update
         GymViewModel,
         GymRepository>(repository, mapper)
     {
-        protected override void ManipulateEntityBeforeUpdate(Gym entity)
+        protected override void ManipulateEntityBeforeUpdate(IEnumerable<Gym> entities)
         {
-            entity.RefreshToken = Guid.NewGuid().ToString();
-            entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            foreach (var entity in entities)
+            {
+                entity.RefreshToken = Guid.NewGuid().ToString();
+                entity.RefreshTokenExpiryTime = DateTime.UtcNow.AddMonths(6);
+            }
         }
     }
 }

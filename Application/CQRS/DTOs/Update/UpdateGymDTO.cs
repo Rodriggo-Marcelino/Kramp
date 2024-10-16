@@ -1,6 +1,6 @@
 ﻿namespace Application.CQRS.DTOs.Update
 {
-    public record UpdateGymDTO
+    public record UpdateGymDTO : UpdateGenericDTO
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

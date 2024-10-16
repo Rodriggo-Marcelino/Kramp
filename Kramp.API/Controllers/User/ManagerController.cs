@@ -41,7 +41,8 @@ namespace Kramp.API.Controllers.User
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<UserViewModel>> UpdateManager(Guid id, [FromBody] UpdateUserDTO dto)
         {
-            var command = new UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>(id, dto);
+            dto.Id = id;
+            var command = new UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>(dto);
             var result = await _mediator.Send(command);
             return Ok(result);
         }

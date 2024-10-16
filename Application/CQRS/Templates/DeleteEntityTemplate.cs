@@ -18,16 +18,13 @@ namespace Application.CQRS.Templates
             return await DeleteByIdAsync(request.Id);
         }
 
-        public async Task<Unit> DeleteByIdAsync(Guid id)
+        public async Task<Unit> DeleteByIdAsync(TCommand request)
         {
-            TEntity? entity = await _repository.GetByIdAsync(id);
+            var ids = request.Ids;
+            
+            IEnumerable<TEntity?> entityList = await _repository.FindAllByIdAsync(ids);
 
-            if (entity == null)
-            {
-                throw new Exception($"Entity with id {id} not found");
-            }
-
-            await _repository.DeleteAsync(entity);
+            await _repository.DeleteAsync(entityList);
 
             return Unit.Value;
         }

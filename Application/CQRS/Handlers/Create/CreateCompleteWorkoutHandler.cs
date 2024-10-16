@@ -40,13 +40,56 @@ public class CreateCompleteWorkoutHandler
         _mediator = mediator;
     }
 
-    protected override void ManipulateEntityBeforeSave(CreateCompleteWorkoutDTO data, Workout entity)
+    protected override void ManipulateEntityBeforeSave(IEnumerable<CreateCompleteWorkoutDTO> request, IEnumerable<Workout> entities)
+    {
+        foreach (var entity in entities)
+        {
+            while (request.GetEnumerator().MoveNext())
+            {
+                var currDto = request.GetEnumerator().Current;
+                if (currDto.Name == entity.Name)
+                {
+                    SetCompleteWorkoutProperties(currDto, entity);
+                }
+            }
+        }
+    }
+
+    protected override void ManipulateEntityAfterSave(IEnumerable<CreateCompleteWorkoutDTO> request, IEnumerable<Workout> entities)
+    {
+        foreach (var workout in entities)
+        {
+            foreach (var dto in request)
+            {
+                if (dto.Name == workout.Name)
+                {
+                    foreach (var exercise in dto.Exercises)
+                    {
+                        exercise.WorkoutId = workout.Id;
+                    }
+                    
+                    SaveAllExercisesInWorkout(dto.Exercises);
+                }
+            }
+        }
+    }
+
+    protected override ResponseBase<IEnumerable<CompleteWorkoutViewModel>> CreateResponse(IEnumerable<Workout>? entityList)
+    {
+        var viewModels = _mapper.Map<IEnumerable<CompleteWorkoutViewModel>>(entityList);
+
+        viewModels = InsertExercisesInViewModel(viewModels, entityList);
+        
+        return new ResponseBase<IEnumerable<CompleteWorkoutViewModel>>(new ResponseInfo(), viewModels);
+    }
+    
+    private void SetCompleteWorkoutProperties(CreateCompleteWorkoutDTO dto, Workout entity)
     {
         var seriesCount = 0;
         var repetitionCount = 0;
         var targetedMuscles = new List<Muscle>();
-
-        foreach (var exercise in data.Exercises)
+        
+        foreach (var exercise in dto.Exercises)
         {
             seriesCount += exercise.Series;
             repetitionCount += exercise.Repetitions;
@@ -61,29 +104,43 @@ public class CreateCompleteWorkoutHandler
                 targetedMuscles.Add(getExercise.Result.SynergistMuscle);
             }
         }
-
+        
         entity.RepetitionCount = repetitionCount;
         entity.SeriesCount = seriesCount;
         entity.TargetedMuscles = targetedMuscles;
         entity.CreatedAt = DateTime.UtcNow;
     }
 
-    protected override void ManipulateEntityAfterSave(CreateCompleteWorkoutDTO data, Workout entity)
+    private void SaveAllExercisesInWorkout(IEnumerable<AddExerciseToWorkoutDTO> dto)
     {
         var command = new
-            CreateEntityCommand<WorkoutExercise, AddExerciseToWorkoutDTO, WorkoutExerciseViewModel>(data.Exercises);
+            CreateEntityCommand<WorkoutExercise, AddExerciseToWorkoutDTO, WorkoutExerciseViewModel>(dto);
         _mediator.Send(command);
     }
 
-    protected override ResponseBase<CompleteWorkoutViewModel> CreateResponse(Workout entity)
+    private IEnumerable<CompleteWorkoutViewModel> InsertExercisesInViewModel(
+        IEnumerable<CompleteWorkoutViewModel> viewModels, IEnumerable<Workout>? entityList)
     {
-        var viewModel = _mapper.Map<CompleteWorkoutViewModel>(entity);
-        var workoutExercises = _workoutExerciseRepository
-            .FindAllAsync(exercise =>
-                exercise.WorkoutId == entity.Id)
-            .Result
-            .ToList();
-        viewModel.Exercises = _mapper.Map<List<WorkoutExerciseViewModel>>(workoutExercises);
-        return new ResponseBase<CompleteWorkoutViewModel>(new ResponseInfo(), viewModel);
+        var updatedViewModels = new List<CompleteWorkoutViewModel>();
+        
+        foreach (var workout in entityList)
+        {
+            var workoutExercises = _workoutExerciseRepository
+                .FindAllAsync(exercise =>
+                    exercise.WorkoutId == workout.Id)
+                .Result
+                .ToList();
+
+            foreach (var viewModel in viewModels)
+            {
+                if (viewModel.Name == workout.Name)
+                {
+                    viewModel.Exercises = _mapper.Map<List<WorkoutExerciseViewModel>>(workoutExercises);
+                    updatedViewModels.Add(viewModel);
+                }
+            }
+        }
+        
+        return updatedViewModels;
     }
 }

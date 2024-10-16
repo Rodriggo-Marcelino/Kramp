@@ -1,9 +1,10 @@
 using System.Text.Json.Serialization;
+using Application.CQRS.GenericsCQRS.Generic.DTOs;
 using Domain.Entity.Enum;
 
 namespace Application.CQRS.DTOs.Update;
 
-public record UpdateSimpleWorkoutDTO
+public record UpdateSimpleWorkoutDTO : UpdateGenericDTO
 {
     [JsonIgnore]
     public Guid Id { get; set; }

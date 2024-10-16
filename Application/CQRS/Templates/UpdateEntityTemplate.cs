@@ -11,56 +11,72 @@ namespace Application.CQRS.Templates
     public abstract class UpdateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, TRepository>(
         TRepository repository,
         IMapper mapper)
-        : IRequestHandler<TCommand, ResponseBase<TViewModel>>
+        : IRequestHandler<TCommand, ResponseBase<IEnumerable<TViewModel>>>
         where TEntity : EntityGeneric
         where TCommand : UpdateEntityCommand<TEntity, TDTO, TViewModel>
         where TViewModel : GenericViewModel
         where TRepository : IRepository<TEntity>
-        where TDTO : class
+        where TDTO : UpdateGenericDTO
     {
         private readonly TRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
-        public virtual async Task<ResponseBase<TViewModel>> Handle(TCommand request,
+        public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TCommand request,
             CancellationToken cancellationToken)
         {
             return await ExecuteAsync(request);
         }
 
-        public async Task<ResponseBase<TViewModel>> ExecuteAsync(TCommand request)
+        public async Task<ResponseBase<IEnumerable<TViewModel>>> ExecuteAsync(TCommand request)
         {
-            TEntity? entity = await GetEntityAsync(request.Id);
+            IEnumerable<TEntity> updatedEntitiesList = MapCommandToEntity(request.DataList);
 
-            if (entity == null) throw new Exception("Entity not found.");
+            ManipulateEntityBeforeUpdate(updatedEntitiesList);
 
-            TEntity updatedEntity = MapCommandToEntity(request.Data, entity);
+            IEnumerable<TEntity?>? savedUpdatedEntitiesList = await UpdateEntityAsync(updatedEntitiesList);
 
-            ManipulateEntityBeforeUpdate(updatedEntity);
+            ManipulateEntityAfterUpdate(savedUpdatedEntitiesList);
 
-            TEntity? savedUpdatedEntity = await UpdateEntityAsync(updatedEntity);
-
-            ManipulateEntityAfterUpdate(savedUpdatedEntity);
-
-            return CreateResponse(savedUpdatedEntity);
+            return CreateResponse(savedUpdatedEntitiesList);
         }
 
-        protected virtual async Task<TEntity?> GetEntityAsync(Guid id) => await _repository.GetByIdAsync(id);
+        protected virtual IEnumerable<TEntity> MapCommandToEntity(IEnumerable<TDTO>? dataList)
+        {
+            return _mapper.Map<IEnumerable<TEntity>>(dataList);
+        }
 
-        protected virtual TEntity MapCommandToEntity(TDTO data, TEntity entity) => _mapper.Map(data, entity);
+        protected virtual void ManipulateEntityBeforeUpdate(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.UpdatedAt = DateTime.UtcNow;
+            }
+        }
 
-        protected virtual void ManipulateEntityBeforeUpdate(TEntity entity)
+        protected virtual async Task<IEnumerable<TEntity?>?> UpdateEntityAsync(IEnumerable<TEntity> entities)
+        {
+            List<TEntity> validEntities = new List<TEntity>();
+            
+            foreach (var entity in entities)
+            {
+                var entityFromDb = await _repository.GetByIdAsync(entity.Id);
+                var updatedEntity = _mapper.Map(entity, entityFromDb);
+                validEntities.Add(updatedEntity!);
+            }
+
+            if (validEntities.Count > 0)
+                return await _repository.UpdateAsync(validEntities);
+
+            return null;
+        }
+
+        protected virtual void ManipulateEntityAfterUpdate(IEnumerable<TEntity?>? entity)
         {
         }
 
-        protected virtual async Task<TEntity?> UpdateEntityAsync(TEntity entity) => await _repository.UpdateAsync(entity);
-
-        protected virtual void ManipulateEntityAfterUpdate(TEntity? entity)
+        protected virtual ResponseBase<IEnumerable<TViewModel>> CreateResponse(IEnumerable<TEntity?>? entity)
         {
-        }
-
-        protected virtual ResponseBase<TViewModel> CreateResponse(TEntity? entity)
-        {
-            var viewModel = _mapper.Map<TViewModel>(entity);
-            return new ResponseBase<TViewModel>(new ResponseInfo(), viewModel);
+            var viewModel = _mapper.Map<IEnumerable<TViewModel>>(entity);
+            return new ResponseBase<IEnumerable<TViewModel>>(new ResponseInfo(), viewModel);
         }
     }
 }
