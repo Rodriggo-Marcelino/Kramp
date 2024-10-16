@@ -1,4 +1,5 @@
 ﻿using Application.CQRS.Commands.Update;
+using Application.CQRS.DTOs.Update;
 using Application.CQRS.ViewModels;
 using Application.Response;
 using AutoMapper;
@@ -55,7 +56,7 @@ namespace Application.CQRS.Templates
         protected virtual async Task<IEnumerable<TEntity?>?> UpdateEntityAsync(IEnumerable<TEntity> entities)
         {
             List<TEntity> validEntities = new List<TEntity>();
-            
+
             foreach (var entity in entities)
             {
                 var entityFromDb = await _repository.GetByIdAsync(entity.Id);

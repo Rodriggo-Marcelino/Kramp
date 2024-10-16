@@ -1,4 +1,18 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.Validator;
+﻿using Application.CQRS.Commands.Create;
+using Application.CQRS.Commands.Delete;
+using Application.CQRS.Commands.Update;
+using Application.CQRS.DTOs.Create;
+using Application.CQRS.DTOs.Update;
+using Application.CQRS.GenericsCQRS.Generic.Validator;
+using Application.CQRS.Handlers.Create;
+using Application.CQRS.Handlers.Delete;
+using Application.CQRS.Handlers.Get;
+using Application.CQRS.Handlers.Update;
+using Application.CQRS.Queries;
+using Application.CQRS.Templates;
+using Application.CQRS.Validators.Create;
+using Application.CQRS.Validators.Update;
+using Application.CQRS.ViewModels;
 using Application.ExceptionHandler;
 using Application.Mapping;
 using Application.Response;
@@ -18,20 +32,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Application.CQRS.Queries;
-using Application.CQRS.Templates;
-using Application.CQRS.ViewModels;
-using Application.CQRS.DTOs.Create;
-using Application.CQRS.DTOs.Update;
-using Application.CQRS.Validators.Create;
-using Application.CQRS.Validators.Update;
-using Application.CQRS.Handlers.Create;
-using Application.CQRS.Handlers.Delete;
-using Application.CQRS.Handlers.Get;
-using Application.CQRS.Handlers.Update;
-using Application.CQRS.Commands.Create;
-using Application.CQRS.Commands.Delete;
-using Application.CQRS.Commands.Update;
 
 namespace Kramp.API
 {
@@ -115,13 +115,13 @@ namespace Kramp.API
             var services = builder.Services;
 
             #region RegisterCQRS for all
-            RegisterCqrs<
+            RegisterIEnumerableCqrs<
                 CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
                 CreateManagerHandler,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
-            RegisterCqrs<
+            RegisterIEnumerableCqrs<
                 UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
                 UpdateManagerHandler,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,

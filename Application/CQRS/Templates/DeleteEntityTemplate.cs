@@ -15,13 +15,13 @@ namespace Application.CQRS.Templates
         private readonly TRepository _repository = repository;
         public virtual async Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
         {
-            return await DeleteByIdAsync(request.Id);
+            return await DeleteByIdAsync(request);
         }
 
         public async Task<Unit> DeleteByIdAsync(TCommand request)
         {
             var ids = request.Ids;
-            
+
             IEnumerable<TEntity?> entityList = await _repository.FindAllByIdAsync(ids);
 
             await _repository.DeleteAsync(entityList);
