@@ -125,7 +125,7 @@ public class PlanController(IMediator _mediator) : ControllerBase
     }
 
     [HttpPut("{id:guid}/workouts")]
-    public async Task<IActionResult> UpdateWorkouts(Guid planId, UpdateWorkoutInPlanDTO data)
+    public async Task<IActionResult> UpdateWorkouts(Guid id, UpdateWorkoutInPlanDTO data)
     {
         data.Id = id;
         var command = new UpdateEntityCommand<PlanWorkout, UpdateWorkoutInPlanDTO, PlanWorkoutViewModel>(data);

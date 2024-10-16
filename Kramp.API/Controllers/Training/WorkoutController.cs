@@ -127,7 +127,7 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     [HttpPut("{id:guid}/exercises")]
     public async Task<IActionResult> UpdateWorkoutExercise(Guid id, UpdateExerciseInWorkoutDTO data)
     {
-        data.Id = id;
+        data.WorkoutId = id;
         var command = new UpdateEntityCommand<WorkoutExercise, UpdateExerciseInWorkoutDTO, WorkoutExerciseViewModel>(data);
         var result = await _mediator.Send(command);
         return Ok(result);
