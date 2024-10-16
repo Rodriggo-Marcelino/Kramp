@@ -81,7 +81,7 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     }
 
     [HttpGet("details/all/page")]
-    public async Task<ActionResult<IEnumerable<SimpleWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(
+    public async Task<ActionResult<IEnumerable<CompleteWorkoutViewModel>>> GetAllCompleteWorkoutsPageable(
         [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         var query = new GetAllEntitiesQuery<CompleteWorkoutViewModel>(pageNumber, pageSize);
