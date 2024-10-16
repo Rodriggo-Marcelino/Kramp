@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.CQRS.Commands.Delete
+namespace Application.CQRS.Commands
 {
     public record DeleteEntityCommand<TEntity> : IRequest<Unit>
     {

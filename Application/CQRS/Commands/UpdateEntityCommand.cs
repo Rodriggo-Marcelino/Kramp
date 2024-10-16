@@ -1,7 +1,7 @@
 ﻿using Application.Response;
 using MediatR;
 
-namespace Application.CQRS.Commands.Update
+namespace Application.CQRS.Commands
 {
     public record UpdateEntityCommand<TEntity, TDTO, TViewModel>
         : IRequest<ResponseBase<IEnumerable<TViewModel>>>

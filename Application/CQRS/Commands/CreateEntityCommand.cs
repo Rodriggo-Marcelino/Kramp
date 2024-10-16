@@ -1,7 +1,7 @@
 ﻿using Application.Response;
 using MediatR;
 
-namespace Application.CQRS.Commands.Create
+namespace Application.CQRS.Commands
 {
     public record CreateEntityCommand<TEntity, TDTO, TViewModel> : IRequest<ResponseBase<IEnumerable<TViewModel>>>
     {

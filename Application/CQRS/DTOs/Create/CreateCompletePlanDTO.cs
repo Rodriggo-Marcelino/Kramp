@@ -1,10 +1,6 @@
-﻿using Application.CQRS.ViewModels;
-using Application.Response;
-using MediatR;
-
-namespace Application.CQRS.Commands.Create
+﻿namespace Application.CQRS.DTOs.Create
 {
-    public record CreateCompletePlanCommand : IRequest<ResponseBase<CompletePlanViewModel>>
+    public record CreateCompletePlanDTO
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
