@@ -15,11 +15,11 @@ namespace Application.Mapping
 
             CreateMap<CreateUserDTO, Manager>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(dto => dto.Password));
 
             CreateMap<UpdateUserDTO, Manager>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Manager, UserViewModel>()
@@ -31,11 +31,11 @@ namespace Application.Mapping
 
             CreateMap<CreateGymDTO, Gym>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(dto => dto.Password));
 
             CreateMap<UpdateGymDTO, Gym>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Gym, GymViewModel>()
@@ -47,11 +47,11 @@ namespace Application.Mapping
 
             CreateMap<CreateUserDTO, Member>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
-
-            CreateMap<CreateUserDTO, Member>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(dto => dto.Password));
+
+            CreateMap<UpdateUserDTO, Member>()
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Member, UserViewModel>()
@@ -63,11 +63,11 @@ namespace Application.Mapping
 
             CreateMap<CreateProfessionalDTO, Professional>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore());
+                .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(dto => dto.Password));
 
             CreateMap<UpdateProfessionalDTO, Professional>()
                 .ForMember(dest => dest.TypeDocument, opt => opt.Ignore())
-                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Professional, ProfessionalViewModel>()
