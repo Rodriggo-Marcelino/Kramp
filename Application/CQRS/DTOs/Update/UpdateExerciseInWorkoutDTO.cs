@@ -1,11 +1,7 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Application.CQRS.DTOs.Update
+﻿namespace Application.CQRS.DTOs.Update
 {
     public record UpdateExerciseInWorkoutDTO : UpdateGenericDTO
     {
-        [JsonIgnore]
-        public Guid Id { get; set; }
         public Guid WorkoutId { get; set; }
         public Guid ExerciseId { get; set; }
         public int RestTimeInSeconds { get; set; }
