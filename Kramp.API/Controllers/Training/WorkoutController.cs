@@ -45,8 +45,8 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     {
         data.ForEach(x => x.WorkoutId = id);
         var command = new CreateEntityCommand<WorkoutExercise, AddExerciseToWorkoutDTO, WorkoutExerciseViewModel>(data);
-        await _mediator.Send(command);
-        return Created("api/workouts/{id}/exercises/list", data);
+        var result = await _mediator.Send(command);
+        return Created("api/workouts/{id}/exercises/list", result);
     }
 
     #endregion
@@ -107,8 +107,8 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
     public async Task<ActionResult<WorkoutExerciseViewModel>> GetWorkoutExercisesById(Guid id)
     {
         var query = new GetEntityByIdQuery<WorkoutExerciseViewModel>(id);
-        var workout = await _mediator.Send(query);
-        return Ok(workout);
+        var workoutExercise = await _mediator.Send(query);
+        return Ok(workoutExercise);
     }
 
     #endregion
@@ -145,10 +145,10 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}/exercises/{exerciseId:guid}")]
-    public async Task<IActionResult> RemoveExerciseFromWorkout(Guid id, Guid exerciseId)
+    [HttpDelete("{id:guid}/exercises/{workoutExerciseId:guid}")]
+    public async Task<IActionResult> RemoveExerciseFromWorkout(Guid id, Guid workoutExerciseId)
     {
-        var command = new DeleteEntityCommand<WorkoutExercise>(id);
+        var command = new DeleteEntityCommand<WorkoutExercise>(workoutExerciseId);
         await _mediator.Send(command);
         return NoContent();
     }

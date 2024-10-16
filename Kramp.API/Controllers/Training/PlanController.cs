@@ -1,6 +1,7 @@
 using Application.CQRS.Commands;
 using Application.CQRS.DTOs.Create;
 using Application.CQRS.DTOs.Update;
+using Application.CQRS.Queries;
 using Application.CQRS.ViewModels;
 using Domain.Entity.Training;
 using MediatR;
@@ -33,13 +34,19 @@ public class PlanController(IMediator _mediator) : ControllerBase
     [HttpPost("{id:guid}/workouts")]
     public async Task<IActionResult> AddWorkoutToPlan(Guid id, AddWorkoutToPlanDTO data)
     {
-        throw new NotImplementedException();
+        data.WorkoutId = id;
+        var command = new CreateEntityCommand<PlanWorkout, AddWorkoutToPlanDTO, PlanWorkoutViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("api/plans/{id}/workouts", result);
     }
 
     [HttpPost("{id:guid}/workouts/list")]
     public async Task<IActionResult> AddListWorkoutToPlan(Guid id, List<AddWorkoutToPlanDTO> data)
     {
-        throw new NotImplementedException();
+        data.ForEach(x => x.PlanId = id);
+        var command = new CreateEntityCommand<PlanWorkout, AddWorkoutToPlanDTO, PlanWorkoutViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("api/plans/{id}/workouts/list", result);
     }
 
     #endregion
@@ -49,45 +56,59 @@ public class PlanController(IMediator _mediator) : ControllerBase
     [HttpGet("simple/all")]
     public async Task<ActionResult<IEnumerable<SimplePlanViewModel>>> GetAllPlans()
     {
-        throw new NotImplementedException();
+        var query = new GetAllEntitiesQuery<SimplePlanViewModel>();
+        var plans = await _mediator.Send(query);
+        return Ok(plans);
     }
 
     [HttpGet("details/all")]
     public async Task<ActionResult<IEnumerable<CompletePlanViewModel>>> GetAllPlansDetail()
     {
-        throw new NotImplementedException();
+        var query = new GetAllEntitiesQuery<CompletePlanViewModel>();
+        var plans = await _mediator.Send(query);
+        return Ok(plans);
     }
 
     [HttpGet("simple/all/page")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans([FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10)
     {
-        throw new NotImplementedException();
+        var query = new GetAllEntitiesQuery<SimplePlanViewModel>(pageNumber, pageSize);
+        var plans = await _mediator.Send(query);
+        return Ok(plans);
     }
 
     [HttpGet("details/all/page")]
-    public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail([FromQuery] int pageNumber = 1,
+    public async Task<ActionResult<List<CompletePlanViewModel>>> GetAllPlansDetail([FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10)
     {
-        throw new NotImplementedException();
+        var query = new GetAllEntitiesQuery<CompletePlanViewModel>(pageNumber, pageSize);
+        var plans = await _mediator.Send(query);
+        return Ok(plans);
     }
 
     [HttpGet("{id:guid}/simple")]
     public async Task<ActionResult<SimplePlanViewModel>> GetPlanById(Guid id)
     {
-        throw new NotImplementedException();
+        var query = new GetEntityByIdQuery<SimplePlanViewModel>(id);
+        var plan = await _mediator.Send(query);
+        return Ok(plan);
     }
 
     [HttpGet("{id:guid}/details")]
     public async Task<ActionResult<CompletePlanViewModel>> GetPlanDetailById(Guid id)
     {
-        throw new NotImplementedException();
+        var query = new GetEntityByIdQuery<CompletePlanViewModel>(id);
+        var plan = await _mediator.Send(query);
+        return Ok(plan);
     }
 
-    [HttpGet("{id:guid}/plans")]
+    [HttpGet("{id:guid}/workouts")]
     public async Task<ActionResult<List<PlanWorkoutViewModel>>> GetPlanWorkoutsById(Guid id)
     {
-        throw new NotImplementedException();
+        var query = new GetEntityByIdQuery<PlanWorkoutViewModel>(id);
+        var planWorkout = await _mediator.Send(query);
+        return Ok(planWorkout);
     }
 
     #endregion
@@ -95,15 +116,21 @@ public class PlanController(IMediator _mediator) : ControllerBase
     #region PUT
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<SimplePlanViewModel>> Update(Guid Id, UpdateSimplePlanDTO data)
+    public async Task<ActionResult<SimplePlanViewModel>> Update(Guid id, UpdateSimplePlanDTO data)
     {
-        throw new NotImplementedException();
+        data.Id = id;
+        var command = new UpdateEntityCommand<Plan, UpdateSimplePlanDTO, SimplePlanViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     [HttpPut("{id:guid}/workouts")]
     public async Task<IActionResult> UpdateWorkouts(Guid planId, UpdateWorkoutInPlanDTO data)
     {
-        throw new NotImplementedException();
+        data.Id = id;
+        var command = new UpdateEntityCommand<PlanWorkout, UpdateWorkoutInPlanDTO, PlanWorkoutViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     #endregion
@@ -118,16 +145,12 @@ public class PlanController(IMediator _mediator) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{planId:guid}/Workouts/{workoutId:guid}")]
-    public async Task<IActionResult> RemoveWorkoutFromPlan(Guid planId, Guid workoutId)
+    [HttpDelete("{id:guid}/Workouts/{planWorkoutId:guid}")]
+    public async Task<IActionResult> RemoveWorkoutFromPlan(Guid id, Guid planWorkoutId)
     {
-        throw new NotImplementedException();
-    }
-
-    [HttpDelete("{planId:guid}/Workouts")]
-    public async Task<IActionResult> RemoveAllWorkoutsFromPlan(Guid planId)
-    {
-        throw new NotImplementedException();
+        var command = new DeleteEntityCommand<WorkoutExercise>(planWorkoutId);
+        await _mediator.Send(command);
+        return NoContent();
     }
 
     #endregion
