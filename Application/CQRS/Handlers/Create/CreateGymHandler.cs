@@ -34,26 +34,26 @@ namespace Application.CQRS.Handlers.Create
         protected override ResponseBase<IEnumerable<GymViewModel>> CreateResponse(IEnumerable<Gym>? entityList)
         {
             var viewModelList = _mapper.Map<IEnumerable<GymViewModel>>(entityList);
-            
-            var entityEnumerator = entityList?.GetEnumerator();
-            var viewModelEnumerator = viewModelList.GetEnumerator();
-            
+
+            var entities = entityList?.ToList();
+            var viewModels = viewModelList.ToList();
+
             var resultList = new List<GymViewModel>();
 
-            while (entityEnumerator.MoveNext())
+            foreach (var entity in entities)
             {
-                while (viewModelEnumerator.MoveNext())
+                foreach (var viewModel in viewModels)
                 {
-                    if (entityEnumerator.Current.Username == viewModelEnumerator.Current.Username)
+                    if (entity.Username == viewModel.Username)
                     {
-                        resultList.Add(SetUserToken(viewModelEnumerator.Current, entityEnumerator.Current));
+                        resultList.Add(SetUserToken(viewModel, entity));
                     }
                 }
             }
-            
+
             return new ResponseBase<IEnumerable<GymViewModel>>(new ResponseInfo(), resultList);
         }
-        
+
         private void SetGymProperties(Gym entity)
         {
             entity.CreatedAt = DateTime.UtcNow;

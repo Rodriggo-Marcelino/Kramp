@@ -32,26 +32,26 @@ namespace Application.CQRS.Handlers.Create
         protected override ResponseBase<IEnumerable<UserViewModel>> CreateResponse(IEnumerable<Member>? entityList)
         {
             var viewModelList = _mapper.Map<IEnumerable<UserViewModel>>(entityList);
-            
-            var entityEnumerator = entityList?.GetEnumerator();
-            var viewModelEnumerator = viewModelList.GetEnumerator();
-            
+
+            var entities = entityList?.ToList();
+            var viewModels = viewModelList.ToList();
+
             var resultList = new List<UserViewModel>();
 
-            while (entityEnumerator.MoveNext())
+            foreach (var entity in entities)
             {
-                while (viewModelEnumerator.MoveNext())
+                foreach (var viewModel in viewModels)
                 {
-                    if (entityEnumerator.Current.Username == viewModelEnumerator.Current.Username)
+                    if (entity.Username == viewModel.Username)
                     {
-                        resultList.Add(SetUserToken(viewModelEnumerator.Current, entityEnumerator.Current));
+                        resultList.Add(SetUserToken(viewModel, entity));
                     }
                 }
             }
-            
+
             return new ResponseBase<IEnumerable<UserViewModel>>(new ResponseInfo(), resultList);
         }
-        
+
         private void SetMemberProperties(Member entity)
         {
             entity.CreatedAt = DateTime.UtcNow;

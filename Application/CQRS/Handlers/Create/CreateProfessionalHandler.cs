@@ -35,26 +35,26 @@ namespace Application.CQRS.Handlers.Create
         protected override ResponseBase<IEnumerable<ProfessionalViewModel>> CreateResponse(IEnumerable<Professional>? entityList)
         {
             var viewModelList = _mapper.Map<IEnumerable<ProfessionalViewModel>>(entityList);
-            
-            var entityEnumerator = entityList?.GetEnumerator();
-            var viewModelEnumerator = viewModelList.GetEnumerator();
-            
+
+            var entities = entityList?.ToList();
+            var viewModels = viewModelList.ToList();
+
             var resultList = new List<ProfessionalViewModel>();
 
-            while (entityEnumerator.MoveNext())
+            foreach (var entity in entities)
             {
-                while (viewModelEnumerator.MoveNext())
+                foreach (var viewModel in viewModels)
                 {
-                    if (entityEnumerator.Current.Username == viewModelEnumerator.Current.Username)
+                    if (entity.Username == viewModel.Username)
                     {
-                        resultList.Add(SetUserToken(viewModelEnumerator.Current, entityEnumerator.Current));
+                        resultList.Add(SetUserToken(viewModel, entity));
                     }
                 }
             }
-            
+
             return new ResponseBase<IEnumerable<ProfessionalViewModel>>(new ResponseInfo(), resultList);
         }
-        
+
         private void SetProfessionalProperties(Professional entity)
         {
             entity.CreatedAt = DateTime.UtcNow;
