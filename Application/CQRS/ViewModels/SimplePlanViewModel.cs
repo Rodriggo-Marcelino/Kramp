@@ -1,6 +1,6 @@
 namespace Application.CQRS.ViewModels;
 
-public record SimplePlanViewModel
+public record SimplePlanViewModel : GenericViewModel
 {
     public string? Name { get; set; }
     public string? Description { get; set; }

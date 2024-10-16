@@ -1,6 +1,4 @@
-﻿using Application.CQRS.Commands.Create;
-using Application.CQRS.Commands.Update;
-using Application.CQRS.DTOs.Create;
+﻿using Application.CQRS.DTOs.Create;
 using Application.CQRS.DTOs.Update;
 using Application.CQRS.ViewModels;
 using AutoMapper;
@@ -79,18 +77,18 @@ namespace Application.Mapping
 
             #region Plan Mappings
 
-            CreateMap<CreateSimplePlanCommand, Plan>()
+            CreateMap<CreateSimplePlanDTO, Plan>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<UpdateSimplePlanCommand, Plan>()
+            CreateMap<UpdateSimplePlanDTO, Plan>()
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<Plan, SimplePlanViewModel>().ReverseMap();
 
-            CreateMap<CreateCompletePlanCommand, Plan>()
+            CreateMap<CreateCompletePlanDTO, Plan>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Workouts, opt => opt.MapFrom(src => src.Workouts))
                 .ReverseMap();

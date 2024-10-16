@@ -1,6 +1,4 @@
-﻿using Application.CQRS.Commands.Create;
-using Application.CQRS.Commands.Delete;
-using Application.CQRS.Commands.Update;
+﻿using Application.CQRS.Commands;
 using Application.CQRS.DTOs.Create;
 using Application.CQRS.DTOs.Update;
 using Application.CQRS.Queries;

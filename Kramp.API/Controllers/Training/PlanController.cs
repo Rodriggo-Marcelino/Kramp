@@ -1,40 +1,43 @@
-using Application.CQRS.Commands.Create;
-using Application.CQRS.Commands.Update;
+using Application.CQRS.Commands;
+using Application.CQRS.DTOs.Create;
+using Application.CQRS.DTOs.Update;
 using Application.CQRS.ViewModels;
-using AutoMapper;
 using Domain.Entity.Training;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
 
 namespace Kramp.API.Controllers.Training;
 
-[Route("api/[controller]")]
+[Route("api/plans")]
 [ApiController]
-public class PlanController(IMediator _mediator, PlanRepository _repository, IMapper _mapper) : ControllerBase
+public class PlanController(IMediator _mediator) : ControllerBase
 {
     #region POST
 
-    [HttpPost("Create/Simple")]
-    public async Task<ActionResult<SimplePlanViewModel>> CreateSimple(CreateSimplePlanCommand command)
+    [HttpPost("simple")]
+    public async Task<ActionResult<SimplePlanViewModel>> CreateSimple(CreateSimplePlanDTO data)
     {
-        return Created("", await _mediator.Send(command));
+        var command = new CreateEntityCommand<Plan, CreateSimplePlanDTO, SimplePlanViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("", result);
     }
 
-    [HttpPost("Create/Complete")]
-    public async Task<ActionResult<SimplePlanViewModel>> CreateComplete(CreateCompletePlanCommand command)
+    [HttpPost("details")]
+    public async Task<ActionResult<CompletePlanViewModel>> CreateComplete(CreateCompletePlanDTO data)
     {
-        return Created("", await _mediator.Send(command));
+        var command = new CreateEntityCommand<Plan, CreateCompletePlanDTO, CompletePlanViewModel>(data);
+        var result = await _mediator.Send(command);
+        return Created("", result);
     }
 
-    [HttpPost("{planId:guid}/Workouts")]
-    public async Task<IActionResult> AddWorkoutToPlan(Guid planId, AddWorkoutToPlanCommand command)
+    [HttpPost("{id:guid}/workouts")]
+    public async Task<IActionResult> AddWorkoutToPlan(Guid id, AddWorkoutToPlanDTO data)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("{planId:guid}/Workouts/List")]
-    public async Task<IActionResult> AddListWorkoutToPlan(Guid planId, List<AddWorkoutToPlanCommand> command)
+    [HttpPost("{id:guid}/workouts/list")]
+    public async Task<IActionResult> AddListWorkoutToPlan(Guid id, List<AddWorkoutToPlanDTO> data)
     {
         throw new NotImplementedException();
     }
@@ -43,62 +46,46 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
 
     #region GET
 
-    [HttpGet("All/Simple")]
+    [HttpGet("simple/all")]
     public async Task<ActionResult<IEnumerable<SimplePlanViewModel>>> GetAllPlans()
     {
-        var plans = await _repository.GetAllAsync();
-        return Ok(_mapper.Map<IEnumerable<SimplePlanViewModel>>(plans));
+        throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details")]
+    [HttpGet("details/all")]
     public async Task<ActionResult<IEnumerable<CompletePlanViewModel>>> GetAllPlansDetail()
     {
-        var plans = await _repository.GetAllAsync();
-        return Ok(_mapper.Map<IEnumerable<CompletePlanViewModel>>(plans));
+        throw new NotImplementedException();
     }
 
-    [HttpGet("{Id:guid}/Simple")]
-    public async Task<ActionResult<SimplePlanViewModel>> GetPlanById(Guid Id)
-    {
-        Plan? plan = await _repository.GetByIdAsync(Id);
-
-        if (plan == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(_mapper.Map<SimplePlanViewModel>(plan));
-    }
-
-    [HttpGet("{Id:guid}/Details")]
-    public async Task<ActionResult<CompletePlanViewModel>> GetPlanDetailById(Guid Id)
-    {
-        Plan? plan = await _repository.GetByIdAsync(Id);
-
-        if (plan == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(_mapper.Map<CompletePlanViewModel>(plan));
-    }
-
-    [HttpGet("All/Simple/Page")]
+    [HttpGet("simple/all/page")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlans([FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("All/Details/Page")]
+    [HttpGet("details/all/page")]
     public async Task<ActionResult<List<SimplePlanViewModel>>> GetAllPlansDetail([FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("{planId:guid}/Workouts")]
-    public async Task<ActionResult<List<PlanWorkoutViewModel>>> GetPlanWorkoutsById(Guid planId)
+    [HttpGet("{id:guid}/simple")]
+    public async Task<ActionResult<SimplePlanViewModel>> GetPlanById(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpGet("{id:guid}/details")]
+    public async Task<ActionResult<CompletePlanViewModel>> GetPlanDetailById(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpGet("{id:guid}/plans")]
+    public async Task<ActionResult<List<PlanWorkoutViewModel>>> GetPlanWorkoutsById(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -107,15 +94,14 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
 
     #region PUT
 
-    [HttpPut("Update/{Id:guid}")]
-    public async Task<ActionResult<SimplePlanViewModel>> Update(Guid Id, UpdateSimplePlanCommand command)
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<SimplePlanViewModel>> Update(Guid Id, UpdateSimplePlanDTO data)
     {
-        command.Id = Id;
-        return Ok(await _mediator.Send(command));
+        throw new NotImplementedException();
     }
 
-    [HttpPut("{planId:guid}/Workouts")]
-    public async Task<IActionResult> UpdateWorkouts(Guid planId, UpdateWorkoutsInPlanCommand command)
+    [HttpPut("{id:guid}/workouts")]
+    public async Task<IActionResult> UpdateWorkouts(Guid planId, UpdateWorkoutInPlanDTO data)
     {
         throw new NotImplementedException();
     }
@@ -124,11 +110,11 @@ public class PlanController(IMediator _mediator, PlanRepository _repository, IMa
 
     #region DELETE
 
-    [HttpDelete("Delete/{Id:guid}")]
-    public async Task<ActionResult> DeleteById(Guid Id)
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult> DeleteById(Guid id)
     {
-        //TODO: Retirar o método de delete do controller (má prática)
-        await _repository.DeleteByIdAsync(Id);
+        var command = new DeleteEntityCommand<Plan>(id);
+        await _mediator.Send(command);
         return NoContent();
     }
 
