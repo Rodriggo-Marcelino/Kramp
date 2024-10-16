@@ -1,19 +1,14 @@
-﻿using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+﻿using Application.CQRS.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Services.Repositories;
 
 namespace Kramp.API.Controllers.Training
 {
-    [Route("api/[controller]")]
+    [Route("api/exercises")]
     [ApiController]
     public class ExerciseController(ExerciseRepository _repository, IMapper _mapper) : ControllerBase
     {
-        /*
-         * -- Ler Exercícios (Exercises) --
-         * GET /api/exercises (Retorna todos os exercícios)
-         * GET /api/exercises/{id} (Retorna um exercício específico pelo ID)
-         */
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ExerciseViewModel>>> GetAllExercises()

@@ -1,12 +1,4 @@
-﻿using Application.CQRS.GenericsCQRS.Generic.Commands;
-using Application.CQRS.GenericsCQRS.Generic.Queries;
-using Application.CQRS.GenericsCQRS.Generic.Validator;
-using Application.CQRS.GenericsCQRS.User.Commands;
-using Application.CQRS.GenericsCQRS.User.DTOs;
-using Application.CQRS.GenericsCQRS.User.ViewModel;
-using Application.CQRS.UsersCQRS.GymCQ.Validators;
-using Application.CQRS.UsersCQRS.ManagerCQ.Templates;
-using Application.CQRS.UsersCQRS.ManagerCQ.Validators;
+﻿using Application.CQRS.GenericsCQRS.Generic.Validator;
 using Application.ExceptionHandler;
 using Application.Mapping;
 using Application.Response;
@@ -26,7 +18,20 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Application.CQRS.GenericsCQRS.Generic.Handlers;
+using Application.CQRS.Queries;
+using Application.CQRS.Templates;
+using Application.CQRS.ViewModels;
+using Application.CQRS.DTOs.Create;
+using Application.CQRS.DTOs.Update;
+using Application.CQRS.Validators.Create;
+using Application.CQRS.Validators.Update;
+using Application.CQRS.Handlers.Create;
+using Application.CQRS.Handlers.Delete;
+using Application.CQRS.Handlers.Get;
+using Application.CQRS.Handlers.Update;
+using Application.CQRS.Commands.Create;
+using Application.CQRS.Commands.Delete;
+using Application.CQRS.Commands.Update;
 
 namespace Kramp.API
 {
@@ -88,7 +93,7 @@ namespace Kramp.API
 
             builder.Services.AddMediatR(config =>
                 config.RegisterServicesFromAssemblyContaining<
-                    CreateEntityHandler<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
+                    CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                         CreateUserDTO, UserViewModel, ManagerRepository>>()
             );
         }
@@ -111,31 +116,31 @@ namespace Kramp.API
 
             #region RegisterCQRS for all
             RegisterCqrs<
-                CreateEntityHandler<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
-                CreateManagerTemplate,
+                CreateEntityTemplate<Manager, CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>, CreateUserDTO, UserViewModel, ManagerRepository>,
+                CreateManagerhandler,
                 CreateEntityCommand<Manager, CreateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
             RegisterCqrs<
-                UpdateEntityHandler<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
-                UpdateManagerTemplate,
+                UpdateEntityTemplate<Manager, UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>, UpdateUserDTO, UserViewModel, ManagerRepository>,
+                UpdateManagerHandler,
                 UpdateEntityCommand<Manager, UpdateUserDTO, UserViewModel>,
                 UserViewModel>(services);
 
             RegisterVoidCqrs<
-                DeleteEntityHandler<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
-                DeleteManagerTemplate,
+                DeleteEntityTemplate<Manager, DeleteEntityCommand<Manager>, ManagerRepository>,
+                DeleteManagerHandler,
                 DeleteEntityCommand<Manager>>(services);
 
             RegisterCqrs<
-                GetEntityByIdHandler<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
-                GetManagerByIdTemplate,
+                GetEntityByIdTemplate<Manager, GetEntityByIdQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+                GetManagerByIdhandler,
                 GetEntityByIdQuery<UserViewModel>,
                 UserViewModel>(services);
 
             RegisterIEnumerableCqrs<
-                GetAllEntitiesHandler<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
-                GetAllManagersTemplate,
+                GetAllEntitiesTemplate<Manager, GetAllEntitiesQuery<UserViewModel>, UserViewModel, ManagerRepository>,
+                GetAllManagersHandler,
                 GetAllEntitiesQuery<UserViewModel>,
                 UserViewModel>(services);
             #endregion

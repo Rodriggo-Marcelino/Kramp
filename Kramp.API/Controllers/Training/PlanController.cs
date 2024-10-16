@@ -1,5 +1,6 @@
-using Application.CQRS.TrainingCQRS.PlanCQ.Commands;
-using Application.CQRS.TrainingCQRS.PlanCQ.ViewModels;
+using Application.CQRS.Commands.Create;
+using Application.CQRS.Commands.Update;
+using Application.CQRS.ViewModels;
 using AutoMapper;
 using Domain.Entity.Training;
 using MediatR;

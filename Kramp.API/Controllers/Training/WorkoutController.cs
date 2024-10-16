@@ -1,7 +1,10 @@
-using Application.CQRS.GenericsCQRS.Generic.Commands;
-using Application.CQRS.GenericsCQRS.Generic.Queries;
-using Application.CQRS.TrainingCQRS.WorkoutCQ.DTOs;
-using Application.CQRS.TrainingCQRS.WorkoutCQ.ViewModels;
+using Application.CQRS.Commands.Create;
+using Application.CQRS.Commands.Delete;
+using Application.CQRS.Commands.Update;
+using Application.CQRS.DTOs.Create;
+using Application.CQRS.DTOs.Update;
+using Application.CQRS.Queries;
+using Application.CQRS.ViewModels;
 using Domain.Entity.Training;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
