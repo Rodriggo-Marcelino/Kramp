@@ -23,14 +23,20 @@ public abstract class CreateEntityTemplate<TEntity, TCommand, TDTO, TViewModel, 
 
     public virtual async Task<ResponseBase<IEnumerable<TViewModel>>> Handle(TCommand request, CancellationToken cancellationToken)
     {
+        if (request == null)
+        {
+            throw new NullReferenceException("request is null");
+        }
+
         return await ExecuteAsync(request);
     }
 
     public async Task<ResponseBase<IEnumerable<TViewModel>>> ExecuteAsync(TCommand request)
     {
+
         ManipulateRequest(request);
 
-        IEnumerable<TEntity> entityList = MapCommandToEntity(request.DataList);
+        var entityList = MapCommandToEntity(request.DataList);
 
         ManipulateEntityBeforeSave(request.DataList, entityList);
 
