@@ -104,6 +104,7 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
         return Ok(workout);
     }
 
+    //Para Jorge: Não funciona
     [HttpGet("{id:guid}/exercises")]
     public async Task<ActionResult<WorkoutExerciseViewModel>> GetWorkoutExercisesById(Guid id)
     {
@@ -125,6 +126,7 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
         return Ok(result);
     }
 
+    //Para Jorge: Não funciona
     [HttpPut("{id:guid}/exercises")]
     public async Task<IActionResult> UpdateWorkoutExercise(Guid id, UpdateExerciseInWorkoutDTO data)
     {
@@ -146,6 +148,7 @@ public class WorkoutController(IMediator _mediator) : ControllerBase
         return NoContent();
     }
 
+    //Para Jorge: Não funciona
     [HttpDelete("{id:guid}/exercises/{workoutExerciseId:guid}")]
     public async Task<IActionResult> RemoveExerciseFromWorkout(Guid id, Guid workoutExerciseId)
     {
