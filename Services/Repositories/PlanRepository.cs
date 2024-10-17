@@ -5,5 +5,4 @@ namespace Services.Repositories;
 
 public class PlanRepository(KrampDbContext context) : GenericRepository<Plan>(context)
 {
-
 }

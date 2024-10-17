@@ -22,83 +22,62 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entity.Exercise", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SynergistMuscle")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TargetedMuscle")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Video")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("exercise", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entity.Generics.UserGeneric", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("Deleted");
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("document_number");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("name");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("password_hash");
 
                     b.Property<Guid?>("PlanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("refresh_token");
 
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("refresh_token_expiry_time");
 
                     b.Property<int>("TypeDocument")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("type_document");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("username");
 
                     b.Property<Guid?>("WorkoutId")
                         .HasColumnType("uniqueidentifier");
@@ -109,54 +88,131 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("users");
 
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Plan", b =>
+            modelBuilder.Entity("Domain.Entity.Training.Exercise", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("Deleted");
 
                     b.Property<string>("Description")
                         .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("name");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("photo");
+
+                    b.Property<int>("SynergistMuscle")
+                        .HasColumnType("int")
+                        .HasColumnName("synergist_muscle");
+
+                    b.Property<int>("TargetedMuscle")
+                        .HasColumnType("int")
+                        .HasColumnName("targeted_muscle");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("video");
 
                     b.HasKey("Id");
 
-                    b.ToTable("training_plan", (string)null);
+                    b.ToTable("exercise");
                 });
 
-            modelBuilder.Entity("Domain.Entity.PlanWorkout", b =>
+            modelBuilder.Entity("Domain.Entity.Training.Plan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("Deleted");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(240)
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("description");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("end_date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("start_date");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("training_plan");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Training.PlanWorkout", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("Deleted");
 
                     b.Property<Guid>("PlanId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("plan_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("WorkoutId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("workout_id");
 
                     b.HasKey("Id");
 
@@ -164,71 +220,102 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("plan_workout", (string)null);
+                    b.ToTable("plan_workout");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Workout", b =>
+            modelBuilder.Entity("Domain.Entity.Training.Workout", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("Deleted");
 
                     b.Property<string>("Description")
                         .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("name");
 
                     b.Property<int>("Period")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("period");
 
                     b.Property<int>("RepetitionCount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("repetition_count");
 
                     b.Property<int>("SeriesCount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("series_count");
 
                     b.Property<string>("TargetedMuscles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("targeted_muscles");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
-                    b.ToTable("workout", (string)null);
+                    b.ToTable("workout");
                 });
 
-            modelBuilder.Entity("Domain.Entity.WorkoutExercise", b =>
+            modelBuilder.Entity("Domain.Entity.Training.WorkoutExercise", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("Deleted");
 
                     b.Property<Guid>("ExerciseId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("exercise_id");
 
                     b.Property<int>("ExerciseTimeInSeconds")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("exercise_time_in_seconds");
 
                     b.Property<int>("Repetitions")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("repetitions");
 
                     b.Property<int>("RestTimeInSeconds")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("rest_time_in_seconds");
 
                     b.Property<int>("Series")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("series");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("WorkoutId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("workout_id");
 
                     b.HasKey("Id");
 
@@ -236,26 +323,28 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("workout_exercise", (string)null);
+                    b.ToTable("workout_exercise");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Gym", b =>
+            modelBuilder.Entity("Domain.Entity.User.Gym", b =>
                 {
                     b.HasBaseType("Domain.Entity.Generics.UserGeneric");
 
                     b.Property<string>("Description")
                         .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("description");
 
-                    b.ToTable("gym", (string)null);
+                    b.ToTable("gym");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Manager", b =>
+            modelBuilder.Entity("Domain.Entity.User.Manager", b =>
                 {
                     b.HasBaseType("Domain.Entity.Generics.UserGeneric");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("birth_date");
 
                     b.Property<string>("Permission")
                         .IsRequired()
@@ -264,76 +353,85 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("surname");
 
                     b.Property<string>("UserBio")
                         .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("user_bio");
 
-                    b.ToTable("manager", (string)null);
+                    b.ToTable("manager");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Member", b =>
+            modelBuilder.Entity("Domain.Entity.User.Member", b =>
                 {
                     b.HasBaseType("Domain.Entity.Generics.UserGeneric");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("birth_date");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("surname");
 
                     b.Property<string>("UserBio")
                         .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("user_bio");
 
-                    b.ToTable("member", (string)null);
+                    b.ToTable("member");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Professional", b =>
+            modelBuilder.Entity("Domain.Entity.User.Professional", b =>
                 {
                     b.HasBaseType("Domain.Entity.Generics.UserGeneric");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("birth_date");
 
                     b.Property<int>("Job")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("job");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("surname");
 
                     b.Property<string>("UserBio")
                         .HasMaxLength(240)
-                        .HasColumnType("varchar(240)");
+                        .HasColumnType("varchar(240)")
+                        .HasColumnName("user_bio");
 
-                    b.ToTable("professional", (string)null);
+                    b.ToTable("professional");
                 });
 
             modelBuilder.Entity("Domain.Entity.Generics.UserGeneric", b =>
                 {
-                    b.HasOne("Domain.Entity.Plan", null)
+                    b.HasOne("Domain.Entity.Training.Plan", null)
                         .WithMany("Users")
                         .HasForeignKey("PlanId");
 
-                    b.HasOne("Domain.Entity.Workout", null)
+                    b.HasOne("Domain.Entity.Training.Workout", null)
                         .WithMany("Users")
                         .HasForeignKey("WorkoutId");
                 });
 
-            modelBuilder.Entity("Domain.Entity.PlanWorkout", b =>
+            modelBuilder.Entity("Domain.Entity.Training.PlanWorkout", b =>
                 {
-                    b.HasOne("Domain.Entity.Plan", "Plan")
+                    b.HasOne("Domain.Entity.Training.Plan", "Plan")
                         .WithMany("Workouts")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entity.Workout", "Workout")
+                    b.HasOne("Domain.Entity.Training.Workout", "Workout")
                         .WithMany()
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -344,15 +442,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Workout");
                 });
 
-            modelBuilder.Entity("Domain.Entity.WorkoutExercise", b =>
+            modelBuilder.Entity("Domain.Entity.Training.WorkoutExercise", b =>
                 {
-                    b.HasOne("Domain.Entity.Exercise", "Exercise")
+                    b.HasOne("Domain.Entity.Training.Exercise", "Exercise")
                         .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entity.Workout", "Workout")
+                    b.HasOne("Domain.Entity.Training.Workout", "Workout")
                         .WithMany("Exercises")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -363,50 +461,50 @@ namespace Infrastructure.Migrations
                     b.Navigation("Workout");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Gym", b =>
+            modelBuilder.Entity("Domain.Entity.User.Gym", b =>
                 {
                     b.HasOne("Domain.Entity.Generics.UserGeneric", null)
                         .WithOne()
-                        .HasForeignKey("Domain.Entity.Gym", "Id")
+                        .HasForeignKey("Domain.Entity.User.Gym", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Manager", b =>
+            modelBuilder.Entity("Domain.Entity.User.Manager", b =>
                 {
                     b.HasOne("Domain.Entity.Generics.UserGeneric", null)
                         .WithOne()
-                        .HasForeignKey("Domain.Entity.Manager", "Id")
+                        .HasForeignKey("Domain.Entity.User.Manager", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Member", b =>
+            modelBuilder.Entity("Domain.Entity.User.Member", b =>
                 {
                     b.HasOne("Domain.Entity.Generics.UserGeneric", null)
                         .WithOne()
-                        .HasForeignKey("Domain.Entity.Member", "Id")
+                        .HasForeignKey("Domain.Entity.User.Member", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Professional", b =>
+            modelBuilder.Entity("Domain.Entity.User.Professional", b =>
                 {
                     b.HasOne("Domain.Entity.Generics.UserGeneric", null)
                         .WithOne()
-                        .HasForeignKey("Domain.Entity.Professional", "Id")
+                        .HasForeignKey("Domain.Entity.User.Professional", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Plan", b =>
+            modelBuilder.Entity("Domain.Entity.Training.Plan", b =>
                 {
                     b.Navigation("Users");
 
                     b.Navigation("Workouts");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Workout", b =>
+            modelBuilder.Entity("Domain.Entity.Training.Workout", b =>
                 {
                     b.Navigation("Exercises");
 

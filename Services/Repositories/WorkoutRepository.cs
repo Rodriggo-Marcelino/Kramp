@@ -5,5 +5,4 @@ namespace Services.Repositories;
 
 public class WorkoutRepository(KrampDbContext context) : GenericRepository<Workout>(context)
 {
-
 }
