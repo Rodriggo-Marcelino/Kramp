@@ -115,7 +115,7 @@ public class CreateCompleteWorkoutHandler
     {
         var updatedViewModels = new List<CompleteWorkoutViewModel>();
 
-        foreach (var workout in entityList)
+        foreach (var workout in entityList.ToList())
         {
             var workoutExercises = _workoutExerciseRepository
                 .FindAllAsync(exercise =>

@@ -97,12 +97,23 @@ namespace Application.Mapping
                 .ForMember(dest => dest.Workouts, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<Plan, CompletePlanViewModel>().ReverseMap();
+            CreateMap<Plan, CompletePlanViewModel>()
+                .ForMember(dest => dest.Workouts, opt => opt.Ignore())
+                .ReverseMap();
 
             #endregion
 
             #region PlanWorkout Mappings
-            CreateMap<PlanWorkoutViewModel, PlanWorkout>().ReverseMap();
+
+            CreateMap<AddWorkoutToPlanDTO, PlanWorkout>()
+                .ForMember(dest => dest.Plan, opt => opt.Ignore())
+                .ForMember(dest => dest.Workout, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<PlanWorkoutViewModel, PlanWorkout>()
+                .ForMember(dest => dest.Plan, opt => opt.Ignore())
+                .ForMember(dest => dest.Workout, opt => opt.Ignore())
+                .ReverseMap();
             #endregion
 
             #region Workout Mappings
@@ -118,9 +129,7 @@ namespace Application.Mapping
                 .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<Workout, SimpleWorkoutViewModel>()
-                .ForMember(dest => dest.TargetedMuscles, opt => opt.Ignore())
-                .ReverseMap();
+            CreateMap<Workout, SimpleWorkoutViewModel>().ReverseMap();
 
             CreateMap<CreateCompleteWorkoutDTO, Workout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())

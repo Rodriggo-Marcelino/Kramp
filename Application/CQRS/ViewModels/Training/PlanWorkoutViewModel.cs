@@ -2,6 +2,7 @@
 {
     public record PlanWorkoutViewModel : GenericViewModel
     {
-        public SimpleWorkoutViewModel Workout { get; set; }
+        public Guid PlanId { get; set; }
+        public Guid WorkoutId { get; set; }
     }
 }
