@@ -1,0 +1,1481 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "KRAMP API",
+    "description": "API for managing gyms, managers, members, professionals, training plans, workouts, and exercises.",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Gym",
+      "description": "API related to Gym management."
+    },
+    {
+      "name": "Manager",
+      "description": "API related to Manager management."
+    },
+    {
+      "name": "Member",
+      "description": "API related to Member management."
+    },
+    {
+      "name": "Professional",
+      "description": "API related to Professionals management."
+    },
+    {
+      "name": "Exercises",
+      "description": "API related to exercises management."
+    },
+    {
+      "name": "Plans",
+      "description": "API related to plans management."
+    },
+    {
+      "name": "Workouts",
+      "description": "API related to workouts management."
+    }
+  ],
+  "paths": {
+    "/api/gyms": {
+      "post": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Create a new gym",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gym created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gyms/all": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Get all gyms",
+        "responses": {
+          "200": {
+            "description": "List of gyms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GymViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gyms/{id}": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Get a gym by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gym details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Update a gym by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGymDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gym updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Delete a gym by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Gym deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/managers": {
+      "post": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Create a new manager",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Manager created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/managers/all": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Get all managers",
+        "responses": {
+          "200": {
+            "description": "List of managers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/managers/{id}": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Get a manager by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Manager details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Update a manager by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Manager updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Delete a manager by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Manager deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/members": {
+      "post": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Create a new member",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Member created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/members/all": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Get all members",
+        "responses": {
+          "200": {
+            "description": "List of members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/members/{id}": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Get a member by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Update a member by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Member updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Member"
+        ],
+        "summary": "Delete a member by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Member deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/professional": {
+      "post": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Create a new professional",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Professional created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/professional/all": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Get all professionals",
+        "responses": {
+          "200": {
+            "description": "List of professionals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfessionalViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/professional/{id}": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Get a professional by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Professional details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Update a professional by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfessionalDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Professional updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Delete a professional by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Professional deleted successfully"
+          }
+        }
+      }
+    },
+    "/exercises": {
+      "get": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Get all exercises",
+        "operationId": "GetAllExercises",
+        "responses": {
+          "200": {
+            "description": "A list of exercises",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Create a new exercise",
+        "operationId": "CreateExercise",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExerciseViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created exercise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercises/{id}": {
+      "get": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Get exercise by ID",
+        "operationId": "GetExerciseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The exercise details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Update an exercise by ID",
+        "operationId": "UpdateExerciseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExerciseViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated exercise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Delete an exercise by ID",
+        "operationId": "DeleteExerciseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Exercise deleted successfully"
+          }
+        }
+      }
+    },
+    "/plans": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get all plans",
+        "operationId": "GetAllPlans",
+        "responses": {
+          "200": {
+            "description": "A list of plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplePlanViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Create a new plan",
+        "operationId": "CreatePlan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSimplePlanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimplePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plans/{id}": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get plan by ID",
+        "operationId": "GetPlanById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The plan details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Update a plan by ID",
+        "operationId": "UpdatePlanById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompletePlanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Delete a plan by ID",
+        "operationId": "DeletePlanById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Plan deleted successfully"
+          }
+        }
+      }
+    },
+    "/workouts": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get all workouts",
+        "operationId": "GetAllWorkouts",
+        "responses": {
+          "200": {
+            "description": "A list of workouts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Create a new workout",
+        "operationId": "CreateWorkout",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workouts/{id}": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get workout by ID",
+        "operationId": "GetWorkoutById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The workout details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Update a workout by ID",
+        "operationId": "UpdateWorkoutById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Delete a workout by ID",
+        "operationId": "DeleteWorkoutById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workout deleted successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateUserDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "Surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "UserBio": {
+            "type": "string",
+            "nullable": true
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Username": {
+            "type": "string",
+            "nullable": true
+          },
+          "Password": {
+            "type": "string",
+            "nullable": true
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "Name",
+          "Username",
+          "Password"
+        ]
+      },
+      "CreateGymDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the gym"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Brief description of the gym"
+          },
+          "Username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Username for gym owner/admin"
+          },
+          "Password": {
+            "type": "string",
+            "nullable": true,
+            "description": "Password for gym owner/admin"
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Official document number of the gym"
+          }
+        },
+        "required": [
+          "Name",
+          "Username",
+          "Password"
+        ]
+      },
+      "CreateProfessionalDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateUserDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Job": {
+                "type": "string",
+                "description": "Professional's job role in the gym"
+              }
+            },
+            "required": [
+              "Job"
+            ]
+          }
+        ]
+      },
+      "UpdateGenericDTO": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do registro",
+            "readOnly": true
+          }
+        }
+      },
+      "UpdateUserDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string"
+              },
+              "Surname": {
+                "type": "string"
+              },
+              "UserBio": {
+                "type": "string"
+              },
+              "BirthDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "Username": {
+                "type": "string"
+              },
+              "DocumentNumber": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateGymDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "description": "Updated name of the gym"
+              },
+              "Description": {
+                "type": "string",
+                "description": "Updated description of the gym"
+              },
+              "Username": {
+                "type": "string",
+                "description": "Updated username for the gym"
+              },
+              "DocumentNumber": {
+                "type": "string",
+                "description": "Updated document number of the gym"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateProfessionalDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateUserDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Job": {
+                "type": "string",
+                "description": "Updated job role of the professional"
+              }
+            }
+          }
+        ]
+      },
+      "UserViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Surname": {
+            "type": "string"
+          },
+          "UserBio": {
+            "type": "string"
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Username": {
+            "type": "string"
+          },
+          "RefreshToken": {
+            "type": "string"
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "TokenJWT": {
+            "type": "string"
+          }
+        }
+      },
+      "GymViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Gym name"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description of the gym"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username for gym admin"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "Token for refreshing session"
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Expiration time for refresh token"
+          },
+          "TokenJWT": {
+            "type": "string",
+            "description": "JWT token"
+          }
+        }
+      },
+      "ProfessionalViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "First name of the professional"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "Last name of the professional"
+          },
+          "Job": {
+            "type": "string",
+            "description": "Job role of the professional"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username for the professional"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "Token for refreshing session"
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Expiration time for refresh token"
+          },
+          "TokenJWT": {
+            "type": "string",
+            "description": "JWT token"
+          }
+        }
+      },
+      "CreateSimplePlanDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateCompletePlanDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workouts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddWorkoutToPlanDTO"
+            }
+          }
+        }
+      },
+      "SimplePlanViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CompletePlanViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workouts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+            }
+          }
+        }
+      },
+      "SimpleWorkoutViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "Duration of the workout in minutes"
+          },
+          "intensity": {
+            "type": "string"
+          },
+          "exercises": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExerciseViewModel"
+            }
+          }
+        }
+      },
+      "AddWorkoutToPlanDTO": {
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workoutId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ExerciseViewModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "targetedMuscle": {
+            "type": "string"
+          },
+          "synergistMuscle": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          },
+          "video": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
