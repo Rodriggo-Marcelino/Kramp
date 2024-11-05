@@ -22,6 +22,9 @@ namespace Domain.Entity.User
         [DataType(DataType.Date)]
         [Column("birth_date")]
         public DateTime BirthDate { get; set; }
+        
+        [Column("points")]
+        public int Points { get; set; }
 
         public void SetTypeDocument()
         {

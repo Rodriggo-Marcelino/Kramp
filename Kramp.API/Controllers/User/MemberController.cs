@@ -20,6 +20,15 @@ namespace Kramp.API.Controllers.User
             return Created("", await _mediator.Send(command));
         }
 
+        [HttpPost("{id:guid}")]
+        public async Task<ActionResult<UserViewModel>> SomarPontuacao(Guid id , [FromQuery] int points)
+        {
+            var dto = new UpdatePointsDTO { Id = id, Points = points };
+            var command = new UpdateEntityCommand<Member, UpdatePointsDTO, UserViewModel>(dto);
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpGet("all")]
         public async Task<ActionResult<UserViewModel>> GetAllMembers()
         {
