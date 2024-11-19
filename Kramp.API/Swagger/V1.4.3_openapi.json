@@ -1,0 +1,2420 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "KRAMP API",
+    "description": "API for managing gyms and professionals",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/gyms": {
+      "post": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Create a new gym",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGymDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gym created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gyms/all": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Get all gyms",
+        "responses": {
+          "200": {
+            "description": "List of gyms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GymViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gyms/{id}": {
+      "get": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Get a gym by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gym details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Update a gym by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGymDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gym updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GymViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gym"
+        ],
+        "summary": "Delete a gym by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Gym deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/managers": {
+      "post": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Create a new manager",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Manager created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/managers/all": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Get all managers",
+        "responses": {
+          "200": {
+            "description": "List of managers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/managers/{id}": {
+      "get": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Get a manager by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Manager details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Update a manager by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Manager updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manager"
+        ],
+        "summary": "Delete a manager by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Manager deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/members": {
+      "post": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Create a new member",
+        "operationId": "createMember",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Member created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/members/{id}?points={points}": {
+      "post": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Add points to member's score",
+        "operationId": "addMemberPoints",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the member",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "points",
+            "in": "query",
+            "required": true,
+            "description": "The number of points to add",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Points added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/members/all": {
+      "get": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Get all members",
+        "operationId": "getAllMembers",
+        "responses": {
+          "200": {
+            "description": "List of all members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/members/{id}": {
+      "get": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Get a member by ID",
+        "operationId": "getMemberById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the member to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Update a member",
+        "operationId": "updateMember",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the member to update",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated member details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Delete a member by ID",
+        "operationId": "deleteMember",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the member to delete",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content, member deleted"
+          }
+        }
+      }
+    },
+    "/api/professional": {
+      "post": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Create a new professional",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Professional created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/professional/all": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Get all professionals",
+        "responses": {
+          "200": {
+            "description": "List of professionals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfessionalViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/professional/{id}": {
+      "get": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Get a professional by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Professional details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Update a professional by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfessionalDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Professional updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Professional"
+        ],
+        "summary": "Delete a professional by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Professional deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/exercises": {
+      "get": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Get all exercises",
+        "operationId": "getAllExercises",
+        "responses": {
+          "200": {
+            "description": "A list of exercises",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/exercises/{id}": {
+      "get": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Get exercise by ID",
+        "operationId": "getExerciseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the exercise to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested exercise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseViewModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercise not found"
+          }
+        }
+      }
+    },
+    "/api/plans/simple": {
+      "post": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Create a simple plan",
+        "operationId": "createSimplePlan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSimplePlanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Simple plan created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimplePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/details": {
+      "post": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Create a complete plan",
+        "operationId": "createCompletePlan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompletePlanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Complete plan created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/{id}/workouts": {
+      "post": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Add a workout to a plan",
+        "operationId": "addWorkoutToPlan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the plan to add a workout to",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkoutToPlanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Workout added to the plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/{id}/workouts/list": {
+      "post": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Add a list of workouts to a plan",
+        "operationId": "addListWorkoutToPlan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the plan to add workouts to",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AddWorkoutToPlanDTO"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Workouts added to the plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlanWorkoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/simple/all": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get all simple plans",
+        "operationId": "getAllSimplePlans",
+        "responses": {
+          "200": {
+            "description": "A list of simple plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplePlanViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/details/all": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get all complete plans",
+        "operationId": "getAllCompletePlans",
+        "responses": {
+          "200": {
+            "description": "A list of complete plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompletePlanViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/simple/all/page": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get all simple plans with pagination",
+        "operationId": "getAllSimplePlansPaged",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of simple plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplePlanViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/details/all/page": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get all complete plans with pagination",
+        "operationId": "getAllCompletePlansPaged",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of complete plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompletePlanViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/{id}/simple": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get a simple plan by ID",
+        "operationId": "getSimplePlanById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the simple plan to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested simple plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimplePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/{id}/details": {
+      "get": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Get a complete plan by ID",
+        "operationId": "getCompletePlanById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the complete plan to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested complete plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plans/{id}": {
+      "put": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Update a simple plan",
+        "operationId": "updateSimplePlan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the simple plan to update",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSimplePlanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated simple plan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimplePlanViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Delete a plan by ID",
+        "operationId": "deletePlanById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the plan to delete",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content, plan deleted"
+          }
+        }
+      }
+    },
+    "/api/workouts/simple": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Create a simple workout",
+        "operationId": "createSimpleWorkout",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSimpleWorkoutDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created simple workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/details": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Create a complete workout",
+        "operationId": "createCompleteWorkout",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompleteWorkoutDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created complete workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompleteWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/{id}/exercises": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Add an exercise to a workout",
+        "operationId": "addExerciseToWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the workout to add an exercise",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddExerciseToWorkoutDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Exercise added to workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutExerciseViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/{id}/exercises/list": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Add a list of exercises to a workout",
+        "operationId": "addListOfExercisesToWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the workout to add a list of exercises",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AddExerciseToWorkoutDTO"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "List of exercises added to workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkoutExerciseViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/simple/all": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get all simple workouts",
+        "operationId": "getAllSimpleWorkouts",
+        "responses": {
+          "200": {
+            "description": "List of simple workouts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/details/all": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get all complete workouts",
+        "operationId": "getAllCompleteWorkouts",
+        "responses": {
+          "200": {
+            "description": "List of complete workouts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompleteWorkoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/simple/all/page": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get all simple workouts with pagination",
+        "operationId": "getAllSimpleWorkoutsPageable",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "description": "The page number to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "description": "The number of items per page",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of simple workouts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/details/all/page": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get all complete workouts with pagination",
+        "operationId": "getAllCompleteWorkoutsPageable",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "description": "The page number to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "description": "The number of items per page",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of complete workouts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompleteWorkoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/{id}/simple": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get a simple workout by ID",
+        "operationId": "getSimpleWorkoutById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the simple workout to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The simple workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/{id}/details": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Get a complete workout by ID",
+        "operationId": "getCompleteWorkoutById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the complete workout to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The complete workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompleteWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/{id}": {
+      "put": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Update a simple workout",
+        "operationId": "updateSimpleWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the simple workout to update",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSimpleWorkoutDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated simple workout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Workouts"
+        ],
+        "summary": "Delete a workout by ID",
+        "operationId": "deleteWorkout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the workout to delete",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content, workout deleted"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateUserDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "Surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "UserBio": {
+            "type": "string",
+            "nullable": true
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Username": {
+            "type": "string",
+            "nullable": true
+          },
+          "Password": {
+            "type": "string",
+            "nullable": true
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "Name",
+          "Username",
+          "Password"
+        ]
+      },
+      "CreateGymDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the gym"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Brief description of the gym"
+          },
+          "Username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Username for gym owner/admin"
+          },
+          "Password": {
+            "type": "string",
+            "nullable": true,
+            "description": "Password for gym owner/admin"
+          },
+          "DocumentNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Official document number of the gym"
+          }
+        },
+        "required": [
+          "Name",
+          "Username",
+          "Password"
+        ]
+      },
+      "CreateProfessionalDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateUserDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Job": {
+                "type": "string",
+                "description": "Professional's job role in the gym"
+              }
+            },
+            "required": [
+              "Job"
+            ]
+          }
+        ]
+      },
+      "UpdateGenericDTO": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do registro",
+            "readOnly": true
+          }
+        }
+      },
+      "UpdateUserDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string"
+              },
+              "Surname": {
+                "type": "string"
+              },
+              "UserBio": {
+                "type": "string"
+              },
+              "BirthDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "Username": {
+                "type": "string"
+              },
+              "DocumentNumber": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateGymDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "description": "Updated name of the gym"
+              },
+              "Description": {
+                "type": "string",
+                "description": "Updated description of the gym"
+              },
+              "Username": {
+                "type": "string",
+                "description": "Updated username for the gym"
+              },
+              "DocumentNumber": {
+                "type": "string",
+                "description": "Updated document number of the gym"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateProfessionalDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateUserDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Job": {
+                "type": "string",
+                "description": "Updated job role of the professional"
+              }
+            }
+          }
+        ]
+      },
+      "AddExerciseToWorkoutDTO": {
+        "type": "object",
+        "properties": {
+          "WorkoutId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do treino (ignorado no request)",
+            "readOnly": true
+          },
+          "ExerciseId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do exercício"
+          },
+          "RestTimeInSeconds": {
+            "type": "integer",
+            "description": "Tempo de descanso em segundos"
+          },
+          "ExerciseTimeInSeconds": {
+            "type": "integer",
+            "description": "Tempo de exercício em segundos"
+          },
+          "Series": {
+            "type": "integer",
+            "description": "Número de séries"
+          },
+          "Repetitions": {
+            "type": "integer",
+            "description": "Número de repetições"
+          }
+        },
+        "required": [
+          "ExerciseId",
+          "RestTimeInSeconds",
+          "ExerciseTimeInSeconds",
+          "Series",
+          "Repetitions"
+        ]
+      },
+      "AddWorkoutToPlanDTO": {
+        "type": "object",
+        "properties": {
+          "PlanId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do plano (ignorado no request)",
+            "readOnly": true
+          },
+          "WorkoutId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do treino"
+          }
+        },
+        "required": [
+          "WorkoutId"
+        ]
+      },
+      "CreateCompletePlanDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nome do plano completo"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descrição do plano"
+          },
+          "StartDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de início do plano"
+          },
+          "EndDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de término do plano"
+          },
+          "Workouts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddWorkoutToPlanDTO"
+            },
+            "description": "Lista de treinos associados ao plano"
+          }
+        },
+        "required": [
+          "StartDate",
+          "EndDate"
+        ]
+      },
+      "CreateCompleteWorkoutDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nome do treino completo"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descrição do treino completo"
+          },
+          "Period": {
+            "type": "string",
+            "description": "Período do treino"
+          },
+          "Exercises": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddExerciseToWorkoutDTO"
+            },
+            "nullable": true,
+            "description": "Lista de exercícios associados ao treino"
+          }
+        },
+        "required": [
+          "Period"
+        ]
+      },
+      "CreateSimplePlanDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nome do plano simples"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descrição do plano simples"
+          },
+          "StartDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de início do plano"
+          },
+          "EndDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de término do plano"
+          }
+        },
+        "required": [
+          "StartDate",
+          "EndDate"
+        ]
+      },
+      "CreateSimpleWorkoutDTO": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Nome do treino simples"
+          },
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descrição do treino simples"
+          },
+          "Period": {
+            "type": "string",
+            "description": "Período do treino"
+          }
+        },
+        "required": [
+          "Period"
+        ]
+      },
+      "UpdateExerciseInWorkoutDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "WorkoutId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do treino ao qual o exercício pertence"
+              },
+              "ExerciseId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do exercício a ser atualizado"
+              },
+              "RestTimeInSeconds": {
+                "type": "integer",
+                "description": "Tempo de descanso em segundos"
+              },
+              "ExerciseTimeInSeconds": {
+                "type": "integer",
+                "description": "Tempo de exercício em segundos"
+              },
+              "Series": {
+                "type": "integer",
+                "description": "Número de séries"
+              },
+              "Repetitions": {
+                "type": "integer",
+                "description": "Número de repetições"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateSimplePlanDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do plano simples"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do plano simples"
+              },
+              "StartDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data de início do plano"
+              },
+              "EndDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data de término do plano"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateSimpleWorkoutDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do treino simples"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do treino simples"
+              },
+              "Period": {
+                "type": "string",
+                "description": "Período do treino"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateWorkoutInPlanDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "PlanId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do plano ao qual o treino pertence"
+              },
+              "WorkoutId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do treino a ser atualizado"
+              }
+            }
+          }
+        ]
+      },
+      "UpdatePointsDTO": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpdateGenericDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Points": {
+                "type": "integer",
+                "description": "The number of points to add to the member's score"
+              }
+            }
+          }
+        ]
+      },
+      "UserViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Surname": {
+            "type": "string"
+          },
+          "UserBio": {
+            "type": "string"
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Username": {
+            "type": "string"
+          },
+          "RefreshToken": {
+            "type": "string"
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "TokenJWT": {
+            "type": "string"
+          }
+        }
+      },
+      "GymViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Gym name"
+          },
+          "Description": {
+            "type": "string",
+            "description": "Description of the gym"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username for gym admin"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "Token for refreshing session"
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Expiration time for refresh token"
+          },
+          "TokenJWT": {
+            "type": "string",
+            "description": "JWT token"
+          }
+        }
+      },
+      "ProfessionalViewModel": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "First name of the professional"
+          },
+          "Surname": {
+            "type": "string",
+            "description": "Last name of the professional"
+          },
+          "Job": {
+            "type": "string",
+            "description": "Job role of the professional"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username for the professional"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "description": "Token for refreshing session"
+          },
+          "RefreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Expiration time for refresh token"
+          },
+          "TokenJWT": {
+            "type": "string",
+            "description": "JWT token"
+          }
+        }
+      },
+      "GenericViewModel": {
+        "type": "object",
+        "description": "Modelo genérico para ViewModels"
+      },
+      "CompletePlanViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do plano completo"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do plano completo"
+              },
+              "StartDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data de início do plano"
+              },
+              "EndDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data de término do plano"
+              },
+              "Workouts": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SimpleWorkoutViewModel"
+                },
+                "nullable": true,
+                "description": "Lista de treinos simples associados ao plano"
+              }
+            }
+          }
+        ]
+      },
+      "CompleteWorkoutViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do treino completo"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do treino completo"
+              },
+              "SeriesCount": {
+                "type": "integer",
+                "description": "Número total de séries no treino"
+              },
+              "RepetitionCount": {
+                "type": "integer",
+                "description": "Número total de repetições no treino"
+              },
+              "Period": {
+                "type": "string",
+                "description": "Período do treino",
+                "nullable": true
+              },
+              "TargetedMuscles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Músculos almejados"
+                },
+                "nullable": true
+              },
+              "Exercises": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WorkoutExerciseViewModel"
+                },
+                "nullable": true,
+                "description": "Lista de exercícios no treino"
+              }
+            }
+          }
+        ]
+      },
+      "ExerciseSmallViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do exercício"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do exercício"
+              },
+              "TargetedMuscle": {
+                "type": "string",
+                "description": "Músculo alvo do exercício"
+              },
+              "SynergistMuscle": {
+                "type": "string",
+                "description": "Músculo sinérgico do exercício"
+              }
+            }
+          }
+        ]
+      },
+      "ExerciseViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do exercício"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do exercício"
+              },
+              "TargetedMuscle": {
+                "type": "string",
+                "description": "Músculo alvo do exercício"
+              },
+              "SynergistMuscle": {
+                "type": "string",
+                "description": "Músculo sinérgico do exercício"
+              },
+              "Photo": {
+                "type": "string",
+                "nullable": true,
+                "description": "URL da foto do exercício"
+              },
+              "Video": {
+                "type": "string",
+                "nullable": true,
+                "description": "URL do vídeo do exercício"
+              }
+            }
+          }
+        ]
+      },
+      "PlanWorkoutViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "PlanId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do plano associado"
+              },
+              "WorkoutId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do treino associado"
+              }
+            }
+          }
+        ]
+      },
+      "SimplePlanViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do plano simples"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do plano simples"
+              },
+              "StartDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data de início do plano"
+              },
+              "EndDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data de término do plano"
+              }
+            }
+          }
+        ]
+      },
+      "SimpleWorkoutViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "nullable": true,
+                "description": "Nome do treino simples"
+              },
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Descrição do treino simples"
+              },
+              "Period": {
+                "type": "string",
+                "description": "Período do treino",
+                "nullable": true
+              },
+              "SeriesCount": {
+                "type": "integer",
+                "description": "Número total de séries no treino"
+              },
+              "RepetitionCount": {
+                "type": "integer",
+                "description": "Número total de repetições no treino"
+              },
+              "TargetedMuscles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Músculos almejados"
+                },
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "WorkoutExerciseViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GenericViewModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ExerciseId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "ID do exercício"
+              },
+              "Exercise": {
+                "$ref": "#/components/schemas/ExerciseViewModel"
+              },
+              "RestTimeInSeconds": {
+                "type": "integer",
+                "description": "Tempo de descanso em segundos"
+              },
+              "ExerciseTimeInSeconds": {
+                "type": "integer",
+                "description": "Tempo de exercício em segundos"
+              },
+              "Series": {
+                "type": "integer",
+                "description": "Número de séries"
+              },
+              "Repetitions": {
+                "type": "integer",
+                "description": "Número de repetições"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

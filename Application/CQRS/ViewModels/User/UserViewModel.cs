@@ -7,4 +7,5 @@ public record UserViewModel : TokenViewModel
     public string? UserBio { get; set; }
     public DateTime BirthDate { get; set; }
     public string? Username { get; set; }
+    public int Points { get; set; }
 }

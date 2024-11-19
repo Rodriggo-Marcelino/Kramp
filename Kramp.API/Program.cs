@@ -1,4 +1,5 @@
 using Kramp.API;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -22,9 +23,9 @@ app.UseExceptionHandler();
 
 app.Use(async (context, next) =>
 {
-    if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.4.2_openapi.json"))
+    if (context.Request.Path.StartsWithSegments("/swagger/v1/V1.4.3_openapi.json"))
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "Swagger", "V1.4.2_openapi.json");
+        var filePath = Path.Combine(AppContext.BaseDirectory, "Swagger", "V1.4.3_openapi.json");
         var jsonContent = await File.ReadAllTextAsync(filePath);
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(jsonContent);
@@ -35,13 +36,11 @@ app.Use(async (context, next) =>
     }
 });
 
-
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/swagger/v1/V1.4.2_openapi.json", "Kramp API v1")
+        options.SwaggerEndpoint("/swagger/v1/V1.4.3_openapi.json", "Kramp API v1")
     );
 }
 
